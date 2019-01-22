@@ -1,0 +1,18 @@
+{
+  "location1": {
+    "name": "Hero Association HQ",
+    "imageUrl": "https://vignette.wikia.nocookie.net/onepunchman/images/a/a2/Hq.jpg/revision/latest?cb=20161023050648"
+  },
+  "location2": {
+    "name": "Planet Namek",
+    "imageUrl": "https://vignette.wikia.nocookie.net/biggreen/images/f/f9/Namek.jpg/revision/latest?cb=20151023153235"
+  },
+  "location3": {
+    "name": "Sunny Go",
+    "imageUrl": "https://steamuserimages-a.akamaihd.net/ugc/843710577592071601/8FBF7B330B262CAA7CDC48DDB125F9B042371A39/?imw=268&imh=268&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"
+  },
+  "location4": {
+    "name": "Tower of Heaven",
+    "imageUrl": "https://vignette.wikia.nocookie.net/hunterx/images/5/52/Heavens_Arena_1999.jpg/revision/latest?cb=20120328050059"
+  }
+}

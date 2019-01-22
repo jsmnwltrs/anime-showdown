@@ -1,0 +1,282 @@
+{
+  "character1": {
+    "name": "Saitama",
+    "imageUrl": "https://i.ebayimg.com/images/g/FHkAAOSwaA5WlTYo/s-l300.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character2": {
+    "name": "Genos",
+    "imageUrl": "https://i.ytimg.com/vi/jjyTzL6sxdQ/maxresdefault.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character3": {
+    "name": "Mumen Rider",
+    "imageUrl": "https://4.bp.blogspot.com/-oXh9RZbAnnE/WP1tm-7aIEI/AAAAAAAAOv4/mY1wUgn7fYE9RaphDtGwqzOuPvvTBjjJACLcB/s1600/Standuppedelingmode.png",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character4": {
+    "name": "Tornado of Terror",
+    "imageUrl": "https://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/tornado-of-terror-one-punch-man-46.1.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character5": {
+    "name": "Silver Fang",
+    "imageUrl": "https://i.kym-cdn.com/photos/images/original/001/055/388/200.png",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },  
+  "character6": {
+    "name": "Speed of Sound",
+    "imageUrl": "http://static1.comicvine.com/uploads/original/11118/111183611/5201690-sonic-ep4.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character7": {
+    "name": "Huff Puff Prisoner",
+    "imageUrl": "https://cdn.myanimelist.net/images/characters/15/296951.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character8": {
+    "name": "Metal Knight",
+    "imageUrl": "https://i.ytimg.com/vi/iOfm7A3290U/maxresdefault.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character9": {
+    "name": "Blizzard of Hell",
+    "imageUrl": "https://cdn.myanimelist.net/images/characters/16/285584.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character10": {
+    "name": "Watchdog Man",
+    "imageUrl": "https://vignette.wikia.nocookie.net/onepunchman/images/a/a8/WatchdogManAvi.png/revision/latest?cb=20151227212923",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character11": {
+    "name": "Goku",
+    "imageUrl": "https://i.pinimg.com/originals/6f/58/c0/6f58c0a4571b74b331f3666950fa1d44.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character12": {
+    "name": "Vegeta",
+    "imageUrl": "https://static4.comicvine.com/uploads/original/11122/111225835/5534698-geetz%202.0.png",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character13": {
+    "name": "Krillin",
+    "imageUrl": "https://vignette.wikia.nocookie.net/dragonball/images/f/fa/Krillin_namek_saga.PNG/revision/latest?cb=20160601043425",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character14": {
+    "name": "Bulma",
+    "imageUrl": "https://vignette.wikia.nocookie.net/dragonball/images/1/1d/Bulma.Ep.044.png/revision/latest?cb=20120605202126",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character15": {
+    "name": "Gohan",
+    "imageUrl": "https://static.comicvine.com/uploads/original/11117/111174760/4438323-9085829344-Gohan.png",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character16": {
+    "name": "Piccolo",
+    "imageUrl": "https://vignette.wikia.nocookie.net/dragonball/images/1/1a/PiccoloVsAndroid17NV.png/revision/latest?cb=20120605144223",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character17": {
+    "name": "Dende",
+    "imageUrl": "https://vignette.wikia.nocookie.net/teamfourstar/images/e/e3/DendeWhiteMage.png/revision/latest?cb=20160405224554",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character18": {
+    "name": "Tenshinhan",
+    "imageUrl": "https://i.ytimg.com/vi/AY7JiIk6P9Y/maxresdefault.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character19": {
+    "name": "Chiaotzu",
+    "imageUrl": "https://vignette.wikia.nocookie.net/dragonball/images/b/bb/Chiaotzu_DB_Ep_134_002.png/revision/latest?cb=20180823011648",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },  
+  "character20": {
+    "name": "Yamcha",
+    "imageUrl": "https://vignette.wikia.nocookie.net/dragonball/images/4/4e/Ep55cap4.JPG/revision/latest?cb=20090824074310",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character21": {
+    "name": "Luffy",
+    "imageUrl": "https://statici.behindthevoiceactors.com/behindthevoiceactors/_img/chars/monkey-d-luffy-one-piece-53.3.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character22": {
+    "name": "Nami",
+    "imageUrl": "https://vignette.wikia.nocookie.net/onepiece/images/d/dd/Nami_Anime_Pre_Timeskip_Infobox.png/revision/latest?cb=20130802045734",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character23": {
+    "name": "Chopper",
+    "imageUrl": "https://www.tapatalk.com/groups/koeiwarriors/imageproxy.php?url=http://i227.photobucket.com/albums/dd300/PSandNintendFreak/chopper.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character24": {
+    "name": "Brook",
+    "imageUrl": "https://www.absoluteanime.com/one_piece/brook.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character25": {
+    "name": "Franky",
+    "imageUrl": "http://3.bp.blogspot.com/_3sU0MnRawMI/TTIZM-abk_I/AAAAAAAAD9I/cp9eSo5DYI8/s1600/franky%2Bone%2Bpiece.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character26": {
+    "name": "Robin",
+    "imageUrl": "https://qph.fs.quoracdn.net/main-qimg-ecd352120f0a33a43e751b7713d51b19.webp",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character27": {
+    "name": "Usopp",
+    "imageUrl": "https://vignette.wikia.nocookie.net/onepiece/images/1/1d/Usopp_Anime_Pre_Timeskip_Infobox.png/revision/latest/scale-to-width-down/270?cb=20151110155125",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character28": {
+    "name": "Sanji",
+    "imageUrl": "http://images6.fanpop.com/image/answers/3288000/3288401_1372789309660.13res_468_351.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character29": {
+    "name": "Zoro",
+    "imageUrl": "https://spinesofgolden.files.wordpress.com/2015/06/zoro-wallpapers-zorro-one-piece-wallpaper-sanji.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character30": {
+    "name": "Jimbei",
+    "imageUrl": "https://static.giantbomb.com/uploads/scale_small/13/135472/1880770-394px_jinbei.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character31": {
+    "name": "Gon",
+    "imageUrl": "https://m4mystery.files.wordpress.com/2012/02/gon-freecss.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character32": {
+    "name": "Killua",
+    "imageUrl": "https://vignette.wikia.nocookie.net/shipoffools/images/e/e0/132308-hunter-x-hunter-killua-zoldyck-lightning.jpg/revision/latest?cb=20130414144053",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character33": {
+    "name": "Hisoka",
+    "imageUrl": "https://66.media.tumblr.com/e42fefc3594651607ec87f601bc83103/tumblr_okpm32VSe01tj75aeo2_250.png",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character34": {
+    "name": "Bisky",
+    "imageUrl": "https://vignette.wikia.nocookie.net/hunterxhunter/images/4/47/Biscuit_Full_Body_View.jpg/revision/latest?cb=20130723031158",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character35": {
+    "name": "Kurapika",
+    "imageUrl": "https://pm1.narvii.com/6453/870230ed83f547820c944fa4faa00918ff7c1764_hq.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character36": {
+    "name": "Leorio",
+    "imageUrl": "https://cdn.myanimelist.net/images/characters/11/174519.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character37": {
+    "name": "Palm",
+    "imageUrl": "https://cdn.myanimelist.net/images/characters/10/211775.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character38": {
+    "name": "Morel",
+    "imageUrl": "https://i.ytimg.com/vi/18BHazaEWOk/maxresdefault.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character39": {
+    "name": "Netero",
+    "imageUrl": "https://randomc.net/image/Hunter%20X%20Hunter/Hunter%20X%20Hunter%20-%20122%20-%20Large%2004.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  },
+  "character40": {
+    "name": "Kite",
+    "imageUrl": "http://i1088.photobucket.com/albums/i336/MKM03/HxH%20CA/HorribleSubsHunterXHunter-76480pmkv_snapshot_0414_20130421_092454.png:original",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0
+  }
+}
