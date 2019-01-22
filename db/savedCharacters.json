@@ -1,0 +1,38 @@
+{
+  "savedCharacter1": {
+    "name": "Saitama",
+    "imageUrl": "https://i.ebayimg.com/images/g/FHkAAOSwaA5WlTYo/s-l300.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0,
+    "onTeam": false,
+    "uid": ""
+  },
+  "savedCharacter2": {
+    "name": "Brook",
+    "imageUrl": "https://www.absoluteanime.com/one_piece/brook.jpg",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0,
+    "onTeam": false,
+    "uid": ""
+  },
+  "savedCharacter3": {
+    "name": "Robin",
+    "imageUrl": "https://qph.fs.quoracdn.net/main-qimg-ecd352120f0a33a43e751b7713d51b19.webp",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0,
+    "onTeam": false,
+    "uid": ""
+  },
+  "savedCharacter4": {
+    "name": "Piccolo",
+    "imageUrl": "https://vignette.wikia.nocookie.net/dragonball/images/1/1a/PiccoloVsAndroid17NV.png/revision/latest?cb=20120605144223",
+    "hitPoints": 0,
+    "attackPoints": 0,
+    "level": 0,
+    "onTeam": false,
+    "uid": "1234"
+  }
+}

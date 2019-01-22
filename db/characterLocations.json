@@ -1,0 +1,162 @@
+{
+  "characterLocation1": {
+    "characterId": "character1",
+    "locationId": "location1"
+  },
+  "characterLocation2": {
+    "characterId": "character2",
+    "locationId": "location1"
+  },
+  "characterLocation3": {
+    "characterId": "character3",
+    "locationId": "location1"
+  },
+  "characterLocation4": {
+    "characterId": "character4",
+    "locationId": "location1"
+  },
+  "characterLocation5": {
+    "characterId": "character5",
+    "locationId": "location1"
+  },
+  "characterLocation6": {
+    "characterId": "character6",
+    "locationId": "location1"
+  },
+  "characterLocation7": {
+    "characterId": "character7",
+    "locationId": "location1"
+  },
+  "characterLocation8": {
+    "characterId": "character8",
+    "locationId": "location1"
+  },
+  "characterLocation9": {
+    "characterId": "character9",
+    "locationId": "location1"
+  },
+  "characterLocation10": {
+    "characterId": "character10",
+    "locationId": "location1"
+  },
+  "characterLocation11": {
+    "characterId": "character11",
+    "locationId": "location2"
+  },
+  "characterLocation12": {
+    "characterId": "character12",
+    "locationId": "location2"
+  },
+  "characterLocation13": {
+    "characterId": "character13",
+    "locationId": "location2"
+  },
+  "characterLocation14": {
+    "characterId": "character14",
+    "locationId": "location2"
+  },
+  "characterLocation15": {
+    "characterId": "character15",
+    "locationId": "location2"
+  },
+  "characterLocation16": {
+    "characterId": "character16",
+    "locationId": "location2"
+  },
+  "characterLocation17": {
+    "characterId": "character17",
+    "locationId": "location2"
+  },
+  "characterLocation18": {
+    "characterId": "character18",
+    "locationId": "location2"
+  },
+  "characterLocation19": {
+    "characterId": "character19",
+    "locationId": "location2"
+  },
+  "characterLocation20": {
+    "characterId": "character20",
+    "locationId": "location2"
+  },
+  "characterLocation21": {
+    "characterId": "character21",
+    "locationId": "location3"
+  },
+  "characterLocation22": {
+    "characterId": "character22",
+    "locationId": "location3"
+  },
+  "characterLocation23": {
+    "characterId": "character23",
+    "locationId": "location3"
+  },
+  "characterLocation24": {
+    "characterId": "character24",
+    "locationId": "location3"
+  },
+  "characterLocation25": {
+    "characterId": "character25",
+    "locationId": "location3"
+  },
+  "characterLocation26": {
+    "characterId": "character26",
+    "locationId": "location3"
+  },
+  "characterLocation27": {
+    "characterId": "character27",
+    "locationId": "location3"
+  },
+  "characterLocation28": {
+    "characterId": "character28",
+    "locationId": "location3"
+  },
+  "characterLocation29": {
+    "characterId": "character29",
+    "locationId": "location3"
+  },
+  "characterLocation30": {
+    "characterId": "character30",
+    "locationId": "location3"
+  },
+  "characterLocation31": {
+    "characterId": "character31",
+    "locationId": "location4"
+  },
+  "characterLocation32": {
+    "characterId": "character32",
+    "locationId": "location4"
+  },
+  "characterLocation33": {
+    "characterId": "character33",
+    "locationId": "location4"
+  },
+  "characterLocation34": {
+    "characterId": "character34",
+    "locationId": "location4"
+  },
+  "characterLocation35": {
+    "characterId": "character35",
+    "locationId": "location4"
+  },
+  "characterLocation36": {
+    "characterId": "character36",
+    "locationId": "location4"
+  },
+  "characterLocation37": {
+    "characterId": "character37",
+    "locationId": "location4"
+  },
+  "characterLocation38": {
+    "characterId": "character38",
+    "locationId": "location4"
+  },
+  "characterLocation39": {
+    "characterId": "character39",
+    "locationId": "location4"
+  },
+  "characterLocation40": {
+    "characterId": "character40",
+    "locationId": "location4"
+  }
+}
