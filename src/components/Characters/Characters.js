@@ -17,12 +17,24 @@ class Characters extends React.Component {
       }).catch(error => console.error('error with getSavedCharacters', error));
   }
 
+  deleteCharacter = (uid) => {
+    characterRequests.deleteSavedCharacter(uid)
+      .then(() => {
+        characterRequests.getSavedCharacters(uid)
+          .then((characters) => {
+            this.setState({ characters });
+          }).catch(error => console.error('error with getSavedCharacters', error));
+      })
+      .catch(error => console.error('error on deleteCharacter', error));
+  }
+
   render() {
     const { characters } = this.state;
     const characterItemComponents = characters.map(character => (
       <CharacterItem
         character={character}
         key={character.id}
+        deleteCharacter={this.deleteCharacter}
       />
     ));
     return (
