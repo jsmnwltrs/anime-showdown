@@ -20,5 +20,7 @@ const getSavedCharacters = uid => new Promise((resolve, reject) => {
     });
 });
 
+const deleteSavedCharacter = characterId => axios.delete(`${firebaseUrl}/savedCharacters/${characterId}.json`);
 
-export default { getSavedCharacters };
+
+export default { getSavedCharacters, deleteSavedCharacter };

@@ -1,9 +1,10 @@
 {
   "user1": {
     "email": "jsmnwltrs@gmail.com",
-    "username": "jazzcat20",
+    "username": "jsmnwltrs",
     "password": "hello123",
     "characterTokens":  4,
-    "levelUpTokens":  2
+    "levelUpTokens":  2,
+    "uid": "wokqClLNOadVZ4bcJJPMLS2dfgB2"
   }
 }
