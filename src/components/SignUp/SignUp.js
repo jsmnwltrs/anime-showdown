@@ -40,16 +40,17 @@ class SignUp extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.setState({ newUser: defaultUser });
+  }
+
 
   saveUser = () => {
     const { newUser } = this.state;
     authRequests.createUser(newUser.email, newUser.password).then((data) => {
       const userWithUid = { ...this.state.newUser };
       userWithUid.uid = data.user.uid;
-      userRequests.addUser(userWithUid).then(() => {
-        this.setState({ newUser: defaultUser });
-      })
-        .catch(error => console.error('error on addUser', error));
+      userRequests.addUser(userWithUid).then().catch(error => console.error('error on addUser', error));
     }).catch(error => console.error('error on saveUser', error));
   }
 
