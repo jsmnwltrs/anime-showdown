@@ -1,25 +1,57 @@
 import React from 'react';
+import { Button, Alert } from 'reactstrap';
 import './Characters.scss';
 import CharacterItem from '../CharacterItem/CharacterItem';
 import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
 
 class Characters extends React.Component {
-  state = {
-    characters: [],
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      visible: false,
+      characters: [],
+      characterId: '',
+    };
+
+    this.onDismiss = this.onDismiss.bind(this);
   }
 
-  componentDidMount() {
-    const uid = authRequests.getCurrentUid();
-    characterRequests.getSavedCharacters(uid)
-      .then((characters) => {
-        this.setState({ characters });
-      }).catch(error => console.error('error with getSavedCharacters', error));
+  onDismiss() {
+    this.setState({ visible: false });
   }
 
-  deleteCharacter = (uid) => {
-    characterRequests.deleteSavedCharacter(uid)
+
+showAlert = (e) => {
+  e.preventDefault();
+  this.setState({ visible: true });
+  const characterId = e.target.id;
+  this.setState({ characterId });
+}
+
+hideAlert = (e) => {
+  e.preventDefault();
+  this.setState({ visible: false });
+  this.setState({ characterId: '' });
+}
+
+componentDidMount() {
+  this.setState({ characterId: '' });
+  const uid = authRequests.getCurrentUid();
+  characterRequests.getSavedCharacters(uid)
+    .then((characters) => {
+      this.setState({ characters });
+    }).catch(error => console.error('error with getSavedCharacters', error));
+}
+
+  deleteCharacter = () => {
+    const { characterId } = this.state;
+    characterRequests.deleteSavedCharacter(characterId)
       .then(() => {
+        this.setState({ characterId: '' });
+        this.setState({ visible: false });
+        const uid = authRequests.getCurrentUid();
         characterRequests.getSavedCharacters(uid)
           .then((characters) => {
             this.setState({ characters });
@@ -32,6 +64,7 @@ class Characters extends React.Component {
     const { characters } = this.state;
     const characterItemComponents = characters.map(character => (
       <CharacterItem
+        showAlert={this.showAlert}
         character={character}
         key={character.id}
         deleteCharacter={this.deleteCharacter}
@@ -41,6 +74,11 @@ class Characters extends React.Component {
       <div className="characters col">
         <h2>Characters</h2>
         <div className='d-flex flex-wrap'>{characterItemComponents}</div>
+        <Alert color="danger" isOpen={this.state.visible} toggle={this.onDismiss}>
+        Are you sure you want to delete this Character?
+        <Button className='btn btn-danger' onClick={this.deleteCharacter}>Yes</Button>
+        <Button className='btn btn-success' onClick={this.hideAlert}>No</Button>
+      </Alert>
       </div>
     );
   }

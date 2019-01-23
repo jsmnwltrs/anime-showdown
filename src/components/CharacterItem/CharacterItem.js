@@ -16,21 +16,16 @@ class CharacterItem extends React.Component {
   static propTypes = {
     character: characterShape,
     deleteCharacter: PropTypes.func,
-  }
-
-  deleteEvent = (e) => {
-    e.preventDefault();
-    const { deleteCharacter, character } = this.props;
-    deleteCharacter(character.id);
+    showAlert: PropTypes.func,
   }
 
   render() {
-    const { character } = this.props;
+    const { character, showAlert } = this.props;
     return (
       <div>
       <Card className='mr-4'>
         <CardTitle>{character.name}</CardTitle>
-        <Button className='btn btn-danger' onClick={this.deleteEvent}>X</Button>
+        <Button className='btn btn-danger' id={character.id} onClick={showAlert}>X</Button>
         <img className="cardImage" src={character.imageUrl} alt="Card img"/>
         <CardBody>
           <CardSubtitle>Level: {character.level}</CardSubtitle>
