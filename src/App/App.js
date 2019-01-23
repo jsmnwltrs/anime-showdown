@@ -21,7 +21,7 @@ import './App.scss';
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
     ? (<Component { ...props } />)
-    : (<Redirect to={{ pathname: './home', state: { from: props.location } }} />));
+    : (<Redirect to={{ pathname: './characters', state: { from: props.location } }} />));
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
 

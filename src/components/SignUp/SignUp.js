@@ -5,9 +5,13 @@ import {
   FormGroup,
   Label,
   Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
 } from 'reactstrap';
 import userRequests from '../../helpers/data/userRequests';
 import './SignUp.scss';
+import authRequests from '../../helpers/data/authRequests';
 
 const defaultUser = {
   email: '',
@@ -15,19 +19,37 @@ const defaultUser = {
   password: '',
   characterTokens: 4,
   levelUpTokens: 2,
+  uid: '',
 };
 
 
 class SignUp extends React.Component {
-  state = {
-    newUser: defaultUser,
+  constructor(props) {
+    super(props);
+    this.state = {
+      newUser: defaultUser,
+      modal: false,
+    };
+
+    this.toggle = this.toggle.bind(this);
   }
 
-  saveUser = (e) => {
-    e.preventDefault();
-    userRequests.addUser(this.newUser).then(() => {
-      // this.props.history.push('/auth');
-      this.setState({ newUser: defaultUser });
+  toggle() {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  }
+
+
+  saveUser = () => {
+    const { newUser } = this.state;
+    authRequests.createUser(newUser.email, newUser.password).then((data) => {
+      const userWithUid = { ...this.state.newUser };
+      userWithUid.uid = data.user.uid;
+      userRequests.addUser(userWithUid).then(() => {
+        this.setState({ newUser: defaultUser });
+      })
+        .catch(error => console.error('error on addUser', error));
     }).catch(error => console.error('error on saveUser', error));
   }
 
@@ -48,7 +70,11 @@ class SignUp extends React.Component {
     const { newUser } = this.state;
     return (
       <div className="Auth">
-       <Form>
+      <p>Don't have an account? <Button className='btn btn-dark' onClick={this.toggle}>Sign Up</Button></p>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+          <ModalHeader toggle={this.toggle}>Sign Up to Play!</ModalHeader>
+          <ModalBody>
+          <Form>
         <FormGroup>
           <Label for="signUpEmail">Email</Label>
           <Input
@@ -82,8 +108,10 @@ class SignUp extends React.Component {
             onChange={this.passwordChange}
           />
         </FormGroup>
-        <Button className="btn btn-dark mt-4" onClick={this.saveUser}>SignUp</Button>
+        <Button className="btn btn-dark mt-4" onClick={this.saveUser}>Sign Up</Button>
         </Form>
+          </ModalBody>
+        </Modal>
       </div>
     );
   }

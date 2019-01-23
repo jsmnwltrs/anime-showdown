@@ -1,9 +1,14 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-const authenticate = () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  return firebase.auth().signInWithPopup(provider);
+const createUser = (email, password) => new Promise((resolve, reject) => {
+  firebase.auth().createUserWithEmailAndPassword(email, password).then((data) => {
+    resolve(data);
+  }).catch(error => reject(error));
+});
+
+const authenticate = (email, password) => {
+  firebase.auth().signInWithEmailAndPassword(email, password);
 };
 
 const logoutUser = () => firebase.auth().signOut();
@@ -14,4 +19,5 @@ export default {
   authenticate,
   logoutUser,
   getCurrentUid,
+  createUser,
 };
