@@ -15,7 +15,6 @@ import './CharacterItem.scss';
 class CharacterItem extends React.Component {
   static propTypes = {
     character: characterShape,
-    deleteCharacter: PropTypes.func,
     showAlert: PropTypes.func,
   }
 
