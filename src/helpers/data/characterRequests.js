@@ -22,14 +22,20 @@ const getSavedCharacters = uid => new Promise((resolve, reject) => {
 
 const getSingleCharacter = characterId => axios.get(`${firebaseUrl}/characters/${characterId}.json`);
 
+const getSingleSavedCharacter = characterId => axios.get(`${firebaseUrl}/savedCharacters/${characterId}.json`);
+
 const deleteSavedCharacter = characterId => axios.delete(`${firebaseUrl}/savedCharacters/${characterId}.json`);
 
 const addSavedCharacter = characterObject => axios.post(`${firebaseUrl}/savedCharacters.json`, characterObject);
+
+const updateSavedCharacter = (characterId, characterObject) => axios.put(`${firebaseUrl}/savedCharacters/${characterId}.json`, characterObject);
 
 
 export default {
   getSavedCharacters,
   deleteSavedCharacter,
   getSingleCharacter,
+  getSingleSavedCharacter,
   addSavedCharacter,
+  updateSavedCharacter,
 };
