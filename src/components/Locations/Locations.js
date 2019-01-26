@@ -114,7 +114,6 @@ class Locations extends React.Component {
       <div className="locations col">
         <h2>Locations</h2>
         <div className='d-flex flex-wrap'>{locationItemComponents}</div>
-        {/* <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button> */}
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>{chosenCharacter.name}</ModalHeader>
           <ModalBody>

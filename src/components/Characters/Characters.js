@@ -1,9 +1,11 @@
 import React from 'react';
+import { NavLink as RRNavLink } from 'react-router-dom';
 import {
   Button,
   Modal,
   ModalHeader,
   ModalFooter,
+  NavLink,
 } from 'reactstrap';
 import './Characters.scss';
 import OnTeamCharacterItem from '../OnTeamCharacterItem/OnTeamCharacterItem';
@@ -19,6 +21,7 @@ const defaultCharacter = {
   level: 0,
   onTeam: false,
   uid: '',
+  fullTeam: false,
 };
 
 class Characters extends React.Component {
@@ -31,6 +34,7 @@ class Characters extends React.Component {
       onTeamCharacters: [],
       characterId: '',
       levelUpCharacter: defaultCharacter,
+      noTeam: true,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -57,8 +61,7 @@ hideAlert = (e) => {
 }
 
 componentDidMount() {
-  this.setState({ characterId: '' });
-  this.setState({ levelUpCharacter: defaultCharacter });
+  this.setState({ levelUpCharacter: defaultCharacter, characterId: '' });
   const uid = authRequests.getCurrentUid();
   characterRequests.getSavedCharacters(uid)
     .then((characters) => {
@@ -66,6 +69,14 @@ componentDidMount() {
       this.setState({ characters: charactersNotOnTeam });
       const charactersOnTeam = characters.filter(x => x.onTeam === true);
       this.setState({ onTeamCharacters: charactersOnTeam });
+      if (this.state.onTeamCharacters.length === 0) {
+        this.setState({ noTeam: true });
+      } else if (this.state.onTeamCharacters.length !== 0) {
+        this.setState({ noTeam: false });
+      }
+      if (this.state.onTeamCharacters.length === 4) {
+        this.setState({ fullTeam: true });
+      }
     }).catch(error => console.error('error with getSavedCharacters', error));
 }
 
@@ -93,7 +104,11 @@ componentDidMount() {
           const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
           this.setState({ characters: charactersNotOnTeam });
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
-          this.setState({ onTeamCharacters: charactersOnTeam });
+          this.setState({ onTeamCharacters: charactersOnTeam, noTeam: false });
+          const { onTeamCharacters } = this.state;
+          if (onTeamCharacters.length === 4) {
+            this.setState({ fullTeam: true });
+          }
         }).catch(error => console.error('error with getSavedCharacters', error));
     }).catch(error => console.error('error on patchOnTeam', error));
   }
@@ -107,7 +122,11 @@ componentDidMount() {
           const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
           this.setState({ characters: charactersNotOnTeam });
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
-          this.setState({ onTeamCharacters: charactersOnTeam });
+          this.setState({ onTeamCharacters: charactersOnTeam, fullTeam: false });
+          const { onTeamCharacters } = this.state;
+          if (onTeamCharacters.length === 0) {
+            this.setState({ noTeam: true });
+          }
         }).catch(error => console.error('error with getSavedCharacters', error));
     }).catch(error => console.error('error on patchOnTeam', error));
   }
@@ -176,12 +195,18 @@ componentDidMount() {
   }
 
   render() {
-    const { characters, onTeamCharacters } = this.state;
+    const {
+      characters,
+      onTeamCharacters,
+      fullTeam,
+      noTeam,
+    } = this.state;
     const characterItemComponents = characters.map(character => (
       <CharacterItem
         showAlert={this.showAlert}
         character={character}
         key={character.id}
+        fullTeam = {fullTeam}
         deleteCharacter={this.deleteCharacter}
         levelUpCharacter={this.levelUpCharacter}
         addToTeam = {this.addToTeam}
@@ -198,6 +223,9 @@ componentDidMount() {
       <div className="characters col">
         <h2>Characters</h2>
         <div className='onTeamCharacters d-flex flex-wrap'>{onTeamCharacterItemComponents}</div>
+        <NavLink>
+        <Button className='btn btn-danger' disabled={noTeam} tag={RRNavLink} to='/battle'>Battle!</Button>
+        </NavLink>
         <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>

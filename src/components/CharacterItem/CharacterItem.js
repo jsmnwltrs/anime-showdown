@@ -18,29 +18,28 @@ class CharacterItem extends React.Component {
     showAlert: PropTypes.func,
     levelUpCharacter: PropTypes.func,
     addToTeam: PropTypes.func,
+    fullTeam: PropTypes.bool,
   }
 
-  levelUpClick = (e) => {
-    const { levelUpCharacter } = this.props;
-    const characterId = e.target.id;
-    levelUpCharacter(characterId);
+  levelUpClick = () => {
+    const { levelUpCharacter, character } = this.props;
+    levelUpCharacter(character.id);
   }
 
-  addToTeamEvent = (e) => {
-    const { addToTeam } = this.props;
-    const characterId = e.target.id;
-    addToTeam(characterId);
+  addToTeamEvent = () => {
+    const { addToTeam, character } = this.props;
+    addToTeam(character.id);
   }
 
   render() {
-    const { character, showAlert } = this.props;
+    const { character, showAlert, fullTeam } = this.props;
     return (
       <div>
       <Card className='mr-4'>
         <CardTitle>{character.name}</CardTitle>
         <Button className='btn btn-danger' id={character.id} onClick={showAlert}>X</Button>
-        <Button className='btn btn-success' id={character.id} onClick={this.levelUpClick}>Level Up!</Button>
-        <Button className='btn btn-success' id={character.id} onClick={this.addToTeamEvent}>Add to Team!</Button>
+        <Button className='btn btn-success' onClick={this.levelUpClick}>Level Up!</Button>
+        <Button className='btn btn-success' disabled={fullTeam} onClick={this.addToTeamEvent}>Add to Team!</Button>
         <img className="cardImage" src={character.imageUrl} alt="Card img"/>
         <CardBody>
           <CardSubtitle>Level: {character.level}</CardSubtitle>
