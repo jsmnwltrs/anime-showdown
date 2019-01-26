@@ -6,6 +6,7 @@ import {
   ModalFooter,
 } from 'reactstrap';
 import './Characters.scss';
+import OnTeamCharacterItem from '../OnTeamCharacterItem/OnTeamCharacterItem';
 import CharacterItem from '../CharacterItem/CharacterItem';
 import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
@@ -27,6 +28,7 @@ class Characters extends React.Component {
     this.state = {
       modal: false,
       characters: [],
+      onTeamCharacters: [],
       characterId: '',
       levelUpCharacter: defaultCharacter,
     };
@@ -60,7 +62,10 @@ componentDidMount() {
   const uid = authRequests.getCurrentUid();
   characterRequests.getSavedCharacters(uid)
     .then((characters) => {
-      this.setState({ characters });
+      const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
+      this.setState({ characters: charactersNotOnTeam });
+      const charactersOnTeam = characters.filter(x => x.onTeam === true);
+      this.setState({ onTeamCharacters: charactersOnTeam });
     }).catch(error => console.error('error with getSavedCharacters', error));
 }
 
@@ -77,6 +82,34 @@ componentDidMount() {
           }).catch(error => console.error('error with getSavedCharacters', error));
       })
       .catch(error => console.error('error on deleteCharacter', error));
+  }
+
+  addToTeam = (characterId) => {
+    const trueValue = true;
+    characterRequests.patchOnTeam(characterId, trueValue).then(() => {
+      const uid = authRequests.getCurrentUid();
+      characterRequests.getSavedCharacters(uid)
+        .then((characters) => {
+          const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
+          this.setState({ characters: charactersNotOnTeam });
+          const charactersOnTeam = characters.filter(x => x.onTeam === true);
+          this.setState({ onTeamCharacters: charactersOnTeam });
+        }).catch(error => console.error('error with getSavedCharacters', error));
+    }).catch(error => console.error('error on patchOnTeam', error));
+  }
+
+  removeFromTeam = (characterId) => {
+    const falseValue = false;
+    characterRequests.patchOnTeam(characterId, falseValue).then(() => {
+      const uid = authRequests.getCurrentUid();
+      characterRequests.getSavedCharacters(uid)
+        .then((characters) => {
+          const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
+          this.setState({ characters: charactersNotOnTeam });
+          const charactersOnTeam = characters.filter(x => x.onTeam === true);
+          this.setState({ onTeamCharacters: charactersOnTeam });
+        }).catch(error => console.error('error with getSavedCharacters', error));
+    }).catch(error => console.error('error on patchOnTeam', error));
   }
 
   levelUpCharacter = (characterId) => {
@@ -143,7 +176,7 @@ componentDidMount() {
   }
 
   render() {
-    const { characters } = this.state;
+    const { characters, onTeamCharacters } = this.state;
     const characterItemComponents = characters.map(character => (
       <CharacterItem
         showAlert={this.showAlert}
@@ -151,12 +184,21 @@ componentDidMount() {
         key={character.id}
         deleteCharacter={this.deleteCharacter}
         levelUpCharacter={this.levelUpCharacter}
+        addToTeam = {this.addToTeam}
+      />
+    ));
+    const onTeamCharacterItemComponents = onTeamCharacters.map(onTeamCharacter => (
+      <OnTeamCharacterItem
+        onTeamCharacter={onTeamCharacter}
+        key={onTeamCharacter.id}
+        removeFromTeam={this.removeFromTeam}
       />
     ));
     return (
       <div className="characters col">
         <h2>Characters</h2>
-        <div className='d-flex flex-wrap'>{characterItemComponents}</div>
+        <div className='onTeamCharacters d-flex flex-wrap'>{onTeamCharacterItemComponents}</div>
+        <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>
           Are you sure you want to delete this Character?
