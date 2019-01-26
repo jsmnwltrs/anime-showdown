@@ -18,10 +18,9 @@ class OnTeamCharacterItem extends React.Component {
     removeFromTeam: PropTypes.func,
   }
 
-  removeFromTeamEvent = (e) => {
-    const { removeFromTeam } = this.props;
-    const characterId = e.target.id;
-    removeFromTeam(characterId);
+  removeFromTeamEvent = () => {
+    const { removeFromTeam, onTeamCharacter } = this.props;
+    removeFromTeam(onTeamCharacter.id);
   }
 
   render() {
@@ -30,7 +29,7 @@ class OnTeamCharacterItem extends React.Component {
       <div>
       <Card className='mr-4'>
         <CardTitle>{onTeamCharacter.name}</CardTitle>
-        <Button className='btn btn-danger' id={onTeamCharacter.id} onClick={this.removeFromTeamEvent}>Remove from Team</Button>
+        <Button className='btn btn-danger' onClick={this.removeFromTeamEvent}>Remove from Team</Button>
         <img className="cardImage" src={onTeamCharacter.imageUrl} alt="Card img"/>
         <CardBody>
           <CardSubtitle>Level: {onTeamCharacter.level}</CardSubtitle>
