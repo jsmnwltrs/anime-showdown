@@ -1,5 +1,10 @@
 import React from 'react';
-import { Button, Alert } from 'reactstrap';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalFooter,
+} from 'reactstrap';
 import './Characters.scss';
 import CharacterItem from '../CharacterItem/CharacterItem';
 import characterRequests from '../../helpers/data/characterRequests';
@@ -20,30 +25,32 @@ class Characters extends React.Component {
     super(props);
 
     this.state = {
-      visible: false,
+      modal: false,
       characters: [],
       characterId: '',
       levelUpCharacter: defaultCharacter,
     };
 
-    this.onDismiss = this.onDismiss.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
-  onDismiss() {
-    this.setState({ visible: false });
+  toggle() {
+    this.setState({
+      modal: !this.state.modal,
+    });
   }
 
 
 showAlert = (e) => {
   e.preventDefault();
-  this.setState({ visible: true });
+  this.setState({ modal: true });
   const characterId = e.target.id;
   this.setState({ characterId });
 }
 
 hideAlert = (e) => {
   e.preventDefault();
-  this.setState({ visible: false });
+  this.setState({ modal: false });
   this.setState({ characterId: '' });
 }
 
@@ -62,7 +69,7 @@ componentDidMount() {
     characterRequests.deleteSavedCharacter(characterId)
       .then(() => {
         this.setState({ characterId: '' });
-        this.setState({ visible: false });
+        this.setState({ modal: false });
         const uid = authRequests.getCurrentUid();
         characterRequests.getSavedCharacters(uid)
           .then((characters) => {
@@ -150,11 +157,15 @@ componentDidMount() {
       <div className="characters col">
         <h2>Characters</h2>
         <div className='d-flex flex-wrap'>{characterItemComponents}</div>
-        <Alert color="danger" isOpen={this.state.visible} toggle={this.onDismiss}>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+          <ModalHeader toggle={this.toggle}>
           Are you sure you want to delete this Character?
-          <Button className='btn btn-danger' onClick={this.deleteCharacter}>Yes</Button>
-          <Button className='btn btn-success' onClick={this.hideAlert}>No</Button>
-        </Alert>
+          </ModalHeader>
+          <ModalFooter>
+            <Button className='btn btn-danger' onClick={this.deleteCharacter}>Yes</Button>
+            <Button className='btn btn-success' onClick={this.hideAlert}>No</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }
