@@ -120,6 +120,17 @@ componentDidMount() {
           myCharacter.attackPoints = characterObject.attackPoints + 1;
         }
         this.setState({ levelUpCharacter: myCharacter });
+        const { levelUpCharacter } = this.state;
+        characterRequests.updateSavedCharacter(characterId, levelUpCharacter)
+          .then(() => {
+            this.setState({ levelUpCharacter: defaultCharacter });
+            const uid = authRequests.getCurrentUid();
+            characterRequests.getSavedCharacters(uid)
+              .then((characters) => {
+                this.setState({ characters });
+              }).catch(error => console.error('error with getSavedCharacters', error));
+          })
+          .catch(error => console.error('error on updateSavedCharacter', error));
       })
       .catch(error => console.error('error on getSingleSavedCharacter', error));
   }
