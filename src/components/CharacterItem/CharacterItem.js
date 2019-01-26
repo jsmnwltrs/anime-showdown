@@ -17,12 +17,19 @@ class CharacterItem extends React.Component {
     character: characterShape,
     showAlert: PropTypes.func,
     levelUpCharacter: PropTypes.func,
+    addToTeam: PropTypes.func,
   }
 
   levelUpClick = (e) => {
     const { levelUpCharacter } = this.props;
     const characterId = e.target.id;
     levelUpCharacter(characterId);
+  }
+
+  addToTeamEvent = (e) => {
+    const { addToTeam } = this.props;
+    const characterId = e.target.id;
+    addToTeam(characterId);
   }
 
   render() {
@@ -33,6 +40,7 @@ class CharacterItem extends React.Component {
         <CardTitle>{character.name}</CardTitle>
         <Button className='btn btn-danger' id={character.id} onClick={showAlert}>X</Button>
         <Button className='btn btn-success' id={character.id} onClick={this.levelUpClick}>Level Up!</Button>
+        <Button className='btn btn-success' id={character.id} onClick={this.addToTeamEvent}>Add to Team!</Button>
         <img className="cardImage" src={character.imageUrl} alt="Card img"/>
         <CardBody>
           <CardSubtitle>Level: {character.level}</CardSubtitle>
