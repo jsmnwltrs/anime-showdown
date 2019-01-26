@@ -95,7 +95,7 @@ componentDidMount() {
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
           this.setState({ onTeamCharacters: charactersOnTeam });
         }).catch(error => console.error('error with getSavedCharacters', error));
-    }).catch();
+    }).catch(error => console.error('error on patchOnTeam', error));
   }
 
   removeFromTeam = (characterId) => {
@@ -109,7 +109,7 @@ componentDidMount() {
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
           this.setState({ onTeamCharacters: charactersOnTeam });
         }).catch(error => console.error('error with getSavedCharacters', error));
-    }).catch();
+    }).catch(error => console.error('error on patchOnTeam', error));
   }
 
   levelUpCharacter = (characterId) => {

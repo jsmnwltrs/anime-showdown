@@ -30,7 +30,7 @@ const addSavedCharacter = characterObject => axios.post(`${firebaseUrl}/savedCha
 
 const updateSavedCharacter = (characterId, characterObject) => axios.put(`${firebaseUrl}/savedCharacters/${characterId}.json`, characterObject);
 
-const patchOnTeam = (characterId, OnTeamVal) => axios.patch(`${firebaseUrl}/savedCharacters/${characterId}.json`, { OnTeamVal });
+const patchOnTeam = (characterId, onTeam) => axios.patch(`${firebaseUrl}/savedCharacters/${characterId}.json`, { onTeam });
 
 
 export default {
