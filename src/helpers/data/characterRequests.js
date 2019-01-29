@@ -20,6 +20,24 @@ const getSavedCharacters = uid => new Promise((resolve, reject) => {
     });
 });
 
+const getOnTeamCharacters = uid => new Promise((resolve, reject) => {
+  axios.get(`${firebaseUrl}/savedCharacters.json?orderBy="uid"&equalTo="${uid}"`)
+    .then((res) => {
+      const characterData = [];
+      if (res.data !== null) {
+        Object.keys(res.data).forEach((key) => {
+          res.data[key].id = key;
+          characterData.push(res.data[key]);
+        });
+      }
+      const onTeamCharacters = characterData.filter(x => x.onTeam === true);
+      resolve(onTeamCharacters);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+
 const getSingleCharacter = characterId => axios.get(`${firebaseUrl}/characters/${characterId}.json`);
 
 const getSingleSavedCharacter = characterId => axios.get(`${firebaseUrl}/savedCharacters/${characterId}.json`);
@@ -41,4 +59,5 @@ export default {
   addSavedCharacter,
   updateSavedCharacter,
   patchOnTeam,
+  getOnTeamCharacters,
 };

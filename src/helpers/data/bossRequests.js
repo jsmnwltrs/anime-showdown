@@ -20,4 +20,6 @@ const getBosses = () => new Promise((resolve, reject) => {
     });
 });
 
-export default { getBosses };
+const getSingleBoss = bossId => axios.get(`${firebaseUrl}/bosses/${bossId}.json`);
+
+export default { getBosses, getSingleBoss };
