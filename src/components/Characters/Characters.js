@@ -5,7 +5,6 @@ import {
   Modal,
   ModalHeader,
   ModalFooter,
-  NavLink,
 } from 'reactstrap';
 import './Characters.scss';
 import OnTeamCharacterItem from '../OnTeamCharacterItem/OnTeamCharacterItem';
@@ -223,9 +222,7 @@ componentDidMount() {
       <div className="characters col">
         <h2>Characters</h2>
         <div className='onTeamCharacters d-flex flex-wrap'>{onTeamCharacterItemComponents}</div>
-        <NavLink>
         <Button className='btn btn-danger' disabled={noTeam} tag={RRNavLink} to='/battle'>Battle!</Button>
-        </NavLink>
         <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>
