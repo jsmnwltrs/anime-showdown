@@ -96,6 +96,21 @@ class Battle extends React.Component {
         teamCharacter = {teamCharacter}
       />
     ));
+
+    const makeModal = () => {
+      const domString = `
+      <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+        <ModalHeader toggle={this.toggle}>You Won!</ModalHeader>
+        <ModalBody>
+          Here are your rewards!
+        </ModalBody>
+        <ModalFooter>
+            <Button color="secondary" onClick={this.toggle} tag={RRNavLink} to='/characters'>OK</Button>
+        </ModalFooter>
+      </Modal>`;
+      return domString;
+    };
+
     return (
       <div>
         <Bosses startBattle={this.startBattle} />
@@ -108,17 +123,7 @@ class Battle extends React.Component {
           <p>Team HP</p>
           <progress id="teamHitPoints" value={teamHP} max={maxTeamHP}></progress>
           <Button onClick={this.attackBoss} className='btn btn-danger'>Attack!</Button>
-          <div>
-            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-              <ModalHeader toggle={this.toggle}>You Won!</ModalHeader>
-              <ModalBody>
-                Here are your rewards!
-              </ModalBody>
-              <ModalFooter>
-                  <Button color="secondary" onClick={this.toggle} tag={RRNavLink} to='/characters'>OK</Button>
-              </ModalFooter>
-            </Modal>
-          </div>
+          <div>{makeModal()}</div>
         </div>
       </div>
     );
