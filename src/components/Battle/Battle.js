@@ -1,5 +1,6 @@
 import React from 'react';
 import './Battle.scss';
+import { Button } from 'reactstrap';
 import Bosses from '../Bosses/Bosses';
 import BattleTeam from '../BattleTeam/BattleTeam';
 import bossRequests from '../../helpers/data/bossRequests';
@@ -13,6 +14,7 @@ class Battle extends React.Component {
     battleTeam: [],
     teamHP: 0,
     maxTeamHP: 0,
+    teamAP: 0,
   }
 
   componentDidMount() {
@@ -21,11 +23,12 @@ class Battle extends React.Component {
       .then((battleTeam) => {
         this.setState({ battleTeam });
         let teamHP = 0;
+        let teamAP = 0;
         battleTeam.forEach((character) => {
           teamHP += character.hitPoints;
+          teamAP += character.attackPoints;
         });
-        this.setState({ teamHP });
-        this.setState({ maxTeamHP: teamHP });
+        this.setState({ teamHP, teamAP, maxTeamHP: teamHP });
       })
       .catch(error => console.error('error on getSavedCharacters', error));
   }
@@ -39,6 +42,19 @@ class Battle extends React.Component {
         this.setState({ bossHP });
       })
       .catch(error => console.error('error on getSingleBoss', error));
+  }
+
+  attackBoss = () => {
+    const {
+      battleBoss,
+      bossHP,
+      teamAP,
+      teamHP,
+    } = this.state;
+    const newBossHP = bossHP - teamAP;
+    this.setState({ bossHP: newBossHP });
+    const newTeamHP = teamHP - battleBoss.hitPoints;
+    this.setState({ teamHP: newTeamHP });
   }
 
   render() {
@@ -67,6 +83,7 @@ class Battle extends React.Component {
           <div className='d-flex flex-wrap'>{battleTeamComponents}</div>
           <p>Team HP</p>
           <progress id="teamHitPoints" value={teamHP} max={maxTeamHP}></progress>
+          <Button onClick={this.attackBoss} className='btn btn-danger'>Attack!</Button>
         </div>
       </div>
     );
