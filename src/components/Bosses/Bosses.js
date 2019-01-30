@@ -8,6 +8,8 @@ class Bosses extends React.Component {
   state = {
     bosses: [],
     bossHeader: 'Choose a Boss!',
+    levelUpTokenRewards: 0,
+    characterTokenRewards: 0,
   }
 
   static propTypes = {

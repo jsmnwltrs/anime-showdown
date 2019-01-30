@@ -16,6 +16,8 @@ class MyNavbar extends React.Component {
   static propTypes = {
     isAuthed: PropTypes.bool,
     logoutClickEvent: PropTypes.func,
+    levelUpToken: PropTypes.number,
+    characterToken: PropTypes.number,
   }
 
   state = {
@@ -29,11 +31,18 @@ class MyNavbar extends React.Component {
   }
 
   render() {
-    const { isAuthed, logoutClickEvent } = this.props;
+    const {
+      isAuthed,
+      logoutClickEvent,
+      levelUpToken,
+      characterToken,
+    } = this.props;
     const buildNavbar = () => {
       if (isAuthed) {
         return (
         <Nav className="ml-auto" navbar>
+          <NavItem>{levelUpToken}</NavItem>
+          <NavItem>{characterToken}</NavItem>
           <NavItem>
             <NavLink tag={RRNavLink} to='/characters'>Characters</NavLink>
           </NavItem>

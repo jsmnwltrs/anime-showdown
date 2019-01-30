@@ -10,6 +10,7 @@ import {
 
 import connection from '../helpers/data/connection';
 import authRequests from '../helpers/data/authRequests';
+import userRequests from '../helpers/data/userRequests';
 import Auth from '../components/Auth/Auth';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import Battle from '../components/Battle/Battle';
@@ -27,7 +28,7 @@ const PublicRoute = ({ component: Component, authed, ...rest }) => {
 
 const PrivateRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === true
-    ? (<Component { ...props } />)
+    ? (<Component { ...props } { ...rest } />)
     : (<Redirect to={{ pathname: './auth', state: { from: props.location } }} />));
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
@@ -37,6 +38,8 @@ class App extends React.Component {
     authed: false,
     currentUid: '',
     pendingUser: true,
+    levelUpToken: 0,
+    characterToken: 0,
   }
 
   componentDidMount() {
@@ -45,6 +48,15 @@ class App extends React.Component {
       if (user) {
         const currentUid = authRequests.getCurrentUid();
         this.setState({ authed: true, currentUid, pendingUser: false });
+        userRequests.getFirebaseUserId(currentUid).then((firebaseId) => {
+          userRequests.getUserObject(firebaseId)
+            .then((userObject) => {
+              const levelUpToken = userObject.data.levelUpTokens;
+              const characterToken = userObject.data.characterTokens;
+              this.setState({ levelUpToken, characterToken });
+            })
+            .catch(error => console.error('error on getUserObject', error));
+        }).catch(error => console.error('error on getFirebaseUserId', error));
       } else {
         this.setState({ authed: false, currentUid: '', pendingUser: false });
       }
@@ -60,9 +72,18 @@ class App extends React.Component {
     this.setState({ authed: false, currentUid: '' });
   }
 
+  setLevelTokens = (tokenValue) => {
+    this.setState({ levelUpToken: tokenValue });
+  }
+
 
   render() {
-    const { authed, pendingUser } = this.state;
+    const {
+      authed,
+      pendingUser,
+      levelUpToken,
+      characterToken,
+    } = this.state;
     if (pendingUser) {
       return null;
     }
@@ -70,13 +91,18 @@ class App extends React.Component {
       <div className="App">
         <BrowserRouter>
           <React.Fragment>
-            <MyNavbar isAuthed={authed} logoutClickEvent={this.logoutClickEvent}/>
+            <MyNavbar
+              isAuthed={authed}
+              logoutClickEvent={this.logoutClickEvent}
+              levelUpToken={levelUpToken}
+              characterToken={characterToken}
+            />
             <div className="container">
               <div className="row">
                 <Switch>
-                  <PrivateRoute path='/characters' component={Characters} authed={authed} />
-                  <PrivateRoute path='/locations' component={Locations} authed={authed} />
-                  <PrivateRoute path='/battle' component={Battle} authed={authed} />
+                  <PrivateRoute path='/characters' component={Characters} authed={authed} setLevelTokens={this.setLevelTokens} />
+                  <PrivateRoute path='/locations' component={Locations} authed={authed} setLevelTokens={this.setLevelTokens} />
+                  <PrivateRoute path='/battle' component={Battle} authed={authed} setLevelTokens={this.setLevelTokens} />
                   <PublicRoute path='/auth' component={Auth} authed={authed} />
                 </Switch>
               </div>
