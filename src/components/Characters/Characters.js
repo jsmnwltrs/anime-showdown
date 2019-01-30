@@ -11,6 +11,7 @@ import OnTeamCharacterItem from '../OnTeamCharacterItem/OnTeamCharacterItem';
 import CharacterItem from '../CharacterItem/CharacterItem';
 import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
+import userRequests from '../../helpers/data/userRequests';
 
 const defaultCharacter = {
   name: '',
@@ -29,19 +30,29 @@ class Characters extends React.Component {
 
     this.state = {
       modal: false,
+      tokenModal: false,
       characters: [],
       onTeamCharacters: [],
       characterId: '',
       levelUpCharacter: defaultCharacter,
+      levelUpToken: 0,
+      characterToken: 0,
       noTeam: true,
     };
 
     this.toggle = this.toggle.bind(this);
+    this.modalToggle = this.modalToggle.bind(this);
   }
 
   toggle() {
     this.setState({
       modal: !this.state.modal,
+    });
+  }
+
+  modalToggle() {
+    this.setState({
+      tokenModal: !this.state.tokenModal,
     });
   }
 
@@ -62,6 +73,15 @@ hideAlert = (e) => {
 componentDidMount() {
   this.setState({ levelUpCharacter: defaultCharacter, characterId: '' });
   const uid = authRequests.getCurrentUid();
+  userRequests.getFirebaseUserId(uid).then((firebaseId) => {
+    userRequests.getUserObject(firebaseId)
+      .then((user) => {
+        const levelUpToken = user.data.levelUpTokens;
+        const characterToken = user.data.characterTokens;
+        this.setState({ levelUpToken, characterToken });
+      })
+      .catch(error => console.error('error on getUserObject', error));
+  }).catch(error => console.error('error on getFirebaseUserId', error));
   characterRequests.getSavedCharacters(uid)
     .then((characters) => {
       const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
@@ -131,66 +151,78 @@ componentDidMount() {
   }
 
   levelUpCharacter = (characterId) => {
-    characterRequests.getSingleSavedCharacter(characterId)
-      .then((result) => {
-        const characterObject = result.data;
-        this.setState({ levelUpCharacter: characterObject });
-        const myCharacter = { ...this.state.levelUpCharacter };
-        if (characterObject.level === 0) {
-          myCharacter.level = characterObject.level + 1;
-          myCharacter.hitPoints = characterObject.hitPoints + 1;
-          myCharacter.attackPoints = characterObject.attackPoints + 1;
-        } else if (characterObject.level === 1) {
-          myCharacter.level = characterObject.level + 1;
-          myCharacter.hitPoints = characterObject.hitPoints + 1;
-          myCharacter.attackPoints = characterObject.attackPoints + 1;
-        } else if (characterObject.level === 2) {
-          myCharacter.level = characterObject.level + 1;
-          myCharacter.hitPoints = characterObject.hitPoints + 1;
-          myCharacter.attackPoints = characterObject.attackPoints + 1;
-        } else if (characterObject.level === 3) {
-          myCharacter.level = characterObject.level + 1;
-          myCharacter.hitPoints = characterObject.hitPoints + 1;
-          myCharacter.attackPoints = characterObject.attackPoints + 1;
-        } else if (characterObject.level === 4) {
-          myCharacter.level = characterObject.level + 1;
-          myCharacter.hitPoints = characterObject.hitPoints + 1;
-          myCharacter.attackPoints = characterObject.attackPoints + 1;
-        } else if (characterObject.level === 5) {
-          myCharacter.level = characterObject.level + 1;
-          myCharacter.hitPoints = characterObject.hitPoints + 1;
-          myCharacter.attackPoints = characterObject.attackPoints + 1;
-        } else if (characterObject.level === 6) {
-          myCharacter.level = characterObject.level + 1;
-          myCharacter.hitPoints = characterObject.hitPoints + 1;
-          myCharacter.attackPoints = characterObject.attackPoints + 1;
-        } else if (characterObject.level === 7) {
-          myCharacter.level = characterObject.level + 1;
-          myCharacter.hitPoints = characterObject.hitPoints + 1;
-          myCharacter.attackPoints = characterObject.attackPoints + 1;
-        } else if (characterObject.level === 8) {
-          myCharacter.level = characterObject.level + 1;
-          myCharacter.hitPoints = characterObject.hitPoints + 1;
-          myCharacter.attackPoints = characterObject.attackPoints + 1;
-        } else if (characterObject.level === 9) {
-          myCharacter.level = characterObject.level + 1;
-          myCharacter.hitPoints = characterObject.hitPoints + 1;
-          myCharacter.attackPoints = characterObject.attackPoints + 1;
-        }
-        this.setState({ levelUpCharacter: myCharacter });
-        const { levelUpCharacter } = this.state;
-        characterRequests.updateSavedCharacter(characterId, levelUpCharacter)
-          .then(() => {
-            this.setState({ levelUpCharacter: defaultCharacter });
-            const uid = authRequests.getCurrentUid();
-            characterRequests.getSavedCharacters(uid)
-              .then((characters) => {
-                this.setState({ characters });
-              }).catch(error => console.error('error with getSavedCharacters', error));
-          })
-          .catch(error => console.error('error on updateSavedCharacter', error));
-      })
-      .catch(error => console.error('error on getSingleSavedCharacter', error));
+    const { levelUpToken } = this.state;
+    if (levelUpToken > 0) {
+      const newTokenAmount = levelUpToken - 1;
+      this.setState({ levelUpToken: newTokenAmount });
+      const uid = authRequests.getCurrentUid();
+      userRequests.getFirebaseUserId(uid).then((firebaseId) => {
+        userRequests.patchLevelToken(firebaseId, newTokenAmount)
+          .then()
+          .catch(error => console.error('error on patchLevelToken', error));
+      }).catch(error => console.error('erro ron getFirebaseUserId', error));
+      characterRequests.getSingleSavedCharacter(characterId)
+        .then((result) => {
+          const characterObject = result.data;
+          this.setState({ levelUpCharacter: characterObject });
+          const myCharacter = { ...this.state.levelUpCharacter };
+          if (characterObject.level === 0) {
+            myCharacter.level = characterObject.level + 1;
+            myCharacter.hitPoints = characterObject.hitPoints + 1;
+            myCharacter.attackPoints = characterObject.attackPoints + 1;
+          } else if (characterObject.level === 1) {
+            myCharacter.level = characterObject.level + 1;
+            myCharacter.hitPoints = characterObject.hitPoints + 1;
+            myCharacter.attackPoints = characterObject.attackPoints + 1;
+          } else if (characterObject.level === 2) {
+            myCharacter.level = characterObject.level + 1;
+            myCharacter.hitPoints = characterObject.hitPoints + 1;
+            myCharacter.attackPoints = characterObject.attackPoints + 1;
+          } else if (characterObject.level === 3) {
+            myCharacter.level = characterObject.level + 1;
+            myCharacter.hitPoints = characterObject.hitPoints + 1;
+            myCharacter.attackPoints = characterObject.attackPoints + 1;
+          } else if (characterObject.level === 4) {
+            myCharacter.level = characterObject.level + 1;
+            myCharacter.hitPoints = characterObject.hitPoints + 1;
+            myCharacter.attackPoints = characterObject.attackPoints + 1;
+          } else if (characterObject.level === 5) {
+            myCharacter.level = characterObject.level + 1;
+            myCharacter.hitPoints = characterObject.hitPoints + 1;
+            myCharacter.attackPoints = characterObject.attackPoints + 1;
+          } else if (characterObject.level === 6) {
+            myCharacter.level = characterObject.level + 1;
+            myCharacter.hitPoints = characterObject.hitPoints + 1;
+            myCharacter.attackPoints = characterObject.attackPoints + 1;
+          } else if (characterObject.level === 7) {
+            myCharacter.level = characterObject.level + 1;
+            myCharacter.hitPoints = characterObject.hitPoints + 1;
+            myCharacter.attackPoints = characterObject.attackPoints + 1;
+          } else if (characterObject.level === 8) {
+            myCharacter.level = characterObject.level + 1;
+            myCharacter.hitPoints = characterObject.hitPoints + 1;
+            myCharacter.attackPoints = characterObject.attackPoints + 1;
+          } else if (characterObject.level === 9) {
+            myCharacter.level = characterObject.level + 1;
+            myCharacter.hitPoints = characterObject.hitPoints + 1;
+            myCharacter.attackPoints = characterObject.attackPoints + 1;
+          }
+          this.setState({ levelUpCharacter: myCharacter });
+          const { levelUpCharacter } = this.state;
+          characterRequests.updateSavedCharacter(characterId, levelUpCharacter)
+            .then(() => {
+              this.setState({ levelUpCharacter: defaultCharacter });
+              characterRequests.getSavedCharacters(uid)
+                .then((characters) => {
+                  this.setState({ characters });
+                }).catch(error => console.error('error with getSavedCharacters', error));
+            })
+            .catch(error => console.error('error on updateSavedCharacter', error));
+        })
+        .catch(error => console.error('error on getSingleSavedCharacter', error));
+    } else {
+      this.setState({ tokenModal: true });
+    }
   }
 
   render() {
@@ -232,6 +264,18 @@ componentDidMount() {
             <Button className='btn btn-danger' onClick={this.deleteCharacter}>Yes</Button>
             <Button className='btn btn-success' onClick={this.hideAlert}>No</Button>
           </ModalFooter>
+        </Modal>
+          <Modal
+            isOpen={this.state.tokenModal}
+            toggle={this.modalToggle}
+            className={this.props.className}
+          >
+            <ModalHeader toggle={this.modalToggle}>
+            You have no more tokens to level up your Characters.
+            </ModalHeader>
+            <ModalFooter>
+              <Button color="secondary" onClick={this.modalToggle}>OK</Button>
+            </ModalFooter>
         </Modal>
       </div>
     );
