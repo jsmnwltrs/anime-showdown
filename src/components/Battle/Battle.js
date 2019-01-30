@@ -7,14 +7,20 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 import { NavLink as RRNavLink } from 'react-router-dom';
 import Bosses from '../Bosses/Bosses';
 import BattleTeam from '../BattleTeam/BattleTeam';
 import bossRequests from '../../helpers/data/bossRequests';
 import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
+import userRequests from '../../helpers/data/userRequests';
 
 class Battle extends React.Component {
+  static propTypes = {
+    setLevelTokens: PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -25,6 +31,10 @@ class Battle extends React.Component {
       teamHP: 0,
       maxTeamHP: 0,
       teamAP: 0,
+      currentLevelUpTokens: 0,
+      currentCharacterTokens: 0,
+      levelUpTokenRewards: 0,
+      characterTokenRewards: 0,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -50,6 +60,15 @@ class Battle extends React.Component {
         this.setState({ teamHP, teamAP, maxTeamHP: teamHP });
       })
       .catch(error => console.error('error on getSavedCharacters', error));
+    userRequests.getFirebaseUserId(uid).then((firebaseId) => {
+      userRequests.getUserObject(firebaseId)
+        .then((userObject) => {
+          const currentLevelUpTokens = userObject.data.levelUpTokens;
+          const currentCharacterTokens = userObject.data.characterTokens;
+          this.setState({ currentLevelUpTokens, currentCharacterTokens });
+        })
+        .catch(error => console.error('error on getUserObject', error));
+    }).catch(error => console.error('error on getFirebaseUserId', error));
   }
 
   startBattle = (bossId) => {
@@ -57,8 +76,14 @@ class Battle extends React.Component {
       .then((res) => {
         const battleBoss = res.data;
         const bossHP = battleBoss.hitPoints;
-        this.setState({ battleBoss });
-        this.setState({ bossHP });
+        const levelUpTokenRewards = battleBoss.levelTokenReward;
+        const characterTokenRewards = battleBoss.characterTokenReward;
+        this.setState({
+          battleBoss,
+          bossHP,
+          characterTokenRewards,
+          levelUpTokenRewards,
+        });
       })
       .catch(error => console.error('error on getSingleBoss', error));
   }
@@ -84,6 +109,19 @@ class Battle extends React.Component {
     }
   }
 
+  addRewards = () => {
+    const { levelUpTokenRewards, currentLevelUpTokens } = this.state;
+    const { setLevelTokens } = this.props;
+    const newLevelTokenValue = currentLevelUpTokens + levelUpTokenRewards;
+    const uid = authRequests.getCurrentUid();
+    userRequests.getFirebaseUserId(uid).then((firebaseId) => {
+      userRequests.patchLevelToken(firebaseId, newLevelTokenValue)
+        .then(() => {
+          setLevelTokens(newLevelTokenValue);
+        })
+        .catch(error => console.error('error on patchLevelToken', error));
+    }).catch(error => console.error('erro ron getFirebaseUserId', error));
+  }
 
   render() {
     const {
@@ -92,6 +130,8 @@ class Battle extends React.Component {
       battleTeam,
       teamHP,
       maxTeamHP,
+      levelUpTokenRewards,
+      characterTokenRewards,
     } = this.state;
     const battleTeamComponents = battleTeam.map(teamCharacter => (
       <BattleTeam
@@ -108,9 +148,11 @@ class Battle extends React.Component {
             <ModalHeader toggle={this.toggle}>You Won!</ModalHeader>
             <ModalBody>
               Here are your rewards!
+              <p>Level Up Tokens: {levelUpTokenRewards}</p>
+              <p>Character Tokens: {characterTokenRewards}</p>
             </ModalBody>
             <ModalFooter>
-              <Button color="secondary" onClick={this.toggle} tag={RRNavLink} to='/characters'>OK</Button>
+              <Button color="secondary" onClick={this.addRewards} tag={RRNavLink} to='/characters'>OK</Button>
             </ModalFooter>
           </Modal>
         );

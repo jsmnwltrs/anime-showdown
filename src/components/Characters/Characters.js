@@ -6,6 +6,7 @@ import {
   ModalHeader,
   ModalFooter,
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 import './Characters.scss';
 import OnTeamCharacterItem from '../OnTeamCharacterItem/OnTeamCharacterItem';
 import CharacterItem from '../CharacterItem/CharacterItem';
@@ -25,6 +26,10 @@ const defaultCharacter = {
 };
 
 class Characters extends React.Component {
+  static propTypes = {
+    setLevelTokens: PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
 
@@ -158,7 +163,9 @@ componentDidMount() {
       const uid = authRequests.getCurrentUid();
       userRequests.getFirebaseUserId(uid).then((firebaseId) => {
         userRequests.patchLevelToken(firebaseId, newTokenAmount)
-          .then()
+          .then(() => {
+            this.props.setLevelTokens(newTokenAmount);
+          })
           .catch(error => console.error('error on patchLevelToken', error));
       }).catch(error => console.error('erro ron getFirebaseUserId', error));
       characterRequests.getSingleSavedCharacter(characterId)
