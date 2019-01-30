@@ -76,6 +76,10 @@ class App extends React.Component {
     this.setState({ levelUpToken: tokenValue });
   }
 
+  setCharacterTokens = (tokenValue) => {
+    this.setState({ characterToken: tokenValue });
+  }
+
 
   render() {
     const {
@@ -101,7 +105,7 @@ class App extends React.Component {
               <div className="row">
                 <Switch>
                   <PrivateRoute path='/characters' component={Characters} authed={authed} setLevelTokens={this.setLevelTokens} />
-                  <PrivateRoute path='/locations' component={Locations} authed={authed} setLevelTokens={this.setLevelTokens} />
+                  <PrivateRoute path='/locations' component={Locations} authed={authed} setCharacterTokens={this.setCharacterTokens} />
                   <PrivateRoute path='/battle' component={Battle} authed={authed} setLevelTokens={this.setLevelTokens} />
                   <PublicRoute path='/auth' component={Auth} authed={authed} />
                 </Switch>

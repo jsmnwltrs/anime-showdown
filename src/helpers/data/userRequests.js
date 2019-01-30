@@ -18,9 +18,12 @@ const getUserObject = firebaseId => axios.get(`${firebaseUrl}/users/${firebaseId
 
 const patchLevelToken = (firebaseId, levelUpTokens) => axios.patch(`${firebaseUrl}/users/${firebaseId}.json`, { levelUpTokens });
 
+const patchCharacterToken = (firebaseId, characterTokens) => axios.patch(`${firebaseUrl}/users/${firebaseId}.json`, { characterTokens });
+
 export default {
   addUser,
   getFirebaseUserId,
   getUserObject,
   patchLevelToken,
+  patchCharacterToken,
 };
