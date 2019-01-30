@@ -70,12 +70,16 @@ class Battle extends React.Component {
       teamAP,
       teamHP,
     } = this.state;
+    let newTeamHP = 0;
     const newBossHP = bossHP - teamAP;
     this.setState({ bossHP: newBossHP });
     if (newBossHP > 0) {
-      const newTeamHP = teamHP - battleBoss.hitPoints;
+      newTeamHP = teamHP - battleBoss.hitPoints;
       this.setState({ teamHP: newTeamHP });
     } else if (newBossHP <= 0) {
+      this.setState({ modal: true });
+    }
+    if (newTeamHP <= 0) {
       this.setState({ modal: true });
     }
   }
@@ -98,17 +102,33 @@ class Battle extends React.Component {
     ));
 
     const makeModal = () => {
-      const domString = `
-      <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-        <ModalHeader toggle={this.toggle}>You Won!</ModalHeader>
-        <ModalBody>
-          Here are your rewards!
-        </ModalBody>
-        <ModalFooter>
-            <Button color="secondary" onClick={this.toggle} tag={RRNavLink} to='/characters'>OK</Button>
-        </ModalFooter>
-      </Modal>`;
-      return domString;
+      if (bossHP <= 0) {
+        return (
+          <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+            <ModalHeader toggle={this.toggle}>You Won!</ModalHeader>
+            <ModalBody>
+              Here are your rewards!
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={this.toggle} tag={RRNavLink} to='/characters'>OK</Button>
+            </ModalFooter>
+          </Modal>
+        );
+      }
+      if (teamHP <= 0) {
+        return (
+          <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+            <ModalHeader toggle={this.toggle}>You Lost!</ModalHeader>
+            <ModalBody>
+              You get no rewards.
+            </ModalBody>
+            <ModalFooter>
+              <Button color="secondary" onClick={this.toggle} tag={RRNavLink} to='/characters'>OK</Button>
+            </ModalFooter>
+          </Modal>
+        );
+      }
+      return <div></div>;
     };
 
     return (
