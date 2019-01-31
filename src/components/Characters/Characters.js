@@ -8,6 +8,7 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import './Characters.scss';
+import levelUpData from '../../helpers/data/levelUpData';
 import OnTeamCharacterItem from '../OnTeamCharacterItem/OnTeamCharacterItem';
 import CharacterItem from '../CharacterItem/CharacterItem';
 import characterRequests from '../../helpers/data/characterRequests';
@@ -41,7 +42,6 @@ class Characters extends React.Component {
       characterId: '',
       levelUpCharacter: defaultCharacter,
       levelUpToken: 0,
-      characterToken: 0,
       noTeam: true,
     };
 
@@ -68,8 +68,7 @@ class Characters extends React.Component {
       userRequests.getUserObject(firebaseId)
         .then((user) => {
           const levelUpToken = user.data.levelUpTokens;
-          const characterToken = user.data.characterTokens;
-          this.setState({ levelUpToken, characterToken });
+          this.setState({ levelUpToken });
         })
         .catch(error => console.error('error on getUserObject', error));
     }).catch(error => console.error('error on getFirebaseUserId', error));
@@ -169,53 +168,16 @@ hideAlert = (e) => {
             this.props.setLevelTokens(newTokenAmount);
           })
           .catch(error => console.error('error on patchLevelToken', error));
-      }).catch(error => console.error('erro ron getFirebaseUserId', error));
+      }).catch(error => console.error('error on getFirebaseUserId', error));
       characterRequests.getSingleSavedCharacter(characterId)
         .then((result) => {
           const characterObject = result.data;
           this.setState({ levelUpCharacter: characterObject });
           const myCharacter = { ...this.state.levelUpCharacter };
-          if (characterObject.level === 0) {
-            myCharacter.level = characterObject.level + 1;
-            myCharacter.hitPoints = characterObject.hitPoints + 1;
-            myCharacter.attackPoints = characterObject.attackPoints + 1;
-          } else if (characterObject.level === 1) {
-            myCharacter.level = characterObject.level + 1;
-            myCharacter.hitPoints = characterObject.hitPoints + 1;
-            myCharacter.attackPoints = characterObject.attackPoints + 1;
-          } else if (characterObject.level === 2) {
-            myCharacter.level = characterObject.level + 1;
-            myCharacter.hitPoints = characterObject.hitPoints + 1;
-            myCharacter.attackPoints = characterObject.attackPoints + 1;
-          } else if (characterObject.level === 3) {
-            myCharacter.level = characterObject.level + 1;
-            myCharacter.hitPoints = characterObject.hitPoints + 1;
-            myCharacter.attackPoints = characterObject.attackPoints + 1;
-          } else if (characterObject.level === 4) {
-            myCharacter.level = characterObject.level + 1;
-            myCharacter.hitPoints = characterObject.hitPoints + 1;
-            myCharacter.attackPoints = characterObject.attackPoints + 1;
-          } else if (characterObject.level === 5) {
-            myCharacter.level = characterObject.level + 1;
-            myCharacter.hitPoints = characterObject.hitPoints + 1;
-            myCharacter.attackPoints = characterObject.attackPoints + 1;
-          } else if (characterObject.level === 6) {
-            myCharacter.level = characterObject.level + 1;
-            myCharacter.hitPoints = characterObject.hitPoints + 1;
-            myCharacter.attackPoints = characterObject.attackPoints + 1;
-          } else if (characterObject.level === 7) {
-            myCharacter.level = characterObject.level + 1;
-            myCharacter.hitPoints = characterObject.hitPoints + 1;
-            myCharacter.attackPoints = characterObject.attackPoints + 1;
-          } else if (characterObject.level === 8) {
-            myCharacter.level = characterObject.level + 1;
-            myCharacter.hitPoints = characterObject.hitPoints + 1;
-            myCharacter.attackPoints = characterObject.attackPoints + 1;
-          } else if (characterObject.level === 9) {
-            myCharacter.level = characterObject.level + 1;
-            myCharacter.hitPoints = characterObject.hitPoints + 1;
-            myCharacter.attackPoints = characterObject.attackPoints + 1;
-          }
+          const key = characterObject.level;
+          myCharacter.level = characterObject.level + 1;
+          myCharacter.hitPoints = characterObject.hitPoints + levelUpData[key].hitPoints;
+          myCharacter.attackPoints = characterObject.attackPoints + levelUpData[key].attackPoints;
           this.setState({ levelUpCharacter: myCharacter });
           const { levelUpCharacter } = this.state;
           characterRequests.updateSavedCharacter(characterId, levelUpCharacter)
@@ -262,33 +224,38 @@ hideAlert = (e) => {
         removeFromTeam={this.removeFromTeam}
       />
     ));
+    const buildModals = () => (
+    <div>
+      <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+        <ModalHeader toggle={this.toggle}>
+        Are you sure you want to delete this Character?
+        </ModalHeader>
+        <ModalFooter>
+          <Button className='btn btn-danger' onClick={this.deleteCharacter}>Yes</Button>
+          <Button className='btn btn-success' onClick={this.hideAlert}>No</Button>
+        </ModalFooter>
+      </Modal>
+      <Modal
+        isOpen={this.state.tokenModal}
+        toggle={this.modalToggle}
+        className={this.props.className}
+      >
+        <ModalHeader toggle={this.modalToggle}>
+        You have no more tokens to level up your Characters.
+        </ModalHeader>
+        <ModalFooter>
+          <Button color="secondary" onClick={this.modalToggle}>OK</Button>
+        </ModalFooter>
+      </Modal>
+    </div>
+    );
     return (
       <div className="characters col">
         <h2>Characters</h2>
         <div className='onTeamCharacters d-flex flex-wrap'>{onTeamCharacterItemComponents}</div>
         <Button className='btn btn-danger' disabled={noTeam} tag={RRNavLink} to='/battle'>Battle!</Button>
         <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>
-          Are you sure you want to delete this Character?
-          </ModalHeader>
-          <ModalFooter>
-            <Button className='btn btn-danger' onClick={this.deleteCharacter}>Yes</Button>
-            <Button className='btn btn-success' onClick={this.hideAlert}>No</Button>
-          </ModalFooter>
-        </Modal>
-          <Modal
-            isOpen={this.state.tokenModal}
-            toggle={this.modalToggle}
-            className={this.props.className}
-          >
-            <ModalHeader toggle={this.modalToggle}>
-            You have no more tokens to level up your Characters.
-            </ModalHeader>
-            <ModalFooter>
-              <Button color="secondary" onClick={this.modalToggle}>OK</Button>
-            </ModalFooter>
-        </Modal>
+        <div>{buildModals()}</div>
       </div>
     );
   }
