@@ -108,6 +108,7 @@ class App extends React.Component {
                   <PrivateRoute path='/locations' component={Locations} authed={authed} setCharacterTokens={this.setCharacterTokens} />
                   <PrivateRoute path='/battle' component={Battle} authed={authed} setCharacterTokens={this.setCharacterTokens} setLevelTokens={this.setLevelTokens} />
                   <PublicRoute path='/auth' component={Auth} authed={authed} />
+                  <PublicRoute path='/' component={Auth} authed={authed} />
                 </Switch>
               </div>
             </div>

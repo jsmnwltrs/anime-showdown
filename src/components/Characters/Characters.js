@@ -61,6 +61,34 @@ class Characters extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.setState({ levelUpCharacter: defaultCharacter, characterId: '' });
+    const uid = authRequests.getCurrentUid();
+    userRequests.getFirebaseUserId(uid).then((firebaseId) => {
+      userRequests.getUserObject(firebaseId)
+        .then((user) => {
+          const levelUpToken = user.data.levelUpTokens;
+          const characterToken = user.data.characterTokens;
+          this.setState({ levelUpToken, characterToken });
+        })
+        .catch(error => console.error('error on getUserObject', error));
+    }).catch(error => console.error('error on getFirebaseUserId', error));
+    characterRequests.getSavedCharacters(uid)
+      .then((characters) => {
+        const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
+        this.setState({ characters: charactersNotOnTeam });
+        const charactersOnTeam = characters.filter(x => x.onTeam === true);
+        this.setState({ onTeamCharacters: charactersOnTeam });
+        if (this.state.onTeamCharacters.length === 0) {
+          this.setState({ noTeam: true });
+        } else if (this.state.onTeamCharacters.length !== 0) {
+          this.setState({ noTeam: false });
+        }
+        if (this.state.onTeamCharacters.length === 4) {
+          this.setState({ fullTeam: true });
+        }
+      }).catch(error => console.error('error with getSavedCharacters', error));
+  }
 
 showAlert = (e) => {
   e.preventDefault();
@@ -75,35 +103,6 @@ hideAlert = (e) => {
   this.setState({ characterId: '' });
 }
 
-componentDidMount() {
-  this.setState({ levelUpCharacter: defaultCharacter, characterId: '' });
-  const uid = authRequests.getCurrentUid();
-  userRequests.getFirebaseUserId(uid).then((firebaseId) => {
-    userRequests.getUserObject(firebaseId)
-      .then((user) => {
-        const levelUpToken = user.data.levelUpTokens;
-        const characterToken = user.data.characterTokens;
-        this.setState({ levelUpToken, characterToken });
-      })
-      .catch(error => console.error('error on getUserObject', error));
-  }).catch(error => console.error('error on getFirebaseUserId', error));
-  characterRequests.getSavedCharacters(uid)
-    .then((characters) => {
-      const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
-      this.setState({ characters: charactersNotOnTeam });
-      const charactersOnTeam = characters.filter(x => x.onTeam === true);
-      this.setState({ onTeamCharacters: charactersOnTeam });
-      if (this.state.onTeamCharacters.length === 0) {
-        this.setState({ noTeam: true });
-      } else if (this.state.onTeamCharacters.length !== 0) {
-        this.setState({ noTeam: false });
-      }
-      if (this.state.onTeamCharacters.length === 4) {
-        this.setState({ fullTeam: true });
-      }
-    }).catch(error => console.error('error with getSavedCharacters', error));
-}
-
   deleteCharacter = () => {
     const { characterId } = this.state;
     characterRequests.deleteSavedCharacter(characterId)
@@ -113,7 +112,10 @@ componentDidMount() {
         const uid = authRequests.getCurrentUid();
         characterRequests.getSavedCharacters(uid)
           .then((characters) => {
-            this.setState({ characters });
+            const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
+            this.setState({ characters: charactersNotOnTeam });
+            const charactersOnTeam = characters.filter(x => x.onTeam === true);
+            this.setState({ onTeamCharacters: charactersOnTeam });
           }).catch(error => console.error('error with getSavedCharacters', error));
       })
       .catch(error => console.error('error on deleteCharacter', error));
@@ -221,7 +223,10 @@ componentDidMount() {
               this.setState({ levelUpCharacter: defaultCharacter });
               characterRequests.getSavedCharacters(uid)
                 .then((characters) => {
-                  this.setState({ characters });
+                  const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
+                  this.setState({ characters: charactersNotOnTeam });
+                  const charactersOnTeam = characters.filter(x => x.onTeam === true);
+                  this.setState({ onTeamCharacters: charactersOnTeam });
                 }).catch(error => console.error('error with getSavedCharacters', error));
             })
             .catch(error => console.error('error on updateSavedCharacter', error));
