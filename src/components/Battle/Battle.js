@@ -110,9 +110,15 @@ class Battle extends React.Component {
   }
 
   addRewards = () => {
-    const { levelUpTokenRewards, currentLevelUpTokens } = this.state;
-    const { setLevelTokens } = this.props;
+    const {
+      levelUpTokenRewards,
+      currentLevelUpTokens,
+      currentCharacterTokens,
+      characterTokenRewards,
+    } = this.state;
+    const { setLevelTokens, setCharacterTokens } = this.props;
     const newLevelTokenValue = currentLevelUpTokens + levelUpTokenRewards;
+    const newCharacterTokenValue = currentCharacterTokens + characterTokenRewards;
     const uid = authRequests.getCurrentUid();
     userRequests.getFirebaseUserId(uid).then((firebaseId) => {
       userRequests.patchLevelToken(firebaseId, newLevelTokenValue)
@@ -120,6 +126,11 @@ class Battle extends React.Component {
           setLevelTokens(newLevelTokenValue);
         })
         .catch(error => console.error('error on patchLevelToken', error));
+      userRequests.patchCharacterToken(firebaseId, newCharacterTokenValue)
+        .then(() => {
+          setCharacterTokens(newCharacterTokenValue);
+        })
+        .catch(error => console.error('error on patchCharacterToken', error));
     }).catch(error => console.error('erro ron getFirebaseUserId', error));
   }
 

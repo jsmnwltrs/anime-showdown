@@ -28,6 +28,7 @@ class Locations extends React.Component {
     super(props);
     this.state = {
       modal: false,
+      tokenModal: false,
       locations: [],
       chosenCharacterId: '',
       chosenCharacter: defaultCharacter,
@@ -36,11 +37,18 @@ class Locations extends React.Component {
     };
 
     this.toggle = this.toggle.bind(this);
+    this.modalToggle = this.modalToggle.bind(this);
   }
 
   toggle() {
     this.setState({
       modal: !this.state.modal,
+    });
+  }
+
+  modalToggle() {
+    this.setState({
+      tokenModal: !this.state.tokenModal,
     });
   }
 
@@ -124,7 +132,7 @@ class Locations extends React.Component {
         })
         .catch(error => console.error('error on getCharacterIds', error));
     } else {
-      console.log('you have no tokens');
+      this.setState({ tokenModal: true });
     }
   }
 
@@ -152,6 +160,18 @@ class Locations extends React.Component {
            <p>AP: {chosenCharacter.attackPoints}</p>
           </ModalFooter>
           <Button color="success" onClick={this.toggle}>OK</Button>
+        </Modal>
+        <Modal
+            isOpen={this.state.tokenModal}
+            toggle={this.modalToggle}
+            className={this.props.className}
+          >
+            <ModalHeader toggle={this.modalToggle}>
+            You have no more tokens to draw Characters.
+            </ModalHeader>
+            <ModalFooter>
+              <Button color="secondary" onClick={this.modalToggle}>OK</Button>
+            </ModalFooter>
         </Modal>
       </div>
     );
