@@ -33,12 +33,21 @@ class CharacterItem extends React.Component {
 
   render() {
     const { character, showAlert, fullTeam } = this.props;
+    const makeButton = () => {
+      if (character.level === 10) {
+        return <span></span>;
+      }
+      return (
+        <Button className='btn btn-success' onClick={this.levelUpClick}>Level Up!</Button>
+      );
+    };
+
     return (
       <div>
       <Card className='mr-4'>
         <CardTitle>{character.name}</CardTitle>
         <Button className='btn btn-danger' id={character.id} onClick={showAlert}>X</Button>
-        <Button className='btn btn-success' onClick={this.levelUpClick}>Level Up!</Button>
+        <div>{makeButton()}</div>
         <Button className='btn btn-success' disabled={fullTeam} onClick={this.addToTeamEvent}>Add to Team!</Button>
         <img className="cardImage" src={character.imageUrl} alt="Card img"/>
         <CardBody>

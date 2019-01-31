@@ -25,6 +25,7 @@ class Battle extends React.Component {
     super(props);
     this.state = {
       modal: false,
+      startBattle: false,
       battleBoss: {},
       bossHP: 0,
       battleTeam: [],
@@ -83,6 +84,7 @@ class Battle extends React.Component {
           bossHP,
           characterTokenRewards,
           levelUpTokenRewards,
+          startBattle: true,
         });
       })
       .catch(error => console.error('error on getSingleBoss', error));
@@ -103,6 +105,7 @@ class Battle extends React.Component {
       this.setState({ teamHP: newTeamHP });
     } else if (newBossHP <= 0) {
       this.setState({ modal: true });
+      this.addRewards();
     }
     if (newTeamHP <= 0) {
       this.setState({ modal: true });
@@ -155,23 +158,31 @@ class Battle extends React.Component {
     const makeModal = () => {
       if (bossHP <= 0) {
         return (
-          <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-            <ModalHeader toggle={this.toggle}>You Won!</ModalHeader>
+          <Modal
+            isOpen={this.state.modal}
+            className={this.props.className}
+            backdrop={false}
+          >
+            <ModalHeader>You Won!</ModalHeader>
             <ModalBody>
               Here are your rewards!
               <p>Level Up Tokens: {levelUpTokenRewards}</p>
               <p>Character Tokens: {characterTokenRewards}</p>
             </ModalBody>
             <ModalFooter>
-              <Button color="secondary" onClick={this.addRewards} tag={RRNavLink} to='/characters'>OK</Button>
+              <Button color="secondary" tag={RRNavLink} to='/characters'>OK</Button>
             </ModalFooter>
           </Modal>
         );
       }
       if (teamHP <= 0) {
         return (
-          <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-            <ModalHeader toggle={this.toggle}>You Lost!</ModalHeader>
+          <Modal
+            isOpen={this.state.modal}
+            className={this.props.className}
+            backdrop={false}
+          >
+            <ModalHeader>You Lost!</ModalHeader>
             <ModalBody>
               You get no rewards.
             </ModalBody>
@@ -184,10 +195,10 @@ class Battle extends React.Component {
       return <div></div>;
     };
 
-    return (
-      <div>
-        <Bosses startBattle={this.startBattle} />
-        <div className='bossBattle'>
+    const makeBattle = () => {
+      if (this.state.startBattle) {
+        return (
+          <div className='bossBattle'>
           <h2>{battleBoss.name}</h2>
           <img src={battleBoss.imageUrl} alt="Card img"/>
           <p>Boss HP</p>
@@ -196,8 +207,17 @@ class Battle extends React.Component {
           <p>Team HP</p>
           <progress id="teamHitPoints" value={teamHP} max={maxTeamHP}></progress>
           <Button onClick={this.attackBoss} className='btn btn-danger'>Attack!</Button>
-          <div>{makeModal()}</div>
         </div>
+        );
+      }
+      return <div></div>;
+    };
+
+    return (
+      <div>
+        <Bosses startBattle={this.startBattle} />
+        <div>{makeBattle()}</div>
+        <div>{makeModal()}</div>
       </div>
     );
   }
