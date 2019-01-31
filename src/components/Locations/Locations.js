@@ -11,6 +11,7 @@ import LocationItem from '../LocationItem/LocationItem';
 import locationRequests from '../../helpers/data/locationRequests';
 import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
+import userRequests from '../../helpers/data/userRequests';
 
 const defaultCharacter = {
   name: '',
@@ -27,17 +28,27 @@ class Locations extends React.Component {
     super(props);
     this.state = {
       modal: false,
+      tokenModal: false,
       locations: [],
       chosenCharacterId: '',
       chosenCharacter: defaultCharacter,
+      levelUpToken: 0,
+      characterToken: 0,
     };
 
     this.toggle = this.toggle.bind(this);
+    this.modalToggle = this.modalToggle.bind(this);
   }
 
   toggle() {
     this.setState({
       modal: !this.state.modal,
+    });
+  }
+
+  modalToggle() {
+    this.setState({
+      tokenModal: !this.state.tokenModal,
     });
   }
 
@@ -47,6 +58,16 @@ class Locations extends React.Component {
       .then((locations) => {
         this.setState({ locations });
       }).catch(error => console.error('error with getLocations', error));
+    const uid = authRequests.getCurrentUid();
+    userRequests.getFirebaseUserId(uid).then((firebaseId) => {
+      userRequests.getUserObject(firebaseId)
+        .then((user) => {
+          const levelUpToken = user.data.characterTokens;
+          const characterToken = user.data.characterTokens;
+          this.setState({ characterToken, levelUpToken });
+        })
+        .catch(error => console.error('error on getUserObject', error));
+    }).catch(error => console.error('error on getFirebaseUserId', error));
   }
 
   chooseRandomCharacter = (characterIds) => {
@@ -75,29 +96,44 @@ class Locations extends React.Component {
   }
 
   drawClickEvent = (e) => {
-    const locationId = e.target.closest('.location').id;
-    locationRequests.getCharacterIds(locationId)
-      .then((characterIds) => {
-        this.chooseRandomCharacter(characterIds);
-        const { chosenCharacterId } = this.state;
-        characterRequests.getSingleCharacter(chosenCharacterId)
-          .then((character) => {
-            const myCharacter = { ...this.state.chosenCharacter };
-            myCharacter.uid = authRequests.getCurrentUid();
-            myCharacter.name = character.data.name;
-            myCharacter.imageUrl = character.data.imageUrl;
-            myCharacter.attackPoints = character.data.attackPoints;
-            myCharacter.hitPoints = character.data.hitPoints;
-            this.setState({ chosenCharacter: myCharacter });
-            characterRequests.addSavedCharacter(this.state.chosenCharacter)
-              .then(() => {
-                this.setState({ modal: true });
-              })
-              .catch(error => console.error('error on addSavedCharacter', error));
+    const { characterToken } = this.state;
+    if (characterToken > 0) {
+      const newTokenAmount = characterToken - 1;
+      this.setState({ characterToken: newTokenAmount });
+      const uid = authRequests.getCurrentUid();
+      userRequests.getFirebaseUserId(uid).then((firebaseId) => {
+        userRequests.patchCharacterToken(firebaseId, newTokenAmount)
+          .then(() => {
+            this.props.setCharacterTokens(newTokenAmount);
           })
-          .catch(error => console.error('error on getSingleCharacter', error));
-      })
-      .catch(error => console.error('error on getCharacterIds', error));
+          .catch(error => console.error('error on patchLevelToken', error));
+      }).catch(error => console.error('erro ron getFirebaseUserId', error));
+      const locationId = e.target.closest('.location').id;
+      locationRequests.getCharacterIds(locationId)
+        .then((characterIds) => {
+          this.chooseRandomCharacter(characterIds);
+          const { chosenCharacterId } = this.state;
+          characterRequests.getSingleCharacter(chosenCharacterId)
+            .then((character) => {
+              const myCharacter = { ...this.state.chosenCharacter };
+              myCharacter.uid = authRequests.getCurrentUid();
+              myCharacter.name = character.data.name;
+              myCharacter.imageUrl = character.data.imageUrl;
+              myCharacter.attackPoints = character.data.attackPoints;
+              myCharacter.hitPoints = character.data.hitPoints;
+              this.setState({ chosenCharacter: myCharacter });
+              characterRequests.addSavedCharacter(this.state.chosenCharacter)
+                .then(() => {
+                  this.setState({ modal: true });
+                })
+                .catch(error => console.error('error on addSavedCharacter', error));
+            })
+            .catch(error => console.error('error on getSingleCharacter', error));
+        })
+        .catch(error => console.error('error on getCharacterIds', error));
+    } else {
+      this.setState({ tokenModal: true });
+    }
   }
 
 
@@ -124,6 +160,18 @@ class Locations extends React.Component {
            <p>AP: {chosenCharacter.attackPoints}</p>
           </ModalFooter>
           <Button color="success" onClick={this.toggle}>OK</Button>
+        </Modal>
+        <Modal
+            isOpen={this.state.tokenModal}
+            toggle={this.modalToggle}
+            className={this.props.className}
+          >
+            <ModalHeader toggle={this.modalToggle}>
+            You have no more tokens to draw Characters.
+            </ModalHeader>
+            <ModalFooter>
+              <Button color="secondary" onClick={this.modalToggle}>OK</Button>
+            </ModalFooter>
         </Modal>
       </div>
     );
