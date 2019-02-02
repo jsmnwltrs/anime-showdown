@@ -2,73 +2,81 @@
   "boss1": {
     "name": "Chrollo Lucilfer",
     "imageUrl": "https://em.wattpad.com/baac744aa401742b336f1feaaa98c92bda543a22/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f7779442d464f42546c56626869673d3d2d3532373738353338342e313530653964353639353563343539373334323939383533333633332e6a7067?s=fit&w=720&h=720",
-    "hitPoints": 100,
-    "attackPoints": 0,
+    "hitPoints": 300,
+    "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 1,
-    "levelTokenReward": 1
+    "levelTokenReward": 1,
+    "healToken": 1
   },
   "boss2": {
     "name": "Frieza",
     "imageUrl": "https://vignette.wikia.nocookie.net/dragonball/images/8/83/Frieza_DBZ_Ep_85_002v2.png/revision/latest?cb=20170920193805",
-    "hitPoints": 100,
-    "attackPoints": 0,
+    "hitPoints": 300,
+    "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 1,
-    "levelTokenReward": 1
+    "levelTokenReward": 1,
+    "healToken": 1
   },
   "boss3": {
     "name": "Garou",
     "imageUrl": "https://vignette.wikia.nocookie.net/villains/images/b/b0/MangaGarou.png/revision/latest?cb=20171112191711",
-    "hitPoints": 100,
-    "attackPoints": 0,
+    "hitPoints": 300,
+    "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 2,
-    "levelTokenReward": 2
+    "levelTokenReward": 2,
+    "healToken": 1
   },
   "boss4": {
     "name": "Doflamingo",
     "imageUrl": "https://hobbydb-production.s3.amazonaws.com/processed_uploads/subject_photo/subject_photo/image/41556/1533318139-24716-0856/Donquixote_Doflamingo_Anime_Infobox_large.png",
-    "hitPoints": 100,
-    "attackPoints": 0,
+    "hitPoints": 300,
+    "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 3,
-    "levelTokenReward": 3
+    "levelTokenReward": 3,
+    "healToken": 1
   },
   "boss5": {
     "name": "Lord Boros",
     "imageUrl": "https://vignette.wikia.nocookie.net/onepunchman/images/2/2f/BorosanimeAV.png/revision/latest?cb=20160111015254",
-    "hitPoints": 100,
-    "attackPoints": 0,
+    "hitPoints": 300,
+    "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 3,
-    "levelTokenReward": 3
+    "levelTokenReward": 3,
+    "healToken": 1
   },
   "boss6": {
     "name": "Jiren",
     "imageUrl": "https://otakukart.com/animeblog/wp-content/uploads/2017/09/865872.png",
-    "hitPoints": 100,
-    "attackPoints": 0,
+    "hitPoints": 300,
+    "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 4,
-    "levelTokenReward": 4
+    "levelTokenReward": 4,
+    "healToken": 1
   },
   "boss7": {
     "name": "Crocodile",
     "imageUrl": "https://vignette.wikia.nocookie.net/fairyonepiecetail/images/a/a8/Crocodile_Marineford.png/revision/latest?cb=20130619041113",
-    "hitPoints": 100,
-    "attackPoints": 0,
+    "hitPoints": 300,
+    "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 5,
-    "levelTokenReward": 5
+    "levelTokenReward": 5,
+    "healToken": 1
   },
   "boss8": {
     "name": "Meruem",
     "imageUrl": "https://cdn.myanimelist.net/r/360x360/images/characters/6/243861.jpg?s=38f1c8d50b763c2958615b5e0dab7354",
-    "hitPoints": 100,
-    "attackPoints": 0,
+    "hitPoints": 300,
+    "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 6,
-    "levelTokenReward": 6
+    "levelTokenReward": 6,
+    "healToken": 1
   }
 }
