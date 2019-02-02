@@ -16,6 +16,7 @@ import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
 import userRequests from '../../helpers/data/userRequests';
 import attackModifierData from '../../helpers/data/attackModifierData';
+import healModifierData from '../../helpers/data/healModifierData';
 
 class Battle extends React.Component {
   static propTypes = {
@@ -96,11 +97,19 @@ class Battle extends React.Component {
   }
 
   healTeam = () => {
-    const { healTokens } = this.state;
+    const { healTokens, teamHP, maxTeamHP } = this.state;
     const newHealTokenAmount = healTokens - 1;
     this.setState({ healTokens: newHealTokenAmount });
     if (newHealTokenAmount === 0) {
       this.setState({ disableHeal: true });
+    }
+    const teamHealBonus = 3;
+    const random = Math.floor((Math.random() * 4) + 1);
+    const teamHeal = teamHP + healModifierData[random].hitPoints + teamHealBonus;
+    if (teamHeal > maxTeamHP) {
+      this.setState({ teamHP: maxTeamHP });
+    } else {
+      this.setState({ teamHP: teamHeal });
     }
   }
 
