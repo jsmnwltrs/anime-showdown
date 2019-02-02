@@ -174,8 +174,8 @@ hideAlert = (e) => {
           const characterObject = result.data;
           this.setState({ levelUpCharacter: characterObject });
           const myCharacter = { ...this.state.levelUpCharacter };
-          const key = characterObject.level;
           myCharacter.level = characterObject.level + 1;
+          const key = myCharacter.level;
           myCharacter.hitPoints = characterObject.hitPoints + levelUpData[key].hitPoints;
           myCharacter.attackPoints = characterObject.attackPoints + levelUpData[key].attackPoints;
           this.setState({ levelUpCharacter: myCharacter });
