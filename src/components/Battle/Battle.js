@@ -111,14 +111,12 @@ class Battle extends React.Component {
       teamAttack = teamAP * attackModifierData[randomizer].attackMultiplier;
       newBossHP = bossHP - teamAttack;
     }
-    console.log('team', teamAttack);
     this.setState({ bossHP: newBossHP });
     if (newBossHP > 0) {
       const random = Math.floor((Math.random() * 5) + 1);
       const bossAttack = battleBoss.attackPoints * attackModifierData[random].attackMultiplier;
       newTeamHP = teamHP - bossAttack;
       this.setState({ teamHP: newTeamHP });
-      console.log('boss', bossAttack);
     } else if (newBossHP <= 0) {
       this.setState({ modal: true });
       this.addRewards();
