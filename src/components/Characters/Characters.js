@@ -37,6 +37,7 @@ class Characters extends React.Component {
     this.state = {
       modal: false,
       tokenModal: false,
+      cantDeleteModal: false,
       characters: [],
       onTeamCharacters: [],
       characterId: '',
@@ -47,6 +48,7 @@ class Characters extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.modalToggle = this.modalToggle.bind(this);
+    this.cantDeleteToggle = this.cantDeleteToggle.bind(this);
   }
 
   toggle() {
@@ -58,6 +60,12 @@ class Characters extends React.Component {
   modalToggle() {
     this.setState({
       tokenModal: !this.state.tokenModal,
+    });
+  }
+
+  cantDeleteToggle() {
+    this.setState({
+      cantDeleteModal: !this.state.cantDeleteModal,
     });
   }
 
@@ -91,33 +99,44 @@ class Characters extends React.Component {
 
 showAlert = (e) => {
   e.preventDefault();
-  this.setState({ modal: true });
   const characterId = e.target.id;
-  this.setState({ characterId });
+  this.setState({ modal: true, characterId });
 }
 
 hideAlert = (e) => {
   e.preventDefault();
-  this.setState({ modal: false });
-  this.setState({ characterId: '' });
+  this.setState({ modal: false, characterId: '' });
+}
+
+hideDeleteAlerts = (e) => {
+  e.preventDefault();
+  this.setState({ modal: false, cantDeleteModal: false, characterId: '' });
 }
 
   deleteCharacter = () => {
-    const { characterId } = this.state;
-    characterRequests.deleteSavedCharacter(characterId)
-      .then(() => {
-        this.setState({ characterId: '' });
-        this.setState({ modal: false });
-        const uid = authRequests.getCurrentUid();
-        characterRequests.getSavedCharacters(uid)
-          .then((characters) => {
-            const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
-            this.setState({ characters: charactersNotOnTeam });
-            const charactersOnTeam = characters.filter(x => x.onTeam === true);
-            this.setState({ onTeamCharacters: charactersOnTeam });
-          }).catch(error => console.error('error with getSavedCharacters', error));
+    const uid = authRequests.getCurrentUid();
+    characterRequests.getSavedCharacters(uid)
+      .then((savedCharacters) => {
+        if (savedCharacters.length > 4) {
+          const { characterId } = this.state;
+          characterRequests.deleteSavedCharacter(characterId)
+            .then(() => {
+              this.setState({ characterId: '' });
+              this.setState({ modal: false });
+              characterRequests.getSavedCharacters(uid)
+                .then((characters) => {
+                  const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
+                  this.setState({ characters: charactersNotOnTeam });
+                  const charactersOnTeam = characters.filter(x => x.onTeam === true);
+                  this.setState({ onTeamCharacters: charactersOnTeam });
+                }).catch(error => console.error('error with getSavedCharacters', error));
+            })
+            .catch(error => console.error('error on deleteCharacter', error));
+        } else {
+          this.setState({ cantDeleteModal: true });
+        }
       })
-      .catch(error => console.error('error on deleteCharacter', error));
+      .catch(error => console.error('error on getSavedCharacters', error));
   }
 
   addToTeam = (characterId) => {
@@ -245,6 +264,19 @@ hideAlert = (e) => {
         </ModalHeader>
         <ModalFooter>
           <Button color="secondary" onClick={this.modalToggle}>OK</Button>
+        </ModalFooter>
+      </Modal>
+      <Modal
+        isOpen={this.state.cantDeleteModal}
+        toggle={this.cantDeleteToggle}
+        className={this.props.className}
+      >
+        <ModalHeader toggle={this.cantDeleteToggle}>
+        You must keep some characters in order to battle.
+        You will need to draw more character cards before you can delete.
+        </ModalHeader>
+        <ModalFooter>
+          <Button color="secondary" onClick={this.hideDeleteAlerts}>OK</Button>
         </ModalFooter>
       </Modal>
     </div>
