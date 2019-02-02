@@ -32,7 +32,6 @@ class Locations extends React.Component {
       locations: [],
       chosenCharacterId: '',
       chosenCharacter: defaultCharacter,
-      levelUpToken: 0,
       characterToken: 0,
     };
 
@@ -62,9 +61,8 @@ class Locations extends React.Component {
     userRequests.getFirebaseUserId(uid).then((firebaseId) => {
       userRequests.getUserObject(firebaseId)
         .then((user) => {
-          const levelUpToken = user.data.characterTokens;
           const characterToken = user.data.characterTokens;
-          this.setState({ characterToken, levelUpToken });
+          this.setState({ characterToken });
         })
         .catch(error => console.error('error on getUserObject', error));
     }).catch(error => console.error('error on getFirebaseUserId', error));
@@ -72,27 +70,9 @@ class Locations extends React.Component {
 
   chooseRandomCharacter = (characterIds) => {
     const randomizer = Math.floor((Math.random() * 10) + 1);
-    if (randomizer === 1) {
-      this.setState({ chosenCharacterId: characterIds[0] });
-    } else if (randomizer === 2) {
-      this.setState({ chosenCharacterId: characterIds[1] });
-    } else if (randomizer === 3) {
-      this.setState({ chosenCharacterId: characterIds[2] });
-    } else if (randomizer === 4) {
-      this.setState({ chosenCharacterId: characterIds[3] });
-    } else if (randomizer === 5) {
-      this.setState({ chosenCharacterId: characterIds[4] });
-    } else if (randomizer === 6) {
-      this.setState({ chosenCharacterId: characterIds[5] });
-    } else if (randomizer === 7) {
-      this.setState({ chosenCharacterId: characterIds[6] });
-    } else if (randomizer === 8) {
-      this.setState({ chosenCharacterId: characterIds[7] });
-    } else if (randomizer === 9) {
-      this.setState({ chosenCharacterId: characterIds[8] });
-    } else if (randomizer === 10) {
-      this.setState({ chosenCharacterId: characterIds[9] });
-    }
+    const key = randomizer - 1;
+    const chosenCharacter = characterIds[key];
+    this.setState({ chosenCharacterId: chosenCharacter });
   }
 
   drawClickEvent = (e) => {
@@ -106,7 +86,7 @@ class Locations extends React.Component {
           .then(() => {
             this.props.setCharacterTokens(newTokenAmount);
           })
-          .catch(error => console.error('error on patchLevelToken', error));
+          .catch(error => console.error('error on patchCharacterToken', error));
       }).catch(error => console.error('erro ron getFirebaseUserId', error));
       const locationId = e.target.closest('.location').id;
       locationRequests.getCharacterIds(locationId)
