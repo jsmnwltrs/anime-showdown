@@ -15,6 +15,7 @@ import bossRequests from '../../helpers/data/bossRequests';
 import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
 import userRequests from '../../helpers/data/userRequests';
+import attackModifierData from '../../helpers/data/attackModifierData';
 
 class Battle extends React.Component {
   static propTypes = {
@@ -98,11 +99,17 @@ class Battle extends React.Component {
       teamHP,
     } = this.state;
     let newTeamHP = 0;
-    const newBossHP = bossHP - teamAP;
+    const randomizer = Math.floor((Math.random() * 5) + 1);
+    const teamAttack = teamAP * attackModifierData[randomizer].attackMultiplier;
+    const newBossHP = bossHP - teamAttack;
+    console.log('team', teamAttack);
     this.setState({ bossHP: newBossHP });
     if (newBossHP > 0) {
-      newTeamHP = teamHP - battleBoss.hitPoints;
+      const random = Math.floor((Math.random() * 5) + 1);
+      const bossAttack = battleBoss.attackPoints * attackModifierData[random].attackMultiplier;
+      newTeamHP = teamHP - bossAttack;
       this.setState({ teamHP: newTeamHP });
+      console.log('boss', bossAttack);
     } else if (newBossHP <= 0) {
       this.setState({ modal: true });
       this.addRewards();
