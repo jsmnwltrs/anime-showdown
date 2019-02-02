@@ -35,6 +35,10 @@ const levelUpData = {
     hitPoints: 9,
     attackPoints: 1,
   },
+  10: {
+    hitPoints: 9,
+    attackPoints: 1,
+  },
 };
 
 export default levelUpData;
