@@ -23,6 +23,8 @@ const defaultCharacter = {
   uid: '',
   critChance: 0,
   healBonus: 0,
+  healTokens: 0,
+  class: '',
 };
 
 class Locations extends React.Component {
@@ -105,6 +107,8 @@ class Locations extends React.Component {
               myCharacter.hitPoints = character.data.hitPoints;
               myCharacter.critChance = character.data.critChance;
               myCharacter.healBonus = character.data.healBonus;
+              myCharacter.healTokens = character.data.healTokens;
+              myCharacter.class = character.data.class;
               this.setState({ chosenCharacter: myCharacter });
               characterRequests.addSavedCharacter(this.state.chosenCharacter)
                 .then(() => {
@@ -140,6 +144,7 @@ class Locations extends React.Component {
             <img src={chosenCharacter.imageUrl} alt='character img' />
           </ModalBody>
           <ModalFooter>
+           <p>Class: {chosenCharacter.class}</p>
            <p>HP: {chosenCharacter.hitPoints}</p>
            <p>AP: {chosenCharacter.attackPoints}</p>
            <p>Crit Chance: {chosenCharacter.critChance}</p>

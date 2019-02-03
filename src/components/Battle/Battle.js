@@ -16,7 +16,6 @@ import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
 import userRequests from '../../helpers/data/userRequests';
 import attackModifierData from '../../helpers/data/attackModifierData';
-import healModifierData from '../../helpers/data/healModifierData';
 
 class Battle extends React.Component {
   static propTypes = {
@@ -34,14 +33,11 @@ class Battle extends React.Component {
       teamHP: 0,
       maxTeamHP: 0,
       teamAP: 0,
-      healTokens: 0,
       currentLevelUpTokens: 0,
       currentCharacterTokens: 0,
       levelUpTokenRewards: 0,
       characterTokenRewards: 0,
-      disableHeal: false,
       teamCritChance: 0,
-      teamHealBonus: 0,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -61,19 +57,16 @@ class Battle extends React.Component {
         let teamHP = 0;
         let teamAP = 0;
         let teamCritChance = 0;
-        let teamHealBonus = 0;
         battleTeam.forEach((character) => {
           teamHP += character.hitPoints;
           teamAP += character.attackPoints;
           teamCritChance += character.critChance;
-          teamHealBonus += character.teamHealBonus;
         });
         this.setState({
           teamHP,
           teamAP,
           maxTeamHP: teamHP,
           teamCritChance,
-          teamHealBonus,
         });
       })
       .catch(error => console.error('error on getSavedCharacters', error));
@@ -93,7 +86,6 @@ class Battle extends React.Component {
       .then((res) => {
         const battleBoss = res.data;
         const bossHP = battleBoss.hitPoints;
-        const healTokens = battleBoss.healToken;
         const levelUpTokenRewards = battleBoss.levelTokenReward;
         const characterTokenRewards = battleBoss.characterTokenReward;
         this.setState({
@@ -102,31 +94,13 @@ class Battle extends React.Component {
           characterTokenRewards,
           levelUpTokenRewards,
           startBattle: true,
-          healTokens,
         });
       })
       .catch(error => console.error('error on getSingleBoss', error));
   }
 
-  healTeam = () => {
-    const {
-      healTokens,
-      teamHP,
-      maxTeamHP,
-      teamHealBonus,
-    } = this.state;
-    const newHealTokenAmount = healTokens - 1;
-    this.setState({ healTokens: newHealTokenAmount });
-    if (newHealTokenAmount === 0) {
-      this.setState({ disableHeal: true });
-    }
-    const random = Math.floor((Math.random() * 4) + 1);
-    const teamHeal = teamHP + healModifierData[random].hitPoints + teamHealBonus;
-    if (teamHeal > maxTeamHP) {
-      this.setState({ teamHP: maxTeamHP });
-    } else {
-      this.setState({ teamHP: teamHeal });
-    }
+  passHealedHP = (healedHP) => {
+    this.setState({ teamHP: healedHP });
   }
 
   attackBoss = () => {
@@ -204,6 +178,9 @@ class Battle extends React.Component {
         showAlert={this.showAlert}
         key={teamCharacter.id}
         teamCharacter = {teamCharacter}
+        teamHP = {teamHP}
+        maxTeamHP = {maxTeamHP}
+        passHealedHP = {this.passHealedHP}
       />
     ));
 
@@ -248,7 +225,6 @@ class Battle extends React.Component {
     };
 
     const makeBattle = () => {
-      const { disableHeal, healTokens } = this.state;
       if (this.state.startBattle) {
         return (
           <div className='bossBattle'>
@@ -260,12 +236,6 @@ class Battle extends React.Component {
           <p>Team HP</p>
           <progress id="teamHitPoints" value={teamHP} max={maxTeamHP}></progress>
           <Button onClick={this.attackBoss} className='btn btn-danger'>Attack!</Button>
-          <Button
-            onClick={this.healTeam}
-            disabled={disableHeal}
-            className='btn btn-success'>
-            Heal! <span>{healTokens}</span>
-          </Button>
         </div>
         );
       }

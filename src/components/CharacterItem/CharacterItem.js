@@ -51,6 +51,7 @@ class CharacterItem extends React.Component {
         <Button className='btn btn-success' disabled={fullTeam} onClick={this.addToTeamEvent}>Add to Team!</Button>
         <img className="cardImage" src={character.imageUrl} alt="Card img"/>
         <CardBody>
+          <CardText>Class: {character.class}</CardText>
           <CardSubtitle>Level: {character.level}</CardSubtitle>
           <CardText>AP: {character.attackPoints}</CardText>
           <CardText>HP: {character.hitPoints}</CardText>

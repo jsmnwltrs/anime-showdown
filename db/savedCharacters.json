@@ -3,44 +3,52 @@
     "name": "Saitama",
     "imageUrl": "https://i.ebayimg.com/images/g/FHkAAOSwaA5WlTYo/s-l300.jpg",
     "hitPoints": 100,
-    "attackPoints": 20,
+    "attackPoints": 14,
     "level": 0,
     "onTeam": false,
     "uid": "wokqClLNOadVZ4bcJJPMLS2dfgB2",
-    "critChance": 10,
-    "healBonus": 5
+    "critChance": 0,
+    "healBonus": 0,
+    "healTokens": 0,
+    "class": "Brawler"
   },
   "savedCharacter2": {
     "name": "Brook",
     "imageUrl": "https://www.absoluteanime.com/one_piece/brook.jpg",
-    "hitPoints": 100,
-    "attackPoints": 20,
+    "hitPoints": 70,
+    "attackPoints": 10,
     "level": 0,
     "onTeam": false,
     "uid": "wokqClLNOadVZ4bcJJPMLS2dfgB2",
     "critChance": 10,
-    "healBonus": 5
+    "healBonus": 0,
+    "healTokens": 0,
+    "class": "Specialist"
   },
   "savedCharacter3": {
     "name": "Robin",
     "imageUrl": "https://qph.fs.quoracdn.net/main-qimg-ecd352120f0a33a43e751b7713d51b19.webp",
-    "hitPoints": 100,
-    "attackPoints": 20,
+    "hitPoints": 70,
+    "attackPoints": 10,
     "level": 0,
     "onTeam": false,
     "uid": "wokqClLNOadVZ4bcJJPMLS2dfgB2",
     "critChance": 10,
-    "healBonus": 5
+    "healBonus": 0,
+    "healTokens": 0,
+    "class": "Specialist"
   },
   "savedCharacter4": {
     "name": "Piccolo",
     "imageUrl": "https://vignette.wikia.nocookie.net/dragonball/images/1/1a/PiccoloVsAndroid17NV.png/revision/latest?cb=20120605144223",
     "hitPoints": 100,
-    "attackPoints": 20,
+    "attackPoints": 14,
     "level": 0,
     "onTeam": false,
     "uid": "1234",
-    "critChance": 10,
-    "healBonus": 5
+    "critChance": 0,
+    "healBonus": 0,
+    "healTokens": 0,
+    "class": "Brawler"
   }
 }
