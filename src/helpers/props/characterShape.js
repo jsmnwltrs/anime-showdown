@@ -8,6 +8,8 @@ const characterShape = PropTypes.shape({
   level: PropTypes.number,
   onTeam: PropTypes.bool,
   uid: PropTypes.string,
+  critChance: PropTypes.number,
+  healBonus: PropTypes.number,
 });
 
 export default characterShape;

@@ -6,7 +6,9 @@
     "attackPoints": 20,
     "level": 0,
     "onTeam": false,
-    "uid": "wokqClLNOadVZ4bcJJPMLS2dfgB2"
+    "uid": "wokqClLNOadVZ4bcJJPMLS2dfgB2",
+    "critChance": 10,
+    "healBonus": 5
   },
   "savedCharacter2": {
     "name": "Brook",
@@ -15,7 +17,9 @@
     "attackPoints": 20,
     "level": 0,
     "onTeam": false,
-    "uid": "wokqClLNOadVZ4bcJJPMLS2dfgB2"
+    "uid": "wokqClLNOadVZ4bcJJPMLS2dfgB2",
+    "critChance": 10,
+    "healBonus": 5
   },
   "savedCharacter3": {
     "name": "Robin",
@@ -24,7 +28,9 @@
     "attackPoints": 20,
     "level": 0,
     "onTeam": false,
-    "uid": "wokqClLNOadVZ4bcJJPMLS2dfgB2"
+    "uid": "wokqClLNOadVZ4bcJJPMLS2dfgB2",
+    "critChance": 10,
+    "healBonus": 5
   },
   "savedCharacter4": {
     "name": "Piccolo",
@@ -33,6 +39,8 @@
     "attackPoints": 20,
     "level": 0,
     "onTeam": false,
-    "uid": "1234"
+    "uid": "1234",
+    "critChance": 10,
+    "healBonus": 5
   }
 }

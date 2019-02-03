@@ -40,6 +40,8 @@ class Battle extends React.Component {
       levelUpTokenRewards: 0,
       characterTokenRewards: 0,
       disableHeal: false,
+      teamCritChance: 0,
+      teamHealBonus: 0,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -58,11 +60,21 @@ class Battle extends React.Component {
         this.setState({ battleTeam });
         let teamHP = 0;
         let teamAP = 0;
+        let teamCritChance = 0;
+        let teamHealBonus = 0;
         battleTeam.forEach((character) => {
           teamHP += character.hitPoints;
           teamAP += character.attackPoints;
+          teamCritChance += character.critChance;
+          teamHealBonus += character.teamHealBonus;
         });
-        this.setState({ teamHP, teamAP, maxTeamHP: teamHP });
+        this.setState({
+          teamHP,
+          teamAP,
+          maxTeamHP: teamHP,
+          teamCritChance,
+          teamHealBonus,
+        });
       })
       .catch(error => console.error('error on getSavedCharacters', error));
     userRequests.getFirebaseUserId(uid).then((firebaseId) => {
@@ -97,13 +109,17 @@ class Battle extends React.Component {
   }
 
   healTeam = () => {
-    const { healTokens, teamHP, maxTeamHP } = this.state;
+    const {
+      healTokens,
+      teamHP,
+      maxTeamHP,
+      teamHealBonus,
+    } = this.state;
     const newHealTokenAmount = healTokens - 1;
     this.setState({ healTokens: newHealTokenAmount });
     if (newHealTokenAmount === 0) {
       this.setState({ disableHeal: true });
     }
-    const teamHealBonus = 3;
     const random = Math.floor((Math.random() * 4) + 1);
     const teamHeal = teamHP + healModifierData[random].hitPoints + teamHealBonus;
     if (teamHeal > maxTeamHP) {
@@ -119,13 +135,13 @@ class Battle extends React.Component {
       bossHP,
       teamAP,
       teamHP,
+      teamCritChance,
     } = this.state;
     let newTeamHP = 0;
-    const teamCrit = 10;
     let newBossHP = 0;
     let teamAttack = 0;
     const randomCrit = Math.floor((Math.random() * 100) + 1);
-    if (teamCrit >= randomCrit) {
+    if (teamCritChance >= randomCrit) {
       teamAttack = teamAP * attackModifierData[5].attackMultiplier;
       newBossHP = bossHP - teamAttack;
     } else {

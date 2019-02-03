@@ -21,6 +21,8 @@ const defaultCharacter = {
   level: 0,
   onTeam: false,
   uid: '',
+  critChance: 0,
+  healBonus: 0,
 };
 
 class Locations extends React.Component {
@@ -101,6 +103,8 @@ class Locations extends React.Component {
               myCharacter.imageUrl = character.data.imageUrl;
               myCharacter.attackPoints = character.data.attackPoints;
               myCharacter.hitPoints = character.data.hitPoints;
+              myCharacter.critChance = character.data.critChance;
+              myCharacter.healBonus = character.data.healBonus;
               this.setState({ chosenCharacter: myCharacter });
               characterRequests.addSavedCharacter(this.state.chosenCharacter)
                 .then(() => {
@@ -138,6 +142,8 @@ class Locations extends React.Component {
           <ModalFooter>
            <p>HP: {chosenCharacter.hitPoints}</p>
            <p>AP: {chosenCharacter.attackPoints}</p>
+           <p>Crit Chance: {chosenCharacter.critChance}</p>
+           <p>Heal Bonus: {chosenCharacter.healBonus}</p>
           </ModalFooter>
           <Button color="success" onClick={this.toggle}>OK</Button>
         </Modal>

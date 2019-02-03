@@ -23,7 +23,8 @@ const defaultCharacter = {
   level: 0,
   onTeam: false,
   uid: '',
-  fullTeam: false,
+  critChance: 0,
+  healBonus: 0,
 };
 
 class Characters extends React.Component {
@@ -44,6 +45,7 @@ class Characters extends React.Component {
       levelUpCharacter: defaultCharacter,
       levelUpToken: 0,
       noTeam: true,
+      fullTeam: false,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -197,6 +199,8 @@ hideDeleteAlerts = (e) => {
           const key = myCharacter.level;
           myCharacter.hitPoints = characterObject.hitPoints + levelUpData[key].hitPoints;
           myCharacter.attackPoints = characterObject.attackPoints + levelUpData[key].attackPoints;
+          myCharacter.critChance = characterObject.critChance + levelUpData[key].critChance;
+          myCharacter.healBonus = characterObject.healBonus + levelUpData[key].healBonus;
           this.setState({ levelUpCharacter: myCharacter });
           const { levelUpCharacter } = this.state;
           characterRequests.updateSavedCharacter(characterId, levelUpCharacter)

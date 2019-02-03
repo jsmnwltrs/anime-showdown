@@ -35,6 +35,8 @@ class OnTeamCharacterItem extends React.Component {
           <CardSubtitle>Level: {onTeamCharacter.level}</CardSubtitle>
           <CardText>AP: {onTeamCharacter.attackPoints}</CardText>
           <CardText>HP: {onTeamCharacter.hitPoints}</CardText>
+          <CardText>Crit Chance: {onTeamCharacter.critChance}</CardText>
+          <CardText>Heal Bonus: {onTeamCharacter.healBonus}</CardText>
         </CardBody>
       </Card>
     </div>
