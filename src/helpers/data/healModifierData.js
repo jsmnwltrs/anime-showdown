@@ -1,15 +1,18 @@
 const healModifierData = {
   1: {
-    hitPoints: 20,
+    healMultiplier: 1,
   },
   2: {
-    hitPoints: 25,
+    healMultiplier: 1.3,
   },
   3: {
-    hitPoints: 30,
+    healMultiplier: 1.5,
   },
   4: {
-    hitPoints: 35,
+    healMultiplier: 1.8,
+  },
+  5: {
+    healMultiplier: 2,
   },
 };
 

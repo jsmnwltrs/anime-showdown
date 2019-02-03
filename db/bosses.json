@@ -6,8 +6,7 @@
     "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 1,
-    "levelTokenReward": 1,
-    "healToken": 1
+    "levelTokenReward": 1
   },
   "boss2": {
     "name": "Frieza",
@@ -16,8 +15,7 @@
     "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 1,
-    "levelTokenReward": 1,
-    "healToken": 1
+    "levelTokenReward": 1
   },
   "boss3": {
     "name": "Garou",
@@ -26,8 +24,7 @@
     "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 2,
-    "levelTokenReward": 2,
-    "healToken": 1
+    "levelTokenReward": 2
   },
   "boss4": {
     "name": "Doflamingo",
@@ -36,8 +33,7 @@
     "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 3,
-    "levelTokenReward": 3,
-    "healToken": 1
+    "levelTokenReward": 3
   },
   "boss5": {
     "name": "Lord Boros",
@@ -46,8 +42,7 @@
     "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 3,
-    "levelTokenReward": 3,
-    "healToken": 1
+    "levelTokenReward": 3
   },
   "boss6": {
     "name": "Jiren",
@@ -56,8 +51,7 @@
     "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 4,
-    "levelTokenReward": 4,
-    "healToken": 1
+    "levelTokenReward": 4
   },
   "boss7": {
     "name": "Crocodile",
@@ -66,8 +60,7 @@
     "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 5,
-    "levelTokenReward": 5,
-    "healToken": 1
+    "levelTokenReward": 5
   },
   "boss8": {
     "name": "Meruem",
@@ -76,7 +69,6 @@
     "attackPoints": 20,
     "level": 0,
     "characterTokenReward": 6,
-    "levelTokenReward": 6,
-    "healToken": 1
+    "levelTokenReward": 6
   }
 }

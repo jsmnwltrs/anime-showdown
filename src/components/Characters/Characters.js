@@ -25,6 +25,8 @@ const defaultCharacter = {
   uid: '',
   critChance: 0,
   healBonus: 0,
+  healTokens: 0,
+  class: '',
 };
 
 class Characters extends React.Component {
@@ -201,6 +203,7 @@ hideDeleteAlerts = (e) => {
           myCharacter.attackPoints = characterObject.attackPoints + levelUpData[key].attackPoints;
           myCharacter.critChance = characterObject.critChance + levelUpData[key].critChance;
           myCharacter.healBonus = characterObject.healBonus + levelUpData[key].healBonus;
+          myCharacter.healTokens = characterObject.healTokens + levelUpData[key].healTokens;
           this.setState({ levelUpCharacter: myCharacter });
           const { levelUpCharacter } = this.state;
           characterRequests.updateSavedCharacter(characterId, levelUpCharacter)

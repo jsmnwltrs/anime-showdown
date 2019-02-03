@@ -10,6 +10,8 @@ const characterShape = PropTypes.shape({
   uid: PropTypes.string,
   critChance: PropTypes.number,
   healBonus: PropTypes.number,
+  healTokens: PropTypes.number,
+  class: PropTypes.string,
 });
 
 export default characterShape;
