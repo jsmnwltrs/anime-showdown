@@ -198,12 +198,16 @@ hideDeleteAlerts = (e) => {
           this.setState({ levelUpCharacter: characterObject });
           const myCharacter = { ...this.state.levelUpCharacter };
           myCharacter.level = characterObject.level + 1;
-          const key = myCharacter.level;
+          const key = myCharacter.class;
           myCharacter.hitPoints = characterObject.hitPoints + levelUpData[key].hitPoints;
           myCharacter.attackPoints = characterObject.attackPoints + levelUpData[key].attackPoints;
           myCharacter.critChance = characterObject.critChance + levelUpData[key].critChance;
           myCharacter.healBonus = characterObject.healBonus + levelUpData[key].healBonus;
-          myCharacter.healTokens = characterObject.healTokens + levelUpData[key].healTokens;
+          if (myCharacter.class === 'Healer' && myCharacter.level === 4) {
+            myCharacter.healTokens = characterObject.healTokens + 1;
+          } else if (myCharacter.class === 'Healer' && myCharacter.level === 8) {
+            myCharacter.healTokens = characterObject.healTokens + 1;
+          }
           this.setState({ levelUpCharacter: myCharacter });
           const { levelUpCharacter } = this.state;
           characterRequests.updateSavedCharacter(characterId, levelUpCharacter)
