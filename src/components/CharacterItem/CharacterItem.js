@@ -54,6 +54,8 @@ class CharacterItem extends React.Component {
           <CardSubtitle>Level: {character.level}</CardSubtitle>
           <CardText>AP: {character.attackPoints}</CardText>
           <CardText>HP: {character.hitPoints}</CardText>
+          <CardText>Crit Chance: {character.critChance}</CardText>
+          <CardText>Heal Bonus: {character.healBonus}</CardText>
         </CardBody>
       </Card>
     </div>
