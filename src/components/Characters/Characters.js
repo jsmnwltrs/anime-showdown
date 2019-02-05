@@ -14,6 +14,7 @@ import CharacterItem from '../CharacterItem/CharacterItem';
 import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
 import userRequests from '../../helpers/data/userRequests';
+import CharacterSelectSuperSmash from '../../helpers/sound/CharacterSelectSuperSmash.mp3';
 
 const defaultCharacter = {
   name: '',
@@ -295,6 +296,9 @@ hideDeleteAlerts = (e) => {
         <Button className='btn btn-danger' disabled={noTeam} tag={RRNavLink} to='/battle'>Battle!</Button>
         <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <div>{buildModals()}</div>
+        <div>
+          <audio ref='audio_tag' src={CharacterSelectSuperSmash} loop autoPlay/>
+        </div>
       </div>
     );
   }
