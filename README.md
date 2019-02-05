@@ -1,68 +1,51 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# anime-showdown
+This project was built using React.js and has full CRUD implemented.The data and deployed site is hosted in firebase.
 
-## Available Scripts
+This is a game where a user can collect characters and fight bosses. A player needs to sign up with their own email/username and password in order to play. 
 
-In the project directory, you can run:
+When the player first logs in, they are given a set number of character tokens which they can use to randomly draw characters from the locations page. The characters will then show on the Characters page. 
 
-### `npm start`
+A player can delete characters but only when they have more than 4 total. They can use level up tokens to update and level up the stats of their characters. 
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+A player can choose up to 4 characters to be on their team. When the team members are selected, they can click the Battle! button to go to the boss selection page.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+A player can choose a boss to fight and the battle will start. The attack button uses the combined team's AP and characters that are in the healer's class can heal the party.
 
-### `npm test`
+If the player wins the battle, they are rewarded with more tokens to draw and level up characters.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### How to run this app
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* This app has been deployed to firebase and can be viewed here: https://anime-showdown.firebaseapp.com/
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### To run on localhost
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* Once you have a clone of the project install the web dependencies in the terminal:
+```sh
+npm install
+```
+* Rename apiKeys.js.example file to apiKeys.js.
+* Create a new project in Firebase and add your api keys to the apiKeys.js
+* Run the server in the terminal:
+```sh
+npm start
+```
 
-### `npm run eject`
+## Screenshots
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Login Page
+![login page]()
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Characters Page
+![main page]()
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Locations Page
+![locations page]()
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Boss Selection Page
+![boss page]()
 
-## Learn More
+### Battle Page
+![battle page]()
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
