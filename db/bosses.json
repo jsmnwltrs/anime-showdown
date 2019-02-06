@@ -11,8 +11,8 @@
   "boss2": {
     "name": "Frieza",
     "imageUrl": "https://vignette.wikia.nocookie.net/dragonball/images/8/83/Frieza_DBZ_Ep_85_002v2.png/revision/latest?cb=20170920193805",
-    "hitPoints": 300,
-    "attackPoints": 20,
+    "hitPoints": 600,
+    "attackPoints": 40,
     "level": 2,
     "characterTokenReward": 1,
     "levelTokenReward": 1
