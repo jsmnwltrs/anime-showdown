@@ -12,7 +12,7 @@
   },
   "character2": {
     "name": "Genos",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/genos.png?alt=media&token=e2507edb-e14f-4310-a502-4fe008dc4979",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/genos.png?alt=media&token=54b4e884-a624-48c0-974b-ffc6745dff8e",
     "hitPoints": 100,
     "attackPoints": 14,
     "level": 0,
@@ -23,7 +23,7 @@
   },
   "character3": {
     "name": "Mumen Rider",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/mumen.png?alt=media&token=b6af1c41-65c9-48c1-94ae-71c6d2300e5a",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/mumen.png?alt=media&token=ceffa710-13af-418d-83ee-3c12a32831e4",
     "hitPoints": 50,
     "attackPoints": 7,
     "level": 0,
@@ -56,7 +56,7 @@
   },  
   "character6": {
     "name": "Speed of Sound Sonic",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/sonic.png?alt=media&token=ec7256f1-094d-4c98-984a-bd4c49f30287",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/sonic2.png?alt=media&token=9a2833a5-53d1-4df4-b688-af03e702ee90",
     "hitPoints": 70,
     "attackPoints": 10,
     "level": 0,
@@ -100,7 +100,7 @@
   },
   "character10": {
     "name": "Watchdog Man",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/watchdogman.png?alt=media&token=44730b51-ef06-4ce7-ac49-9f31239b06a3",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/watchdogman.png?alt=media&token=d4214405-fe39-443f-b325-bf43a0368c3b",
     "hitPoints": 50,
     "attackPoints": 7,
     "level": 0,
@@ -133,7 +133,7 @@
   },
   "character13": {
     "name": "Krillin",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/krillin2.png?alt=media&token=35c9e5e5-f804-4104-9433-f61911eab039",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/krillin2.png?alt=media&token=4474bcab-7e96-4f35-863d-e4ea9d4f1b89",
     "hitPoints": 70,
     "attackPoints": 10,
     "level": 0,
@@ -166,7 +166,7 @@
   },
   "character16": {
     "name": "Piccolo",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/piccolo2.png?alt=media&token=e0820046-af3d-4e13-bf28-925ec3ddd106",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/piccolo2.png?alt=media&token=f5223ac9-ac53-4eb4-9ab9-a66273109a96",
     "hitPoints": 100,
     "attackPoints": 14,
     "level": 0,
@@ -177,7 +177,7 @@
   },
   "character17": {
     "name": "Dende",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/dende.png?alt=media&token=89b02919-e5df-464d-be94-549ccbc4c0d8",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/dende2.png?alt=media&token=f6c21dc4-cce0-4c3e-9f38-2f37287f06a5",
     "hitPoints": 50,
     "attackPoints": 7,
     "level": 0,
@@ -199,7 +199,7 @@
   },
   "character19": {
     "name": "Chiaotzu",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/chiaotzu.png?alt=media&token=e8d4001f-94a0-49c1-9a15-4d0f5a709060",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/chiaotzu.png?alt=media&token=121ffd50-34b1-4cc0-8e2f-bc6d79835b87",
     "hitPoints": 70,
     "attackPoints": 10,
     "level": 0,
@@ -210,7 +210,7 @@
   },  
   "character20": {
     "name": "Yamucha",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/yamacha.png?alt=media&token=66c4822e-b8e1-4827-a348-29c1be4104ff",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/yamucha.png?alt=media&token=8b509fc3-14a4-4c76-97c9-c424c0c24332",
     "hitPoints": 20,
     "attackPoints": 5,
     "level": 0,
@@ -243,7 +243,7 @@
   },
   "character23": {
     "name": "Chopper",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/chopper.png?alt=media&token=e0a09775-21d6-40f8-b588-273bcc285c2d",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/chopper.png?alt=media&token=52c5e39a-0203-4986-99d1-095a473d0f66",
     "hitPoints": 50,
     "attackPoints": 7,
     "level": 0,
@@ -276,7 +276,7 @@
   },
   "character26": {
     "name": "Robin",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/robin.png?alt=media&token=62b9688e-96c3-4318-8561-f5a109f5ae45",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/robin.png?alt=media&token=6e15f0fd-3dce-4605-9a85-76341debe0e0",
     "hitPoints": 70,
     "attackPoints": 10,
     "level": 0,
@@ -298,7 +298,7 @@
   },
   "character28": {
     "name": "Sanji",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/sanji.png?alt=media&token=e1156ab0-ff2d-4fe2-bba7-0fef5e4d3c95",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/sanji.png?alt=media&token=82df10da-e438-420d-940b-66498a9eff26",
     "hitPoints": 100,
     "attackPoints": 14,
     "level": 0,
@@ -309,7 +309,7 @@
   },
   "character29": {
     "name": "Zoro",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/zoro.png?alt=media&token=8fd010bf-10cf-43f0-a82e-9f1ae0c30bc9",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/zoro.png?alt=media&token=311120cc-8441-4d72-81a1-9d91274a7368",
     "hitPoints": 100,
     "attackPoints": 14,
     "level": 0,
@@ -320,7 +320,7 @@
   },
   "character30": {
     "name": "Jimbei",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/jimbei.png?alt=media&token=5b336250-6d38-4815-9bef-0adc08b65930",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/jimbei2.png?alt=media&token=c9abefe8-8e5d-4f89-92fe-cbd78aa29db1",
     "hitPoints": 100,
     "attackPoints": 14,
     "level": 0,
@@ -353,7 +353,7 @@
   },
   "character33": {
     "name": "Hisoka",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/hisoka.png?alt=media&token=5ad8e994-f29a-4f40-9090-25ee57dfec9a",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/hisoka.png?alt=media&token=2f49850d-50ec-4522-a5e8-06ffe3785011",
     "hitPoints": 100,
     "attackPoints": 14,
     "level": 0,
@@ -364,7 +364,7 @@
   },
   "character34": {
     "name": "Bisky",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/paint.png?alt=media&token=1865ffe9-562c-4280-b4bd-250c8faa9b8f",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/bisky.png?alt=media&token=37c9a434-37d0-4248-b4ea-02f27b462900",
     "hitPoints": 70,
     "attackPoints": 10,
     "level": 0,
@@ -386,7 +386,7 @@
   },
   "character36": {
     "name": "Leorio",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/leorio.png?alt=media&token=1c7fe226-6a97-4edc-94ea-8751f6c27733",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/leorio.png?alt=media&token=207672c3-446b-4101-ad4d-0d31d95221ce",
     "hitPoints": 50,
     "attackPoints": 7,
     "level": 0,
@@ -397,7 +397,7 @@
   },
   "character37": {
     "name": "Knov",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/knov.png?alt=media&token=830caa56-fdce-4858-9404-889755c90d54",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/knov.png?alt=media&token=9c38f866-d2e7-4cab-a9fa-d0b7e43e6b5e",
     "hitPoints": 50,
     "attackPoints": 7,
     "level": 0,
@@ -419,7 +419,7 @@
   },
   "character39": {
     "name": "Netero",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/netero.png?alt=media&token=be803624-0710-4308-864b-9407d4db1df8",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/netero.png?alt=media&token=59b703d4-5f9a-40dd-9993-7f39235c4122",
     "hitPoints": 100,
     "attackPoints": 14,
     "level": 0,
@@ -430,7 +430,7 @@
   },
   "character40": {
     "name": "Kite",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/kite.png?alt=media&token=9de61035-79c6-4004-974b-9581d859d870",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/kite.png?alt=media&token=957454ad-af85-4705-bc64-8b838dbb3a03",
     "hitPoints": 70,
     "attackPoints": 10,
     "level": 0,

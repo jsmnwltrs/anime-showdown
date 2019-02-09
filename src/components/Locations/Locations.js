@@ -141,7 +141,7 @@ class Locations extends React.Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>{chosenCharacter.name}</ModalHeader>
           <ModalBody>
-            <img src={chosenCharacter.imageUrl} alt='character img' />
+            <img class='card-image' src={chosenCharacter.imageUrl} alt='character img' />
           </ModalBody>
           <ModalFooter>
            <p>Class: {chosenCharacter.class}</p>
