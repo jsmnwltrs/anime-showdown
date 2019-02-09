@@ -15,7 +15,6 @@ class BattleTeam extends React.Component {
   state = {
     disableHeal: false,
     healTokens: 0,
-    teamHealed: false,
   }
 
   static propTypes = {
@@ -40,19 +39,6 @@ class BattleTeam extends React.Component {
     addToTeam(character.id);
   }
 
-  playHealNoise = () => {
-    const { teamHealed } = this.state;
-    if (teamHealed) {
-      // this.setState({ teamHealed: false });
-      return (
-        <div>
-          <audio ref='audio_tag' src={heal} autoPlay/>
-        </div>
-      );
-    }
-    return <span></span>;
-  };
-
   healTeam = () => {
     const { healTokens } = this.state;
     const {
@@ -74,7 +60,8 @@ class BattleTeam extends React.Component {
     } else {
       passHealedHP(newTeamHP);
     }
-    this.setState({ teamHealed: true });
+    const healSound = new Audio(heal);
+    healSound.play();
   }
 
   render() {
@@ -99,7 +86,6 @@ class BattleTeam extends React.Component {
         <CardTitle>{teamCharacter.name}</CardTitle>
         <img className="cardImage" src={teamCharacter.imageUrl} alt="Card img"/>
         <div>{makeHealButton()}</div>
-        <div>{this.playHealNoise()}</div>
       </Card>
     </div>
     );
