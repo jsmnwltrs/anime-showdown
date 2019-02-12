@@ -26,7 +26,7 @@ class LocationItem extends React.Component {
       <div>
       <Card className='boss mr-4'>
         <CardTitle>{boss.name}</CardTitle>
-        <img className="cardImage" src={boss.imageUrl} alt="Card img"/>
+        <img className="boss-image" src={boss.imageUrl} alt="Card img"/>
         <Button className='btn btn-danger' onClick={this.startBattleClick}>Start Battle!</Button>
       </Card>
     </div>

@@ -24,7 +24,8 @@ class Bosses extends React.Component {
   componentDidMount() {
     bossRequests.getBosses()
       .then((bosses) => {
-        this.setState({ bosses });
+        const sortedBosses = bosses.sort((a, b) => a.level - b.level);
+        this.setState({ bosses: sortedBosses });
       })
       .catch(error => console.error('error on getBosses', error));
   }
