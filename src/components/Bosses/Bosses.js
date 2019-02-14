@@ -14,11 +14,12 @@ class Bosses extends React.Component {
 
   static propTypes = {
     startBattle: PropTypes.func,
+    startBattleBool: PropTypes.bool,
   }
 
   startBattleEvent = (bossId) => {
     this.props.startBattle(bossId);
-    this.setState({ bosses: [], bossHeader: '' });
+    this.setState({ bossHeader: '', bosses: [] });
   }
 
   componentDidMount() {

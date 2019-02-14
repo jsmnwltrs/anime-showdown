@@ -17,15 +17,26 @@ import authRequests from '../../helpers/data/authRequests';
 import userRequests from '../../helpers/data/userRequests';
 import attackModifierData from '../../helpers/data/attackModifierData';
 
+const backgroundImage1 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/arenabackground.jpg?alt=media&token=974afe8c-48e8-4557-8188-cab74373b9fb';
+const backgroundImage2 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/CaveBackground.jpg?alt=media&token=657c7ec4-0feb-49ef-8e58-454465fa5039';
+const backgroundImage3 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/cityBackground.jpg?alt=media&token=0ee865bc-cf81-445d-831b-61a5d269178d';
+const backgroundImage4 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/crocodileBackground.jpg?alt=media&token=a2e8933a-5ddd-422e-a8e5-6dcb1d9ef9ef';
+const backgroundImage5 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/background.jpg?alt=media&token=a98d1540-f28e-4af2-a7ef-384a9b42bef8';
+const backgroundImage6 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/jirenBackground.jpg?alt=media&token=2f31a8cb-96ce-40b8-b0d5-ff610b5babc6';
+const backgroundImage7 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/namekback.png?alt=media&token=bbf77652-5394-4f5b-bf7c-6071dbeb3b80';
+const backgroundImage8 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/swampBackground.jpg?alt=media&token=a6656138-7b5a-407f-bdf7-f70ee07e05a5';
+
 class Battle extends React.Component {
   static propTypes = {
     setLevelTokens: PropTypes.func,
+    hideNavbar: PropTypes.func,
   }
 
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
+      backgroundModal: false,
       startBattle: false,
       battleBoss: {},
       bossHP: 0,
@@ -38,9 +49,17 @@ class Battle extends React.Component {
       levelUpTokenRewards: 0,
       characterTokenRewards: 0,
       teamCritChance: 0,
+      backgroundUrl: '',
     };
 
+    this.toggleBackground = this.toggle.bind(this);
     this.toggle = this.toggle.bind(this);
+  }
+
+  toggleBackground() {
+    this.setState({
+      backgroundModal: !this.state.backgroundModal,
+    });
   }
 
   toggle() {
@@ -93,7 +112,8 @@ class Battle extends React.Component {
           bossHP,
           characterTokenRewards,
           levelUpTokenRewards,
-          startBattle: true,
+          backgroundModal: true,
+          backgroundUrl: '',
         });
       })
       .catch(error => console.error('error on getSingleBoss', error));
@@ -163,6 +183,16 @@ class Battle extends React.Component {
     }).catch(error => console.error('erro ron getFirebaseUserId', error));
   }
 
+  changeBackground = (e) => {
+    const newBackgroundUrl = e.target.id;
+    this.setState({
+      backgroundUrl: newBackgroundUrl,
+      startBattle: true,
+      backgroundModal: false,
+    });
+    this.props.hideNavbar();
+  }
+
   render() {
     const {
       battleBoss,
@@ -172,7 +202,15 @@ class Battle extends React.Component {
       maxTeamHP,
       levelUpTokenRewards,
       characterTokenRewards,
+      backgroundUrl,
     } = this.state;
+    document.body.style.backgroundImage = 'url(' + backgroundUrl + ')';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.maxHeight = '700px';
+    document.body.style.maxWidth = '1800px';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundRepeat = 'no-repeat';
     const battleTeamComponents = battleTeam.map(teamCharacter => (
       <BattleTeam
         showAlert={this.showAlert}
@@ -224,6 +262,26 @@ class Battle extends React.Component {
       return <div></div>;
     };
 
+    const makeBackgroundModal = () => (
+      <Modal
+      isOpen={this.state.backgroundModal}
+      className={this.props.className}
+      backdrop={false}
+      >
+        <ModalHeader>Choose Location</ModalHeader>
+        <ModalBody>
+          <img onClick={this.changeBackground} id={backgroundImage1} className='backImage' src={backgroundImage1} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage2} className='backImage' src={backgroundImage2} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage3} className='backImage' src={backgroundImage3} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage4} className='backImage' src={backgroundImage4} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage5} className='backImage' src={backgroundImage5} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage6} className='backImage' src={backgroundImage6} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage7} className='backImage' src={backgroundImage7} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage8} className='backImage' src={backgroundImage8} alt='background img'/>
+        </ModalBody>
+    </Modal>
+    );
+
     const makeBattle = () => {
       if (this.state.startBattle) {
         return (
@@ -244,9 +302,10 @@ class Battle extends React.Component {
 
     return (
       <div>
-        <Bosses startBattle={this.startBattle} />
+        <Bosses startBattleBool={this.state.startBattle} startBattle={this.startBattle} />
         <div>{makeBattle()}</div>
         <div>{makeModal()}</div>
+        <div>{makeBackgroundModal()}</div>
       </div>
     );
   }
