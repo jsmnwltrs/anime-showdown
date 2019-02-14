@@ -193,6 +193,10 @@ class Battle extends React.Component {
     this.props.hideNavbar();
   }
 
+  reload = () => {
+    window.location.reload();
+  }
+
   render() {
     const {
       battleBoss,
@@ -237,7 +241,7 @@ class Battle extends React.Component {
               <p>Character Tokens: {characterTokenRewards}</p>
             </ModalBody>
             <ModalFooter>
-              <Button color="secondary" tag={RRNavLink} to='/characters'>OK</Button>
+              <Button onClick={this.reload} color="secondary" tag={RRNavLink} to='/characters'>OK</Button>
             </ModalFooter>
           </Modal>
         );
@@ -254,7 +258,7 @@ class Battle extends React.Component {
               You get no rewards.
             </ModalBody>
             <ModalFooter>
-              <Button color="secondary" onClick={this.toggle} tag={RRNavLink} to='/characters'>OK</Button>
+              <Button color="secondary" onClick={this.reload} tag={RRNavLink} to='/characters'>OK</Button>
             </ModalFooter>
           </Modal>
         );
@@ -286,12 +290,11 @@ class Battle extends React.Component {
       if (this.state.startBattle) {
         return (
           <div className='bossBattle'>
-          <h2>{battleBoss.name}</h2>
-          <img src={battleBoss.imageUrl} alt="Card img"/>
-          <p>Boss HP</p>
+          <img className='boss-image' src={battleBoss.imageUrl} alt="Card img"/>
+          <p>Boss HP: {bossHP}/{battleBoss.hitPoints}</p>
           <progress id="bossHitPoints" value={bossHP} max={battleBoss.hitPoints}></progress>
           <div className='d-flex flex-wrap'>{battleTeamComponents}</div>
-          <p>Team HP</p>
+          <p>Team HP: {teamHP}/{maxTeamHP}</p>
           <progress id="teamHitPoints" value={teamHP} max={maxTeamHP}></progress>
           <Button onClick={this.attackBoss} className='btn btn-danger'>Attack!</Button>
         </div>

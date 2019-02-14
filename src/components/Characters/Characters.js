@@ -5,6 +5,7 @@ import {
   Modal,
   ModalHeader,
   ModalFooter,
+  Container,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import './Characters.scss';
@@ -293,9 +294,10 @@ hideDeleteAlerts = (e) => {
     </div>
     );
     return (
-      <div className="characters col">
-        <h2>Characters</h2>
-        <div className='onTeamCharacters d-flex flex-wrap'>{onTeamCharacterItemComponents}</div>
+      <div className="characters">
+        <Container className='onTeamCharacters m-5 d-flex justify-content-center'>
+          <div className='d-flex flex-wrap m-3'>{onTeamCharacterItemComponents}</div>
+        </Container>
         <Button className='btn btn-danger' disabled={noTeam} tag={RRNavLink} to='/battle'>Battle!</Button>
         <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <div>{buildModals()}</div>

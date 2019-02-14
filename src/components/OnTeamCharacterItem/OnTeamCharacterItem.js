@@ -3,7 +3,6 @@ import {
   Card,
   CardText,
   CardBody,
-  CardTitle,
   Button,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
@@ -27,16 +26,11 @@ class OnTeamCharacterItem extends React.Component {
     return (
       <div>
       <Card className='mr-4'>
-        <CardTitle>{onTeamCharacter.name}</CardTitle>
         <Button className='btn btn-danger' onClick={this.removeFromTeamEvent}>Remove from Team</Button>
         <img className="cardImage" src={onTeamCharacter.imageUrl} alt="Card img"/>
         <CardBody>
           <CardText>Class: {onTeamCharacter.class}</CardText>
           <CardText>Level: {onTeamCharacter.level}</CardText>
-          <CardText>AP: {onTeamCharacter.attackPoints}</CardText>
-          <CardText>HP: {onTeamCharacter.hitPoints}</CardText>
-          <CardText>Crit Chance: {onTeamCharacter.critChance}</CardText>
-          <CardText>Heal Bonus: {onTeamCharacter.healBonus}</CardText>
         </CardBody>
       </Card>
     </div>

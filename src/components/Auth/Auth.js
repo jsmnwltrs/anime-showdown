@@ -5,6 +5,9 @@ import {
   FormGroup,
   Label,
   Input,
+  Row,
+  Col,
+  Container,
 } from 'reactstrap';
 import authRequests from '../../helpers/data/authRequests';
 import SignUp from '../SignUp/SignUp';
@@ -42,10 +45,14 @@ class Auth extends React.Component {
   render() {
     const { existingUser } = this.state;
     return (
-      <div className="Auth">
-       <Form>
-        <FormGroup>
-          <Label for="exampleEmail">Email</Label>
+  <Container className="Auth">
+    <Row>
+      <Col><h1 className='loginHeader m-5'>Anime Showdown</h1></Col>
+    </Row>
+    <Row>
+      <Col><Form className='mt-2 mb-4' onSubmit={this.authenticateUser}>
+        <FormGroup className='d-flex justify-content-center'>
+          <Label className='mr-5' for="exampleEmail">Email:</Label>
           <Input
             type="email"
             name="email"
@@ -55,8 +62,8 @@ class Auth extends React.Component {
             onChange={this.emailChange}
           />
         </FormGroup>
-        <FormGroup>
-          <Label for="examplePassword">Password</Label>
+        <FormGroup className='d-flex justify-content-center'>
+          <Label className='mr-3' for="examplePassword">Password:</Label>
           <Input
             type="password"
             name="password"
@@ -66,10 +73,13 @@ class Auth extends React.Component {
             onChange={this.passwordChange}
           />
         </FormGroup>
-        <Button className="btn btn-dark mt-4" onClick={this.authenticateUser}>Login</Button>
-        </Form>
-        <SignUp />
-      </div>
+        <Button className="btn btn-dark mt-2" onClick={this.authenticateUser}>Login</Button>
+      </Form></Col>
+    </Row>
+    <Row className="m-3">
+      <Col><SignUp /></Col>
+    </Row>
+</Container>
     );
   }
 }
