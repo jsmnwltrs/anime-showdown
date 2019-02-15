@@ -45,7 +45,7 @@ class Auth extends React.Component {
   render() {
     const { existingUser } = this.state;
     return (
-  <Container className="Auth">
+  <Container className="auth">
     <Row>
       <Col><h1 className='loginHeader m-5'>Anime Showdown</h1></Col>
     </Row>

@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Card,
   CardText,
-  CardBody,
   Button,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
@@ -25,13 +24,10 @@ class OnTeamCharacterItem extends React.Component {
     const { onTeamCharacter } = this.props;
     return (
       <div>
-      <Card className='mr-4'>
-        <Button className='btn btn-danger' onClick={this.removeFromTeamEvent}>Remove from Team</Button>
+      <Card className='m-2'>
+        <Button className='btn btn-danger' title='remove from team' onClick={this.removeFromTeamEvent}><i className="fas fa-user-slash fa-2x"></i></Button>
         <img className="cardImage" src={onTeamCharacter.imageUrl} alt="Card img"/>
-        <CardBody>
-          <CardText>Class: {onTeamCharacter.class}</CardText>
-          <CardText>Level: {onTeamCharacter.level}</CardText>
-        </CardBody>
+        <CardText>Level: {onTeamCharacter.level}</CardText>
       </Card>
     </div>
     );

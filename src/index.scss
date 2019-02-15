@@ -1,3 +1,18 @@
 body {
   background-color: lightcoral !important;
+  overflow: scroll;
+}
+
+.characters {
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/characterback.jpg?alt=media&token=24eeb529-7d08-401f-b2ad-57b78801bed3);
+  background-size: 5000px;
+  background-repeat: repeat; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  min-width: 100%; 
+  min-height: 100%;
+  margin-top: 50px;
+  position: fixed;
 }

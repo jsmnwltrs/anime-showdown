@@ -6,6 +6,7 @@ import {
   ModalHeader,
   ModalFooter,
   Container,
+  Row,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import './Characters.scss';
@@ -49,6 +50,10 @@ class Characters extends React.Component {
       levelUpToken: 0,
       noTeam: true,
       fullTeam: false,
+      teamAttackPoints: 0,
+      teamCritChance: 0,
+      teamHealTokens: 0,
+      teamHitPoints: 0,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -94,7 +99,23 @@ class Characters extends React.Component {
         if (this.state.onTeamCharacters.length === 0) {
           this.setState({ noTeam: true });
         } else if (this.state.onTeamCharacters.length !== 0) {
-          this.setState({ noTeam: false });
+          let teamAttackPoints = 0;
+          let teamCritChance = 0;
+          let teamHealTokens = 0;
+          let teamHitPoints = 0;
+          this.state.onTeamCharacters.forEach((character) => {
+            teamAttackPoints += character.attackPoints;
+            teamCritChance += character.critChance;
+            teamHealTokens += character.healTokens;
+            teamHitPoints += character.hitPoints;
+          });
+          this.setState({
+            noTeam: false,
+            teamAttackPoints,
+            teamCritChance,
+            teamHealTokens,
+            teamHitPoints,
+          });
         }
         if (this.state.onTeamCharacters.length === 4) {
           this.setState({ fullTeam: true });
@@ -102,9 +123,26 @@ class Characters extends React.Component {
       }).catch(error => console.error('error with getSavedCharacters', error));
   }
 
-showAlert = (e) => {
-  e.preventDefault();
-  const characterId = e.target.id;
+refreshTeamStats = () => {
+  let teamAttackPoints = 0;
+  let teamCritChance = 0;
+  let teamHealTokens = 0;
+  let teamHitPoints = 0;
+  this.state.onTeamCharacters.forEach((character) => {
+    teamAttackPoints += character.attackPoints;
+    teamCritChance += character.critChance;
+    teamHealTokens += character.healTokens;
+    teamHitPoints += character.hitPoints;
+  });
+  this.setState({
+    teamAttackPoints,
+    teamCritChance,
+    teamHealTokens,
+    teamHitPoints,
+  });
+}
+
+showAlert = (characterId) => {
   this.setState({ modal: true, characterId });
 }
 
@@ -155,6 +193,7 @@ hideDeleteAlerts = (e) => {
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
           this.setState({ onTeamCharacters: charactersOnTeam, noTeam: false });
           const { onTeamCharacters } = this.state;
+          this.refreshTeamStats();
           if (onTeamCharacters.length === 4) {
             this.setState({ fullTeam: true });
           }
@@ -173,6 +212,7 @@ hideDeleteAlerts = (e) => {
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
           this.setState({ onTeamCharacters: charactersOnTeam, fullTeam: false });
           const { onTeamCharacters } = this.state;
+          this.refreshTeamStats();
           if (onTeamCharacters.length === 0) {
             this.setState({ noTeam: true });
           }
@@ -236,6 +276,10 @@ hideDeleteAlerts = (e) => {
       onTeamCharacters,
       fullTeam,
       noTeam,
+      teamAttackPoints,
+      teamCritChance,
+      teamHealTokens,
+      teamHitPoints,
     } = this.state;
     const characterItemComponents = characters.map(character => (
       <CharacterItem
@@ -248,13 +292,19 @@ hideDeleteAlerts = (e) => {
         addToTeam = {this.addToTeam}
       />
     ));
-    const onTeamCharacterItemComponents = onTeamCharacters.map(onTeamCharacter => (
-      <OnTeamCharacterItem
-        onTeamCharacter={onTeamCharacter}
-        key={onTeamCharacter.id}
-        removeFromTeam={this.removeFromTeam}
-      />
-    ));
+    let onTeamCharacterItemComponents = '';
+    let teamMessage = '';
+    if (onTeamCharacters.length === 0) {
+      teamMessage = 'Create your team!';
+    } else {
+      onTeamCharacterItemComponents = onTeamCharacters.map(onTeamCharacter => (
+        <OnTeamCharacterItem
+          onTeamCharacter={onTeamCharacter}
+          key={onTeamCharacter.id}
+          removeFromTeam={this.removeFromTeam}
+        />
+      ));
+    }
     const buildModals = () => (
     <div>
       <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
@@ -295,10 +345,21 @@ hideDeleteAlerts = (e) => {
     );
     return (
       <div className="characters">
-        <Container className='onTeamCharacters m-5 d-flex justify-content-center'>
-          <div className='d-flex flex-wrap m-3'>{onTeamCharacterItemComponents}</div>
+        <Container className='onTeamCharacters mt-2 mb-2 d-flex justify-content-center'>
+          <div className='m-3'>
+            <Row className='d-flex justify-content-center teamStats'>
+            <span className='mr-5 ml-5' title='hit points'><i className="fas fa-heart"></i> : {teamHitPoints}</span>
+            <span className='mr-5 ml-5' title='attack points'><i className="fas fa-dumbbell"></i> : {teamAttackPoints}</span>
+            <span className='mr-5 ml-5' title='heal tokens'><i className="fas fa-briefcase-medical"></i> : {teamHealTokens}</span>
+            <span className='mr-5 ml-5' title='crit chance'><i className="fas fa-skull"></i> : {teamCritChance}%</span>
+            </Row>
+            <Row>
+              {onTeamCharacterItemComponents}
+            </Row>
+            <p className='teamMessage p-5 m-5'>{teamMessage}</p>
+          </div>
         </Container>
-        <Button className='btn btn-danger' disabled={noTeam} tag={RRNavLink} to='/battle'>Battle!</Button>
+        <Button className='battleButton btn btn-danger mb-5' disabled={noTeam} tag={RRNavLink} to='/battle'><p className='m-1'>Battle!</p> </Button>
         <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <div>{buildModals()}</div>
       </div>
