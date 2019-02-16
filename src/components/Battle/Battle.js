@@ -24,6 +24,7 @@ const backgroundImage5 = 'https://firebasestorage.googleapis.com/v0/b/anime-show
 const backgroundImage6 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/jirenBackground.jpg?alt=media&token=2f31a8cb-96ce-40b8-b0d5-ff610b5babc6';
 const backgroundImage7 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/namekback.png?alt=media&token=bbf77652-5394-4f5b-bf7c-6071dbeb3b80';
 const backgroundImage8 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/swampBackground.jpg?alt=media&token=a6656138-7b5a-407f-bdf7-f70ee07e05a5';
+const defaultUrl = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/redback1.png?alt=media&token=c0dcc8fc-a09c-4164-b34f-16de54990649';
 
 class Battle extends React.Component {
   static propTypes = {
@@ -48,7 +49,7 @@ class Battle extends React.Component {
       levelUpTokenRewards: 0,
       characterTokenRewards: 0,
       teamCritChance: 0,
-      backgroundUrl: '',
+      backgroundUrl: defaultUrl,
     };
 
     this.toggleBackground = this.toggle.bind(this);
@@ -190,6 +191,8 @@ class Battle extends React.Component {
       backgroundModal: false,
     });
     this.props.hideNavbar();
+    document.body.style.maxHeight = '700px';
+    document.body.style.maxWidth = '1800px';
   }
 
   reload = () => {
@@ -210,9 +213,6 @@ class Battle extends React.Component {
     } = this.state;
     document.body.style.backgroundImage = 'url(' + backgroundUrl + ')';
     document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.maxHeight = '700px';
-    document.body.style.maxWidth = '1800px';
     document.body.style.backgroundSize = 'cover';
     document.body.style.backgroundRepeat = 'no-repeat';
     const battleTeamComponents = battleTeam.map(teamCharacter => (

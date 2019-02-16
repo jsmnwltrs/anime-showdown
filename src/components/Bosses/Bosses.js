@@ -7,7 +7,6 @@ import BossItem from '../BossItem/BossItem';
 class Bosses extends React.Component {
   state = {
     bosses: [],
-    bossHeader: 'Choose a Boss!',
     levelUpTokenRewards: 0,
     characterTokenRewards: 0,
   }
@@ -32,7 +31,7 @@ class Bosses extends React.Component {
   }
 
   render() {
-    const { bosses, bossHeader } = this.state;
+    const { bosses } = this.state;
     const bossItemComponents = bosses.map(boss => (
       <BossItem
         boss={boss}
@@ -42,8 +41,7 @@ class Bosses extends React.Component {
     ));
     return (
       <div className='bosses'>
-      <h2>{ bossHeader }</h2>
-      <div className='d-flex flex-wrap'>{bossItemComponents}</div>
+      <div className='d-flex flex-wrap justify-content-center'>{bossItemComponents}</div>
       </div>
     );
   }
