@@ -115,7 +115,7 @@ class SignUp extends React.Component {
     return (
       <div className="signUp">
         <div className='account'>
-          <p>Don't have an account? <Button className='btn btn-dark' onClick={this.toggle}>Sign Up</Button></p>
+          <p><strong>Don't have an account?</strong> <Button className='btn btn-dark' onClick={this.toggle}>Sign Up</Button></p>
         </div>
       <div>{buildModal()}</div>
       </div>

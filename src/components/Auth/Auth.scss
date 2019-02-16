@@ -1,12 +1,14 @@
 body {
   .loginHeader {
     font-family: 'Shojumaru', cursive;
-    font-size: 100px;
+    font-size: 130px;
     text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
   }
 
   Label {
     font-size: 20px;
+    font-weight: bold; 
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
   }
 
   Input {

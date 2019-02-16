@@ -50,8 +50,8 @@ class CharacterItem extends React.Component {
 
     return (
       <div>
-      <Card className='ml-2 mr-2 mt-3 mb-3'>
-        <CardTitle><strong>{character.name}</strong></CardTitle>
+      <Card className='ml-2 mr-2 mt-3 mb-3 characterCard'>
+        <CardTitle className='character-name'><strong>{character.name}</strong></CardTitle>
         <div className='buttons d-flex justify-content-between mb-1'>
           <Button title='add to team' className='btn btn-success ml-1' disabled={fullTeam} onClick={this.addToTeamEvent}><i className="fas fa-users fa-2x"></i></Button>
           <div>{makeButton()}</div>

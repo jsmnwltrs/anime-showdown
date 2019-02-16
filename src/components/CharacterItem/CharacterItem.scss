@@ -1,4 +1,12 @@
-.cardImage {
-  width:  200px;
-  height: 400px;
+.characterCard {
+  border-radius: 20px;
+
+  .cardImage {
+    width:  200px;
+    height: 400px;
+  }
+  
+  .character-name {
+    font-size: 20px;
+  }
 }

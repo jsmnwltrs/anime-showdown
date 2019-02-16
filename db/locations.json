@@ -1,18 +1,18 @@
 {
   "location1": {
     "name": "Hero Association HQ",
-    "imageUrl": "https://vignette.wikia.nocookie.net/onepunchman/images/a/a2/Hq.jpg/revision/latest?cb=20161023050648"
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/hero.jpg?alt=media&token=f40cdabf-eab6-46d0-a9c5-ac5c597d13f7"
   },
   "location2": {
     "name": "Planet Namek",
-    "imageUrl": "https://vignette.wikia.nocookie.net/biggreen/images/f/f9/Namek.jpg/revision/latest?cb=20151023153235"
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/Namek.png?alt=media&token=075cfce2-b37d-4b3d-af2e-576568744426"
   },
   "location3": {
     "name": "Sunny Go",
-    "imageUrl": "https://steamuserimages-a.akamaihd.net/ugc/843710577592071601/8FBF7B330B262CAA7CDC48DDB125F9B042371A39/?imw=268&imh=268&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/sunny1.jpg?alt=media&token=d7eac8dc-bdf4-484e-9bbb-02f816b9da2f"
   },
   "location4": {
-    "name": "Tower of Heaven",
-    "imageUrl": "https://vignette.wikia.nocookie.net/hunterx/images/5/52/Heavens_Arena_1999.jpg/revision/latest?cb=20120328050059"
+    "name": "Hunter's Association HQ",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/hunterassociation.jpg?alt=media&token=eb85c17d-760b-4005-98b8-92c77c4721c7"
   }
 }
