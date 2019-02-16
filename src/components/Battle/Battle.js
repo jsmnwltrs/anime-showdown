@@ -8,7 +8,6 @@ import {
   ModalFooter,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import { NavLink as RRNavLink } from 'react-router-dom';
 import Bosses from '../Bosses/Bosses';
 import BattleTeam from '../BattleTeam/BattleTeam';
 import bossRequests from '../../helpers/data/bossRequests';
@@ -180,7 +179,7 @@ class Battle extends React.Component {
           setCharacterTokens(newCharacterTokenValue);
         })
         .catch(error => console.error('error on patchCharacterToken', error));
-    }).catch(error => console.error('erro ron getFirebaseUserId', error));
+    }).catch(error => console.error('error on getFirebaseUserId', error));
   }
 
   changeBackground = (e) => {
@@ -194,7 +193,8 @@ class Battle extends React.Component {
   }
 
   reload = () => {
-    window.location.reload();
+    this.setState({ backgroundUrl: '' });
+    window.location.assign('http://localhost:3000/characters');
   }
 
   render() {
@@ -241,7 +241,7 @@ class Battle extends React.Component {
               <p>Character Tokens: {characterTokenRewards}</p>
             </ModalBody>
             <ModalFooter>
-              <Button onClick={this.reload} color="secondary" tag={RRNavLink} to='/characters'>OK</Button>
+              <Button onClick={this.reload} color="secondary">OK</Button>
             </ModalFooter>
           </Modal>
         );
@@ -258,7 +258,7 @@ class Battle extends React.Component {
               You get no rewards.
             </ModalBody>
             <ModalFooter>
-              <Button color="secondary" onClick={this.reload} tag={RRNavLink} to='/characters'>OK</Button>
+              <Button color="secondary" onClick={this.reload}>OK</Button>
             </ModalFooter>
           </Modal>
         );

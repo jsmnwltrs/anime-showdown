@@ -9,7 +9,7 @@ body {
   .onTeamCharacters {
     height: 570px;
     max-width: 1000px;
-    background-color: rgba(51, 50, 50, 0.432);
+    background-color: rgba(51, 50, 50, 0.829);
     border: double black 10px;
     font-size: 20px;
     
@@ -22,5 +22,15 @@ body {
   
   .battleButton {
     font-size: 20px;
+  }
+
+  .savedCharacters {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border: solid black 2px;
+    background-color: rgba(51, 50, 50, 0.829);
+    max-height: 650px;
+    margin-bottom: 20px;
+    border-radius: 20px;
   }
 }

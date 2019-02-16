@@ -31,6 +31,8 @@ const defaultCharacter = {
   class: '',
 };
 
+const defaultBackgroundUrl = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/greenback.jpg?alt=media&token=434b0870-336d-4978-b516-bb3257737280';
+
 class Characters extends React.Component {
   static propTypes = {
     setLevelTokens: PropTypes.func,
@@ -54,6 +56,7 @@ class Characters extends React.Component {
       teamCritChance: 0,
       teamHealTokens: 0,
       teamHitPoints: 0,
+      backgroundUrl: defaultBackgroundUrl,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -80,6 +83,10 @@ class Characters extends React.Component {
   }
 
   componentDidMount() {
+    const { backgroundUrl } = this.state;
+    document.body.style.backgroundImage = 'url(' + backgroundUrl + ')';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundRepeat = 'no-repeat';
     this.setState({ levelUpCharacter: defaultCharacter, characterId: '' });
     const uid = authRequests.getCurrentUid();
     userRequests.getFirebaseUserId(uid).then((firebaseId) => {
@@ -121,6 +128,10 @@ class Characters extends React.Component {
           this.setState({ fullTeam: true });
         }
       }).catch(error => console.error('error with getSavedCharacters', error));
+  }
+
+  componentWillUnmount() {
+    this.setState({ backgroundUrl: '' });
   }
 
 refreshTeamStats = () => {
@@ -360,7 +371,7 @@ hideDeleteAlerts = (e) => {
           </div>
         </Container>
         <Button className='battleButton btn btn-danger mb-5' disabled={noTeam} tag={RRNavLink} to='/battle'><p className='m-1'>Battle!</p> </Button>
-        <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
+        <div className='savedCharacters d-flex flex-wrap ml-4'>{characterItemComponents}</div>
         <div>{buildModals()}</div>
       </div>
     );

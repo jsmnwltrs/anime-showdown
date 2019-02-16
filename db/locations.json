@@ -1,7 +1,7 @@
 {
   "location1": {
     "name": "Hero Association HQ",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/hero.jpg?alt=media&token=f40cdabf-eab6-46d0-a9c5-ac5c597d13f7"
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/hero.png?alt=media&token=e53a7029-ad32-4467-9abb-7dd86ac66bde"
   },
   "location2": {
     "name": "Planet Namek",
@@ -9,7 +9,7 @@
   },
   "location3": {
     "name": "Sunny Go",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/sunny1.jpg?alt=media&token=d7eac8dc-bdf4-484e-9bbb-02f816b9da2f"
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/sunny.png?alt=media&token=35f934aa-73cf-487b-b397-c9e9698ed399"
   },
   "location4": {
     "name": "Hunter's Association HQ",
