@@ -5,6 +5,7 @@ import {
   Modal,
   ModalHeader,
   ModalFooter,
+  ModalBody,
   Container,
   Row,
 } from 'reactstrap';
@@ -31,7 +32,7 @@ const defaultCharacter = {
   class: '',
 };
 
-const defaultBackgroundUrl = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/greenback.jpg?alt=media&token=434b0870-336d-4978-b516-bb3257737280';
+const defaultBackgroundUrl = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/greenback1.jpg?alt=media&token=907abcb1-b074-480e-b98c-531aee4a3d46';
 
 class Characters extends React.Component {
   static propTypes = {
@@ -50,8 +51,8 @@ class Characters extends React.Component {
       characterId: '',
       levelUpCharacter: defaultCharacter,
       levelUpToken: 0,
-      noTeam: true,
       fullTeam: false,
+      disableBattle: true,
       teamAttackPoints: 0,
       teamCritChance: 0,
       teamHealTokens: 0,
@@ -86,6 +87,7 @@ class Characters extends React.Component {
     const { backgroundUrl } = this.state;
     document.body.style.backgroundImage = 'url(' + backgroundUrl + ')';
     document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
     document.body.style.backgroundRepeat = 'no-repeat';
     this.setState({ levelUpCharacter: defaultCharacter, characterId: '' });
     const uid = authRequests.getCurrentUid();
@@ -125,7 +127,7 @@ class Characters extends React.Component {
           });
         }
         if (this.state.onTeamCharacters.length === 4) {
-          this.setState({ fullTeam: true });
+          this.setState({ fullTeam: true, disableBattle: false });
         }
       }).catch(error => console.error('error with getSavedCharacters', error));
   }
@@ -206,7 +208,7 @@ hideDeleteAlerts = (e) => {
           const { onTeamCharacters } = this.state;
           this.refreshTeamStats();
           if (onTeamCharacters.length === 4) {
-            this.setState({ fullTeam: true });
+            this.setState({ fullTeam: true, disableBattle: false });
           }
         }).catch(error => console.error('error with getSavedCharacters', error));
     }).catch(error => console.error('error on patchOnTeam', error));
@@ -221,7 +223,7 @@ hideDeleteAlerts = (e) => {
           const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
           this.setState({ characters: charactersNotOnTeam });
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
-          this.setState({ onTeamCharacters: charactersOnTeam, fullTeam: false });
+          this.setState({ onTeamCharacters: charactersOnTeam, fullTeam: false, disableBattle: true });
           const { onTeamCharacters } = this.state;
           this.refreshTeamStats();
           if (onTeamCharacters.length === 0) {
@@ -286,7 +288,7 @@ hideDeleteAlerts = (e) => {
       characters,
       onTeamCharacters,
       fullTeam,
-      noTeam,
+      disableBattle,
       teamAttackPoints,
       teamCritChance,
       teamHealTokens,
@@ -319,23 +321,23 @@ hideDeleteAlerts = (e) => {
     const buildModals = () => (
     <div>
       <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-        <ModalHeader toggle={this.toggle}>
+        <ModalHeader className='d-flex justify-content-center'>
         Are you sure you want to delete this Character?
         </ModalHeader>
-        <ModalFooter>
+        <ModalBody className='d-flex justify-content-around'>
           <Button className='btn btn-danger' onClick={this.deleteCharacter}>Yes</Button>
           <Button className='btn btn-success' onClick={this.hideAlert}>No</Button>
-        </ModalFooter>
+        </ModalBody>
       </Modal>
       <Modal
         isOpen={this.state.tokenModal}
         toggle={this.modalToggle}
         className={this.props.className}
       >
-        <ModalHeader toggle={this.modalToggle}>
+        <ModalHeader className='d-flex justify-content-center'>
         You have no more tokens to level up your Characters.
         </ModalHeader>
-        <ModalFooter>
+        <ModalFooter className='d-flex justify-content-center'>
           <Button color="secondary" onClick={this.modalToggle}>OK</Button>
         </ModalFooter>
       </Modal>
@@ -344,13 +346,13 @@ hideDeleteAlerts = (e) => {
         toggle={this.cantDeleteToggle}
         className={this.props.className}
       >
-        <ModalHeader toggle={this.cantDeleteToggle}>
-        You must keep some characters in order to battle.
-        You will need to draw more character cards before you can delete.
+        <ModalHeader className='d-flex justify-content-center'>
+        <p>You must keep enough characters in order to battle.</p>
+        <p>You will need to draw more character cards before you can delete.</p>
         </ModalHeader>
-        <ModalFooter>
+        <ModalBody className='d-flex justify-content-center'>
           <Button color="secondary" onClick={this.hideDeleteAlerts}>OK</Button>
-        </ModalFooter>
+        </ModalBody>
       </Modal>
     </div>
     );
@@ -370,8 +372,8 @@ hideDeleteAlerts = (e) => {
             <p className='teamMessage p-5 m-5'>{teamMessage}</p>
           </div>
         </Container>
-        <Button className='battleButton btn btn-danger mb-5' disabled={noTeam} tag={RRNavLink} to='/battle'><p className='m-1'>Battle!</p> </Button>
-        <div className='savedCharacters d-flex flex-wrap ml-4'>{characterItemComponents}</div>
+        <Button className='battleButton btn btn-danger mb-5' disabled={disableBattle} tag={RRNavLink} to='/battle'><p className='m-1'>Battle!</p> </Button>
+        <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <div>{buildModals()}</div>
       </div>
     );

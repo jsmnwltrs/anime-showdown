@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Card,
-  CardTitle,
   Button,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
@@ -52,7 +50,8 @@ class BattleTeam extends React.Component {
       this.setState({ disableHeal: true });
     }
     const random = Math.floor((Math.random() * 5) + 1);
-    const teamHeal = teamCharacter.healBonus * healModifierData[random].healMultiplier;
+    let teamHeal = teamCharacter.healBonus * healModifierData[random].healMultiplier;
+    teamHeal = Math.round(teamHeal);
     const newTeamHP = teamHeal + teamHP;
     if (newTeamHP > maxTeamHP) {
       passHealedHP(maxTeamHP);
@@ -70,7 +69,7 @@ class BattleTeam extends React.Component {
          <Button
             onClick={this.healTeam}
             disabled={disableHeal}
-            className='btn btn-success'>
+            className='btn btn-success healButton'>
             Heal! <span>{healTokens}</span>
           </Button>
         );
@@ -78,12 +77,9 @@ class BattleTeam extends React.Component {
       return <span></span>;
     };
     return (
-      <div>
-      <Card className='mr-4'>
-        <CardTitle>{teamCharacter.name}</CardTitle>
-        <img className="cardImage" src={teamCharacter.imageUrl} alt="Card img"/>
-        <div>{makeHealButton()}</div>
-      </Card>
+      <div className='m-1'>
+        <img className="teamImage" src={teamCharacter.imageUrl} alt="Card img"/>
+        <div className='mt-1'>{makeHealButton()}</div>
     </div>
     );
   }

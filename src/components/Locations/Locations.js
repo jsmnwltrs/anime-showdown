@@ -179,12 +179,12 @@ class Locations extends React.Component {
             toggle={this.modalToggle}
             className={this.props.className}
           >
-            <ModalHeader toggle={this.modalToggle}>
+            <ModalHeader className='d-flex justify-content-center'>
             You have no more tokens to draw Characters.
             </ModalHeader>
-            <ModalFooter>
+            <ModalBody className='d-flex justify-content-center'>
               <Button color="secondary" onClick={this.modalToggle}>OK</Button>
-            </ModalFooter>
+            </ModalBody>
         </Modal>
       </div>
     );
