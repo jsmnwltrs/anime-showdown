@@ -41,8 +41,12 @@ class MyNavbar extends React.Component {
       if (isAuthed) {
         return (
         <Nav className="ml-auto" navbar>
-          <NavItem>{levelUpToken}</NavItem>
-          <NavItem>{characterToken}</NavItem>
+          <NavItem>
+            <p title='character tokens' className='userToken m-1 mr-3'><i class="fas fa-user-plus"> : </i> {levelUpToken}</p>
+          </NavItem>
+          <NavItem>
+            <p title='level up tokens' className='userToken m-1 mr-3'><i class="fas fa-angle-double-up"> : </i> {characterToken}</p>
+          </NavItem>
           <NavItem>
             <NavLink tag={RRNavLink} to='/characters'>Characters</NavLink>
           </NavItem>
@@ -59,7 +63,7 @@ class MyNavbar extends React.Component {
     };
 
     return (
-      <div className="my-navbar sticky-top">
+      <div className="my-navbar fixed-top align-self-start">
         <Navbar color="dark" dark expand="md">
           <NavbarBrand href="/">Anime Showdown</NavbarBrand>
           <NavbarToggler onClick={e => this.toggle(e)} />
