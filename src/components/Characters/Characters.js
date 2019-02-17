@@ -5,6 +5,9 @@ import {
   Modal,
   ModalHeader,
   ModalFooter,
+  ModalBody,
+  Container,
+  Row,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import './Characters.scss';
@@ -29,6 +32,8 @@ const defaultCharacter = {
   class: '',
 };
 
+const defaultBackgroundUrl = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/greenback1.jpg?alt=media&token=907abcb1-b074-480e-b98c-531aee4a3d46';
+
 class Characters extends React.Component {
   static propTypes = {
     setLevelTokens: PropTypes.func,
@@ -46,8 +51,13 @@ class Characters extends React.Component {
       characterId: '',
       levelUpCharacter: defaultCharacter,
       levelUpToken: 0,
-      noTeam: true,
       fullTeam: false,
+      disableBattle: true,
+      teamAttackPoints: 0,
+      teamCritChance: 0,
+      teamHealTokens: 0,
+      teamHitPoints: 0,
+      backgroundUrl: defaultBackgroundUrl,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -74,6 +84,11 @@ class Characters extends React.Component {
   }
 
   componentDidMount() {
+    const { backgroundUrl } = this.state;
+    document.body.style.backgroundImage = 'url(' + backgroundUrl + ')';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
     this.setState({ levelUpCharacter: defaultCharacter, characterId: '' });
     const uid = authRequests.getCurrentUid();
     userRequests.getFirebaseUserId(uid).then((firebaseId) => {
@@ -93,17 +108,54 @@ class Characters extends React.Component {
         if (this.state.onTeamCharacters.length === 0) {
           this.setState({ noTeam: true });
         } else if (this.state.onTeamCharacters.length !== 0) {
-          this.setState({ noTeam: false });
+          let teamAttackPoints = 0;
+          let teamCritChance = 0;
+          let teamHealTokens = 0;
+          let teamHitPoints = 0;
+          this.state.onTeamCharacters.forEach((character) => {
+            teamAttackPoints += character.attackPoints;
+            teamCritChance += character.critChance;
+            teamHealTokens += character.healTokens;
+            teamHitPoints += character.hitPoints;
+          });
+          this.setState({
+            noTeam: false,
+            teamAttackPoints,
+            teamCritChance,
+            teamHealTokens,
+            teamHitPoints,
+          });
         }
         if (this.state.onTeamCharacters.length === 4) {
-          this.setState({ fullTeam: true });
+          this.setState({ fullTeam: true, disableBattle: false });
         }
       }).catch(error => console.error('error with getSavedCharacters', error));
   }
 
-showAlert = (e) => {
-  e.preventDefault();
-  const characterId = e.target.id;
+  componentWillUnmount() {
+    this.setState({ backgroundUrl: '' });
+  }
+
+refreshTeamStats = () => {
+  let teamAttackPoints = 0;
+  let teamCritChance = 0;
+  let teamHealTokens = 0;
+  let teamHitPoints = 0;
+  this.state.onTeamCharacters.forEach((character) => {
+    teamAttackPoints += character.attackPoints;
+    teamCritChance += character.critChance;
+    teamHealTokens += character.healTokens;
+    teamHitPoints += character.hitPoints;
+  });
+  this.setState({
+    teamAttackPoints,
+    teamCritChance,
+    teamHealTokens,
+    teamHitPoints,
+  });
+}
+
+showAlert = (characterId) => {
   this.setState({ modal: true, characterId });
 }
 
@@ -154,8 +206,9 @@ hideDeleteAlerts = (e) => {
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
           this.setState({ onTeamCharacters: charactersOnTeam, noTeam: false });
           const { onTeamCharacters } = this.state;
+          this.refreshTeamStats();
           if (onTeamCharacters.length === 4) {
-            this.setState({ fullTeam: true });
+            this.setState({ fullTeam: true, disableBattle: false });
           }
         }).catch(error => console.error('error with getSavedCharacters', error));
     }).catch(error => console.error('error on patchOnTeam', error));
@@ -170,8 +223,9 @@ hideDeleteAlerts = (e) => {
           const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
           this.setState({ characters: charactersNotOnTeam });
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
-          this.setState({ onTeamCharacters: charactersOnTeam, fullTeam: false });
+          this.setState({ onTeamCharacters: charactersOnTeam, fullTeam: false, disableBattle: true });
           const { onTeamCharacters } = this.state;
+          this.refreshTeamStats();
           if (onTeamCharacters.length === 0) {
             this.setState({ noTeam: true });
           }
@@ -234,7 +288,11 @@ hideDeleteAlerts = (e) => {
       characters,
       onTeamCharacters,
       fullTeam,
-      noTeam,
+      disableBattle,
+      teamAttackPoints,
+      teamCritChance,
+      teamHealTokens,
+      teamHitPoints,
     } = this.state;
     const characterItemComponents = characters.map(character => (
       <CharacterItem
@@ -247,33 +305,39 @@ hideDeleteAlerts = (e) => {
         addToTeam = {this.addToTeam}
       />
     ));
-    const onTeamCharacterItemComponents = onTeamCharacters.map(onTeamCharacter => (
-      <OnTeamCharacterItem
-        onTeamCharacter={onTeamCharacter}
-        key={onTeamCharacter.id}
-        removeFromTeam={this.removeFromTeam}
-      />
-    ));
+    let onTeamCharacterItemComponents = '';
+    let teamMessage = '';
+    if (onTeamCharacters.length === 0) {
+      teamMessage = 'Create your team!';
+    } else {
+      onTeamCharacterItemComponents = onTeamCharacters.map(onTeamCharacter => (
+        <OnTeamCharacterItem
+          onTeamCharacter={onTeamCharacter}
+          key={onTeamCharacter.id}
+          removeFromTeam={this.removeFromTeam}
+        />
+      ));
+    }
     const buildModals = () => (
     <div>
       <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-        <ModalHeader toggle={this.toggle}>
+        <ModalHeader className='d-flex justify-content-center'>
         Are you sure you want to delete this Character?
         </ModalHeader>
-        <ModalFooter>
+        <ModalBody className='d-flex justify-content-around'>
           <Button className='btn btn-danger' onClick={this.deleteCharacter}>Yes</Button>
           <Button className='btn btn-success' onClick={this.hideAlert}>No</Button>
-        </ModalFooter>
+        </ModalBody>
       </Modal>
       <Modal
         isOpen={this.state.tokenModal}
         toggle={this.modalToggle}
         className={this.props.className}
       >
-        <ModalHeader toggle={this.modalToggle}>
+        <ModalHeader className='d-flex justify-content-center'>
         You have no more tokens to level up your Characters.
         </ModalHeader>
-        <ModalFooter>
+        <ModalFooter className='d-flex justify-content-center'>
           <Button color="secondary" onClick={this.modalToggle}>OK</Button>
         </ModalFooter>
       </Modal>
@@ -282,21 +346,33 @@ hideDeleteAlerts = (e) => {
         toggle={this.cantDeleteToggle}
         className={this.props.className}
       >
-        <ModalHeader toggle={this.cantDeleteToggle}>
-        You must keep some characters in order to battle.
-        You will need to draw more character cards before you can delete.
+        <ModalHeader className='d-flex justify-content-center'>
+        <p>You must keep enough characters in order to battle.</p>
+        <p>You will need to draw more character cards before you can delete.</p>
         </ModalHeader>
-        <ModalFooter>
+        <ModalBody className='d-flex justify-content-center'>
           <Button color="secondary" onClick={this.hideDeleteAlerts}>OK</Button>
-        </ModalFooter>
+        </ModalBody>
       </Modal>
     </div>
     );
     return (
-      <div className="characters col">
-        <h2>Characters</h2>
-        <div className='onTeamCharacters d-flex flex-wrap'>{onTeamCharacterItemComponents}</div>
-        <Button className='btn btn-danger' disabled={noTeam} tag={RRNavLink} to='/battle'>Battle!</Button>
+      <div className="characters">
+        <Container className='onTeamCharacters mt-2 mb-2 d-flex justify-content-center'>
+          <div className='m-3'>
+            <Row className='d-flex justify-content-center teamStats'>
+            <span className='mr-5 ml-5' title='hit points'><i className="fas fa-heart"></i> : {teamHitPoints}</span>
+            <span className='mr-5 ml-5' title='attack points'><i className="fas fa-dumbbell"></i> : {teamAttackPoints}</span>
+            <span className='mr-5 ml-5' title='heal tokens'><i className="fas fa-briefcase-medical"></i> : {teamHealTokens}</span>
+            <span className='mr-5 ml-5' title='crit chance'><i className="fas fa-skull"></i> : {teamCritChance}%</span>
+            </Row>
+            <Row>
+              {onTeamCharacterItemComponents}
+            </Row>
+            <p className='teamMessage p-5 m-5'>{teamMessage}</p>
+          </div>
+        </Container>
+        <Button className='battleButton btn btn-danger mb-5' disabled={disableBattle} tag={RRNavLink} to='/battle'><p className='m-1'>Battle!</p> </Button>
         <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <div>{buildModals()}</div>
       </div>

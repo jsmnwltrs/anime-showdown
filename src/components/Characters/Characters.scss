@@ -1,0 +1,41 @@
+body {
+
+  .characters {
+    margin-top: 80px;
+  }
+
+  .teamStats {
+    font-size: 20px;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; 
+  }
+
+  .onTeamCharacters {
+    height: 570px;
+    width: 1200px;
+    background-color: rgba(51, 50, 50, 0.829);
+    border: double black 10px;
+    font-size: 20px;
+    
+    .teamMessage {
+      font-size: 50px;
+      color: white;
+      text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; 
+    }
+  }
+  
+  .battleButton {
+    font-size: 20px;
+  }
+
+  .savedCharacters {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border: solid black 2px;
+    background-color: rgba(51, 50, 50, 0.829);
+    height: 650px;
+    width: 1110;
+    margin-bottom: 20px;
+    border-radius: 20px;
+  }
+}

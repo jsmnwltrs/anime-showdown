@@ -23,7 +23,7 @@
   },
   "character3": {
     "name": "Mumen Rider",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/mumen.png?alt=media&token=ceffa710-13af-418d-83ee-3c12a32831e4",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/mumen.png?alt=media&token=0c05e408-0c23-490f-8ffb-fc49b74b03c2",
     "hitPoints": 50,
     "attackPoints": 7,
     "level": 0,
@@ -155,7 +155,7 @@
   },
   "character15": {
     "name": "Gohan",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/gohan.png?alt=media&token=94c7b227-0368-411a-87cb-21326cbf2e7d",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/gohan.png?alt=media&token=706749ea-46cd-4f53-a8d2-2bcc9a7276d4",
     "hitPoints": 70,
     "attackPoints": 10,
     "level": 0,
@@ -309,7 +309,7 @@
   },
   "character29": {
     "name": "Zoro",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/zoro.png?alt=media&token=311120cc-8441-4d72-81a1-9d91274a7368",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/zoro.png?alt=media&token=a7020e56-3d65-437a-9ed5-3cef4706d7d7",
     "hitPoints": 100,
     "attackPoints": 14,
     "level": 0,
@@ -364,7 +364,7 @@
   },
   "character34": {
     "name": "Bisky",
-    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/bisky.png?alt=media&token=37c9a434-37d0-4248-b4ea-02f27b462900",
+    "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/bisky2.png?alt=media&token=b21bff0e-f19c-43fe-a1c3-2a536a79daf7",
     "hitPoints": 70,
     "attackPoints": 10,
     "level": 0,

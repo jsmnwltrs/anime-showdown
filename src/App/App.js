@@ -40,6 +40,7 @@ class App extends React.Component {
     pendingUser: true,
     levelUpToken: 0,
     characterToken: 0,
+    startBattleBool: false,
   }
 
   componentDidMount() {
@@ -80,6 +81,9 @@ class App extends React.Component {
     this.setState({ characterToken: tokenValue });
   }
 
+  hideNavbar = () => {
+    this.setState({ startBattleBool: true });
+  }
 
   render() {
     const {
@@ -87,26 +91,33 @@ class App extends React.Component {
       pendingUser,
       levelUpToken,
       characterToken,
+      startBattleBool,
     } = this.state;
     if (pendingUser) {
       return null;
     }
+    const makeNavbar = () => {
+      if (startBattleBool === false) {
+        return <MyNavbar
+        isAuthed={authed}
+        logoutClickEvent={this.logoutClickEvent}
+        levelUpToken={levelUpToken}
+        characterToken={characterToken}
+      />;
+      }
+      return <span></span>;
+    };
     return (
       <div className="App">
         <BrowserRouter>
           <React.Fragment>
-            <MyNavbar
-              isAuthed={authed}
-              logoutClickEvent={this.logoutClickEvent}
-              levelUpToken={levelUpToken}
-              characterToken={characterToken}
-            />
+          <div>{makeNavbar()}</div>
             <div className="container">
               <div className="row">
                 <Switch>
                   <PrivateRoute path='/characters' component={Characters} authed={authed} setLevelTokens={this.setLevelTokens} />
                   <PrivateRoute path='/locations' component={Locations} authed={authed} setCharacterTokens={this.setCharacterTokens} />
-                  <PrivateRoute path='/battle' component={Battle} authed={authed} setCharacterTokens={this.setCharacterTokens} setLevelTokens={this.setLevelTokens} />
+                  <PrivateRoute path='/battle' component={Battle} authed={authed} setCharacterTokens={this.setCharacterTokens} setLevelTokens={this.setLevelTokens} hideNavbar={this.hideNavbar}/>
                   <PublicRoute path='/auth' component={Auth} authed={authed} />
                   <PublicRoute path='/' component={Auth} authed={authed} />
                 </Switch>

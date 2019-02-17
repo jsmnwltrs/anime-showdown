@@ -1,3 +1,33 @@
 body {
-  background-color: lightcoral !important;
+  background-color: black !important;
+  
+  .auth {
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/loginBackground.jpg?alt=media&token=7645a180-8573-44f5-be49-24cb6adb7ab4);
+    background-size: cover;
+    background-repeat: no-repeat; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    min-width: 100%; 
+    min-height: 100%;
+    margin-top: 50px;
+    position: fixed;
+  }
+
+  .locations {
+      background-image: url(https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/blueback.jpg?alt=media&token=a6b83e92-fe84-4f49-ab33-b69d5b4b9ff3);
+      background-size: cover;
+      background-repeat: no-repeat; 
+      top: 0; 
+      left: 0; 
+      right: 0; 
+      bottom: 0; 
+      min-width: 100%; 
+      min-height: 100%;
+      margin-top: 50px;
+      position: fixed;
+  }
+
 }
+

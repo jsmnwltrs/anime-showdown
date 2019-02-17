@@ -6,9 +6,10 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Row,
+  Col,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import { NavLink as RRNavLink } from 'react-router-dom';
 import Bosses from '../Bosses/Bosses';
 import BattleTeam from '../BattleTeam/BattleTeam';
 import bossRequests from '../../helpers/data/bossRequests';
@@ -17,15 +18,27 @@ import authRequests from '../../helpers/data/authRequests';
 import userRequests from '../../helpers/data/userRequests';
 import attackModifierData from '../../helpers/data/attackModifierData';
 
+const backgroundImage1 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/arenabackground.jpg?alt=media&token=974afe8c-48e8-4557-8188-cab74373b9fb';
+const backgroundImage2 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/CaveBackground.jpg?alt=media&token=657c7ec4-0feb-49ef-8e58-454465fa5039';
+const backgroundImage3 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/cityBackground.jpg?alt=media&token=0ee865bc-cf81-445d-831b-61a5d269178d';
+const backgroundImage4 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/snowback.jpg?alt=media&token=4d18742e-a49c-43ea-bd4a-6f69fc27dbfb';
+const backgroundImage5 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/background.jpg?alt=media&token=a98d1540-f28e-4af2-a7ef-384a9b42bef8';
+const backgroundImage6 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/jirenBackground.jpg?alt=media&token=2f31a8cb-96ce-40b8-b0d5-ff610b5babc6';
+const backgroundImage7 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/namekback.png?alt=media&token=bbf77652-5394-4f5b-bf7c-6071dbeb3b80';
+const backgroundImage8 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/swampBackground.jpg?alt=media&token=a6656138-7b5a-407f-bdf7-f70ee07e05a5';
+const defaultUrl = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/redback1.png?alt=media&token=c0dcc8fc-a09c-4164-b34f-16de54990649';
+
 class Battle extends React.Component {
   static propTypes = {
     setLevelTokens: PropTypes.func,
+    hideNavbar: PropTypes.func,
   }
 
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
+      backgroundModal: false,
       startBattle: false,
       battleBoss: {},
       bossHP: 0,
@@ -38,9 +51,17 @@ class Battle extends React.Component {
       levelUpTokenRewards: 0,
       characterTokenRewards: 0,
       teamCritChance: 0,
+      backgroundUrl: defaultUrl,
     };
 
+    this.toggleBackground = this.toggle.bind(this);
     this.toggle = this.toggle.bind(this);
+  }
+
+  toggleBackground() {
+    this.setState({
+      backgroundModal: !this.state.backgroundModal,
+    });
   }
 
   toggle() {
@@ -93,7 +114,8 @@ class Battle extends React.Component {
           bossHP,
           characterTokenRewards,
           levelUpTokenRewards,
-          startBattle: true,
+          backgroundModal: true,
+          backgroundUrl: '',
         });
       })
       .catch(error => console.error('error on getSingleBoss', error));
@@ -118,15 +140,19 @@ class Battle extends React.Component {
     if (teamCritChance >= randomCrit) {
       teamAttack = teamAP * attackModifierData[5].attackMultiplier;
       newBossHP = bossHP - teamAttack;
+      this.setState({ battleMessage: attackModifierData[5].attackMessage });
     } else {
       const randomizer = Math.floor((Math.random() * 4) + 1);
       teamAttack = teamAP * attackModifierData[randomizer].attackMultiplier;
+      teamAttack = Math.round(teamAttack);
       newBossHP = bossHP - teamAttack;
+      this.setState({ battleMessage: attackModifierData[randomizer].attackMessage });
     }
     this.setState({ bossHP: newBossHP });
     if (newBossHP > 0) {
       const random = Math.floor((Math.random() * 5) + 1);
-      const bossAttack = battleBoss.attackPoints * attackModifierData[random].attackMultiplier;
+      let bossAttack = battleBoss.attackPoints * attackModifierData[random].attackMultiplier;
+      bossAttack = Math.round(bossAttack);
       newTeamHP = teamHP - bossAttack;
       this.setState({ teamHP: newTeamHP });
     } else if (newBossHP <= 0) {
@@ -160,7 +186,22 @@ class Battle extends React.Component {
           setCharacterTokens(newCharacterTokenValue);
         })
         .catch(error => console.error('error on patchCharacterToken', error));
-    }).catch(error => console.error('erro ron getFirebaseUserId', error));
+    }).catch(error => console.error('error on getFirebaseUserId', error));
+  }
+
+  changeBackground = (e) => {
+    const newBackgroundUrl = e.target.id;
+    this.setState({
+      backgroundUrl: newBackgroundUrl,
+      startBattle: true,
+      backgroundModal: false,
+    });
+    this.props.hideNavbar();
+  }
+
+  reload = () => {
+    this.setState({ backgroundUrl: '' });
+    window.location.assign('http://localhost:3000/characters');
   }
 
   render() {
@@ -172,7 +213,12 @@ class Battle extends React.Component {
       maxTeamHP,
       levelUpTokenRewards,
       characterTokenRewards,
+      backgroundUrl,
     } = this.state;
+    document.body.style.backgroundImage = 'url(' + backgroundUrl + ')';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundRepeat = 'no-repeat';
     const battleTeamComponents = battleTeam.map(teamCharacter => (
       <BattleTeam
         showAlert={this.showAlert}
@@ -189,17 +235,18 @@ class Battle extends React.Component {
         return (
           <Modal
             isOpen={this.state.modal}
-            className={this.props.className}
             backdrop={false}
           >
-            <ModalHeader>You Won!</ModalHeader>
+            <ModalHeader className='d-flex justify-content-center winHeader'>You Won!</ModalHeader>
             <ModalBody>
-              Here are your rewards!
-              <p>Level Up Tokens: {levelUpTokenRewards}</p>
-              <p>Character Tokens: {characterTokenRewards}</p>
+              <strong>
+              <p className='d-flex justify-content-center'>Here are your rewards!</p>
+              <p className='d-flex justify-content-center'>Level Up Tokens: {levelUpTokenRewards}</p>
+              <p className='d-flex justify-content-center'>Character Tokens: {characterTokenRewards}</p>
+              </strong>
             </ModalBody>
-            <ModalFooter>
-              <Button color="secondary" tag={RRNavLink} to='/characters'>OK</Button>
+            <ModalFooter className='d-flex justify-content-center'>
+              <Button onClick={this.reload} className="btn-success ok">OK</Button>
             </ModalFooter>
           </Modal>
         );
@@ -208,15 +255,17 @@ class Battle extends React.Component {
         return (
           <Modal
             isOpen={this.state.modal}
-            className={this.props.className}
+            className='loseModal'
             backdrop={false}
           >
-            <ModalHeader>You Lost!</ModalHeader>
-            <ModalBody>
-              You get no rewards.
+            <ModalHeader className='d-flex justify-content-center'>You Lost!</ModalHeader>
+            <ModalBody className='d-flex justify-content-center'>
+            <strong>
+              <p>You get no rewards.</p>
+            </strong>
             </ModalBody>
-            <ModalFooter>
-              <Button color="secondary" onClick={this.toggle} tag={RRNavLink} to='/characters'>OK</Button>
+            <ModalFooter className='d-flex justify-content-center'>
+              <Button className="btn-danger ok" onClick={this.reload}>OK</Button>
             </ModalFooter>
           </Modal>
         );
@@ -224,19 +273,53 @@ class Battle extends React.Component {
       return <div></div>;
     };
 
+    const makeBackgroundModal = () => (
+      <Modal
+      isOpen={this.state.backgroundModal}
+      className={this.props.className}
+      backdrop={false}
+      >
+        <ModalHeader>Choose Location</ModalHeader>
+        <ModalBody>
+          <img onClick={this.changeBackground} id={backgroundImage1} className='backImage' src={backgroundImage1} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage2} className='backImage' src={backgroundImage2} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage3} className='backImage' src={backgroundImage3} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage4} className='backImage' src={backgroundImage4} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage5} className='backImage' src={backgroundImage5} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage6} className='backImage' src={backgroundImage6} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage7} className='backImage' src={backgroundImage7} alt='background img'/>
+          <img onClick={this.changeBackground} id={backgroundImage8} className='backImage' src={backgroundImage8} alt='background img'/>
+        </ModalBody>
+    </Modal>
+    );
+
     const makeBattle = () => {
       if (this.state.startBattle) {
         return (
           <div className='bossBattle'>
-          <h2>{battleBoss.name}</h2>
-          <img src={battleBoss.imageUrl} alt="Card img"/>
-          <p>Boss HP</p>
-          <progress id="bossHitPoints" value={bossHP} max={battleBoss.hitPoints}></progress>
-          <div className='d-flex flex-wrap'>{battleTeamComponents}</div>
-          <p>Team HP</p>
-          <progress id="teamHitPoints" value={teamHP} max={maxTeamHP}></progress>
-          <Button onClick={this.attackBoss} className='btn btn-danger'>Attack!</Button>
-        </div>
+          <Row>
+            <Col className='col-5 mt-3 teamCol'>
+              <div className='d-flex flex-wrap battleTeam'>{battleTeamComponents}</div>
+            </Col>
+            <Col className='col-4'></Col>
+            <Col className='col-3 bossCol'>
+              <img className='bossImage' src={battleBoss.imageUrl} alt="Card img"/>
+            </Col>
+          </Row>
+          <Row className='battleHP'>
+            <Col className='col-4 teamHPCol'>
+              <p className='mr-5'>Team HP: {teamHP}/{maxTeamHP}</p>
+              <progress id="teamHitPoints" value={teamHP} max={maxTeamHP}></progress>
+            </Col>
+           <Col className='col-5'>
+            <Button onClick={this.attackBoss} id=' attackButton' className='btn-danger attackButton'>Attack!</Button>
+           </Col>
+           <Col className='col-3 bossHPCol'>
+            <p className='bossHP'>Boss HP: {bossHP}/{battleBoss.hitPoints}</p>
+            <progress className='bossHP' id="bossHitPoints" value={bossHP} max={battleBoss.hitPoints}></progress>
+          </Col>
+          </Row>
+          </div>
         );
       }
       return <div></div>;
@@ -244,9 +327,10 @@ class Battle extends React.Component {
 
     return (
       <div>
-        <Bosses startBattle={this.startBattle} />
+        <Bosses startBattleBool={this.state.startBattle} startBattle={this.startBattle} />
         <div>{makeBattle()}</div>
         <div>{makeModal()}</div>
+        <div>{makeBackgroundModal()}</div>
       </div>
     );
   }
