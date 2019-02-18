@@ -9,10 +9,7 @@ const attackModifierData = {
     attackMultiplier: 1.2,
   },
   4: {
-    attackMultiplier: 1.5,
-  },
-  5: {
-    attackMultiplier: 2,
+    attackMultiplier: 1,
   },
 };
 

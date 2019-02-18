@@ -17,8 +17,8 @@ const defaultUser = {
   email: '',
   username: '',
   password: '',
-  characterTokens: 4,
-  levelUpTokens: 2,
+  characterTokens: 5,
+  levelUpTokens: 4,
   uid: '',
 };
 
@@ -50,7 +50,11 @@ class SignUp extends React.Component {
     authRequests.createUser(newUser.email, newUser.password).then((data) => {
       const userWithUid = { ...this.state.newUser };
       userWithUid.uid = data.user.uid;
-      userRequests.addUser(userWithUid).then().catch(error => console.error('error on addUser', error));
+      userRequests.addUser(userWithUid)
+        .then(() => {
+          window.location.assign('http://localhost:3000/characters');
+        })
+        .catch(error => console.error('error on addUser', error));
     }).catch(error => console.error('error on saveUser', error));
   }
 

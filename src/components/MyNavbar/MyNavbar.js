@@ -42,10 +42,10 @@ class MyNavbar extends React.Component {
         return (
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <p title='character tokens' className='userToken m-1 mr-3'><i class="fas fa-user-plus"> : </i> {levelUpToken}</p>
+            <p title='character tokens' className='userToken m-1 mr-5'><i className="fas fa-user-plus"> : </i> {characterToken}</p>
           </NavItem>
           <NavItem>
-            <p title='level up tokens' className='userToken m-1 mr-3'><i class="fas fa-angle-double-up"> : </i> {characterToken}</p>
+            <p title='level up tokens' className='userToken m-1 mr-5'><i className="fas fa-angle-double-up"> : </i> {levelUpToken}</p>
           </NavItem>
           <NavItem>
             <NavLink tag={RRNavLink} to='/characters'>Characters</NavLink>

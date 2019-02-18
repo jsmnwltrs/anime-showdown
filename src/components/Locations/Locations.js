@@ -5,7 +5,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Row,
   Col,
 } from 'reactstrap';
@@ -24,8 +23,8 @@ const defaultCharacter = {
   onTeam: false,
   uid: '',
   critChance: 0,
+  critBonus: 0,
   healBonus: 0,
-  healTokens: 0,
   class: '',
 };
 
@@ -108,8 +107,8 @@ class Locations extends React.Component {
               myCharacter.attackPoints = character.data.attackPoints;
               myCharacter.hitPoints = character.data.hitPoints;
               myCharacter.critChance = character.data.critChance;
+              myCharacter.critBonus = character.data.critBonus;
               myCharacter.healBonus = character.data.healBonus;
-              myCharacter.healTokens = character.data.healTokens;
               myCharacter.class = character.data.class;
               this.setState({ chosenCharacter: myCharacter });
               characterRequests.addSavedCharacter(this.state.chosenCharacter)
@@ -129,6 +128,7 @@ class Locations extends React.Component {
 
   render() {
     const { locations, chosenCharacter } = this.state;
+    const newCritBonus = Math.round(chosenCharacter.critBonus * 100);
     const locationItemComponents = locations.map(location => (
       <LocationItem
         location={location}
@@ -161,11 +161,11 @@ class Locations extends React.Component {
               <div className='col-2'></div>
               <Col className='statCol'>
                 <p title='hit points'><i className="fas fa-heart"></i> : {chosenCharacter.hitPoints}</p>
-                <p title='heal tokens'><i className="fas fa-briefcase-medical"></i> : {chosenCharacter.healTokens}</p>
+                <p title='heal bonus'><i className="fas fa-briefcase-medical"></i> : {chosenCharacter.healBonus}</p>
               </Col>
               <Col>
                 <p title='attack points'><i className="fas fa-dumbbell"></i> : {chosenCharacter.attackPoints}</p>
-                <p title='crit chance'><i className="fas fa-skull"></i> : {chosenCharacter.critChance}%</p>
+                <p title='crit bonus'><i className="fas fa-skull"></i> : {newCritBonus}%</p>
               </Col>
             </Row>
             <div className='d-flex justify-content-center'>

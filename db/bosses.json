@@ -2,91 +2,91 @@
   "boss1": {
     "name": "Chrollo Lucilfer",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/chrollo.png?alt=media&token=91a6eca6-0d55-482d-bbdb-27625dfb6f7b",
-    "hitPoints": 300,
-    "attackPoints": 20,
+    "hitPoints": 620,
+    "attackPoints": 87,
     "level": 3,
-    "characterTokenReward": 1,
-    "levelTokenReward": 1
+    "characterTokenReward": 2,
+    "levelTokenReward": 3
   },
   "boss2": {
     "name": "Frieza",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/frieza.png?alt=media&token=daf13265-aa27-4060-b425-854e719acb1e",
-    "hitPoints": 600,
-    "attackPoints": 40,
+    "hitPoints": 900,
+    "attackPoints": 110,
     "level": 5,
-    "characterTokenReward": 1,
-    "levelTokenReward": 1
+    "characterTokenReward": 3,
+    "levelTokenReward": 4
   },
   "boss3": {
     "name": "Lucci",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/lucci.png?alt=media&token=4b239c21-a677-4074-8279-38543b24fdd4",
-    "hitPoints": 300,
-    "attackPoints": 20,
+    "hitPoints": 750,
+    "attackPoints": 98,
     "level": 4,
-    "characterTokenReward": 2,
-    "levelTokenReward": 2
+    "characterTokenReward": 3,
+    "levelTokenReward": 3
   },
   "boss4": {
     "name": "Doflamingo",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/doffy.png?alt=media&token=d9ca27fe-7c57-4d23-b471-df07014c3391",
-    "hitPoints": 300,
-    "attackPoints": 20,
+    "hitPoints": 1000,
+    "attackPoints": 120,
     "level": 6,
-    "characterTokenReward": 3,
-    "levelTokenReward": 3
+    "characterTokenReward": 4,
+    "levelTokenReward": 4
   },
   "boss5": {
     "name": "Lord Boros",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/boros.png?alt=media&token=39419c93-7535-4f2d-90f8-325e5617cfaf",
-    "hitPoints": 300,
-    "attackPoints": 20,
+    "hitPoints": 1600,
+    "attackPoints": 188,
     "level": 9,
-    "characterTokenReward": 3,
-    "levelTokenReward": 3
+    "characterTokenReward": 5,
+    "levelTokenReward": 6
   },
   "boss6": {
     "name": "Jiren",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/jiren.png?alt=media&token=a2cad9a2-27ca-45db-98ec-ebcdf0a76864",
-    "hitPoints": 300,
-    "attackPoints": 20,
+    "hitPoints": 1800,
+    "attackPoints": 200,
     "level": 10,
-    "characterTokenReward": 4,
-    "levelTokenReward": 4
+    "characterTokenReward": 6,
+    "levelTokenReward": 6
   },
   "boss7": {
     "name": "Crocodile",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/crocodile.png?alt=media&token=26a2d090-a25d-4b22-8fe8-ee029d8d6cd5",
-    "hitPoints": 300,
-    "attackPoints": 20,
+    "hitPoints": 540,
+    "attackPoints": 76,
     "level": 2,
-    "characterTokenReward": 5,
-    "levelTokenReward": 5
+    "characterTokenReward": 2,
+    "levelTokenReward": 2
   },
   "boss8": {
     "name": "Meruem",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/meruim.png?alt=media&token=e6623977-937b-49b9-b531-54c39f805c22",
-    "hitPoints": 300,
-    "attackPoints": 20,
+    "hitPoints": 1250,
+    "attackPoints": 140,
     "level": 7,
-    "characterTokenReward": 6,
-    "levelTokenReward": 6
+    "characterTokenReward": 4,
+    "levelTokenReward": 5
   },
   "boss9": {
     "name": "Boo",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/boo.png?alt=media&token=d5b19766-2610-45d4-8128-2ab2fd8747a0",
-    "hitPoints": 300,
-    "attackPoints": 20,
+    "hitPoints": 1400,
+    "attackPoints": 160,
     "level": 8,
-    "characterTokenReward": 6,
-    "levelTokenReward": 6
+    "characterTokenReward": 5,
+    "levelTokenReward": 5
   },
   "boss10": {
     "name": "Crablante",
     "imageUrl": "https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/crab.png?alt=media&token=5e586150-bdda-4160-b8d8-424fac10daa0",
-    "hitPoints": 300,
-    "attackPoints": 20,
+    "hitPoints": 440,
+    "attackPoints": 65,
     "level": 1,
-    "characterTokenReward": 6,
-    "levelTokenReward": 6
+    "characterTokenReward": 1,
+    "levelTokenReward": 2
   }
 }
