@@ -39,6 +39,7 @@ class CharacterItem extends React.Component {
 
   render() {
     const { character, fullTeam } = this.props;
+    const newCritBonus = Math.round(character.critBonus * 100);
     const makeButton = () => {
       if (character.level === 10) {
         return <span></span>;
@@ -62,11 +63,11 @@ class CharacterItem extends React.Component {
           <CardSubtitle className='mt-1 mb-1'>Level: {character.level}</CardSubtitle>
           <Row>
             <Col><CardText title='hit points'><i className="fas fa-heart"></i> : {character.hitPoints}</CardText></Col>
-            <Col><CardText title='heal tokens'><i className="fas fa-briefcase-medical"></i> : {character.healTokens}</CardText></Col>
+            <Col><CardText title='heal bonus'><i className="fas fa-briefcase-medical"></i> : {character.healBonus}</CardText></Col>
           </Row>
           <Row>
             <Col><CardText title='attack points'><i className="fas fa-dumbbell"></i> : {character.attackPoints}</CardText></Col>
-            <Col><CardText title='crit chance'><i className="fas fa-skull"></i> : {character.critChance}%</CardText></Col>
+            <Col><CardText title='crit bonus'><i className="fas fa-skull"></i> : {newCritBonus}%</CardText></Col>
           </Row>
       </Card>
     </div>

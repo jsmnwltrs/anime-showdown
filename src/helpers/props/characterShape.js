@@ -9,8 +9,8 @@ const characterShape = PropTypes.shape({
   onTeam: PropTypes.bool,
   uid: PropTypes.string,
   critChance: PropTypes.number,
+  critBonus: PropTypes.number,
   healBonus: PropTypes.number,
-  healTokens: PropTypes.number,
   class: PropTypes.string,
 });
 

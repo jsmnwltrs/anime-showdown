@@ -1,21 +1,27 @@
 const levelUpData = {
   Healer: {
-    hitPoints: 1,
-    attackPoints: 1,
-    critChance: 0,
-    healBonus: 5,
+    hitPoints: 1.15,
+    attackPoints: 1.13,
+    critBonus: 1,
+    healBonus: 1.1,
   },
   Brawler: {
-    hitPoints: 5,
-    attackPoints: 5,
-    critChance: 0,
-    healBonus: 0,
+    hitPoints: 1.2,
+    attackPoints: 1.12,
+    critBonus: 1,
+    healBonus: 1,
   },
   Specialist: {
-    hitPoints: 1,
-    attackPoints: 1,
-    critChance: 5,
-    healBonus: 0,
+    hitPoints: 1.2,
+    attackPoints: 1.1,
+    critBonus: 1.025,
+    healBonus: 1,
+  },
+  Sad: {
+    hitPoints: 1.1,
+    attackPoints: 1.1,
+    critBonus: 1,
+    healBonus: 1,
   },
 };
 

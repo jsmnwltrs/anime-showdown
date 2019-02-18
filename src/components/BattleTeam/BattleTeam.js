@@ -11,7 +11,6 @@ import './BattleTeam.scss';
 class BattleTeam extends React.Component {
   state = {
     disableHeal: false,
-    healTokens: 0,
   }
 
   static propTypes = {
@@ -20,35 +19,14 @@ class BattleTeam extends React.Component {
     maxTeamHP: PropTypes.number,
   }
 
-  componentDidMount() {
-    const { teamCharacter } = this.props;
-    const healTokenAmount = teamCharacter.healTokens;
-    this.setState({ healTokens: healTokenAmount });
-  }
-
-  levelUpClick = () => {
-    const { levelUpCharacter, character } = this.props;
-    levelUpCharacter(character.id);
-  }
-
-  addToTeamEvent = () => {
-    const { addToTeam, character } = this.props;
-    addToTeam(character.id);
-  }
-
   healTeam = () => {
-    const { healTokens } = this.state;
     const {
       teamCharacter,
       teamHP,
       maxTeamHP,
       passHealedHP,
     } = this.props;
-    const newHealTokenAmount = healTokens - 1;
-    this.setState({ healTokens: newHealTokenAmount });
-    if (newHealTokenAmount === 0) {
-      this.setState({ disableHeal: true });
-    }
+    this.setState({ disableHeal: true });
     const random = Math.floor((Math.random() * 5) + 1);
     let teamHeal = teamCharacter.healBonus * healModifierData[random].healMultiplier;
     teamHeal = Math.round(teamHeal);
@@ -61,7 +39,7 @@ class BattleTeam extends React.Component {
   }
 
   render() {
-    const { disableHeal, healTokens } = this.state;
+    const { disableHeal } = this.state;
     const { teamCharacter } = this.props;
     const makeHealButton = () => {
       if (teamCharacter.class === 'Healer') {
@@ -70,7 +48,7 @@ class BattleTeam extends React.Component {
             onClick={this.healTeam}
             disabled={disableHeal}
             className='btn btn-success healButton'>
-            Heal! <span>{healTokens}</span>
+            Heal!
           </Button>
         );
       }

@@ -27,8 +27,8 @@ const defaultCharacter = {
   onTeam: false,
   uid: '',
   critChance: 0,
+  critBonus: 0,
   healBonus: 0,
-  healTokens: 0,
   class: '',
 };
 
@@ -52,10 +52,10 @@ class Characters extends React.Component {
       levelUpCharacter: defaultCharacter,
       levelUpToken: 0,
       fullTeam: false,
-      disableBattle: true,
+      disableB: true,
       teamAttackPoints: 0,
-      teamCritChance: 0,
-      teamHealTokens: 0,
+      teamCritBonus: 0,
+      teamHealBonus: 0,
       teamHitPoints: 0,
       backgroundUrl: defaultBackgroundUrl,
     };
@@ -109,25 +109,26 @@ class Characters extends React.Component {
           this.setState({ noTeam: true });
         } else if (this.state.onTeamCharacters.length !== 0) {
           let teamAttackPoints = 0;
-          let teamCritChance = 0;
-          let teamHealTokens = 0;
+          let teamCritBonus = 0;
+          let teamHealBonus = 0;
           let teamHitPoints = 0;
           this.state.onTeamCharacters.forEach((character) => {
             teamAttackPoints += character.attackPoints;
-            teamCritChance += character.critChance;
-            teamHealTokens += character.healTokens;
+            teamCritBonus += character.critBonus;
+            teamHealBonus += character.healBonus;
             teamHitPoints += character.hitPoints;
           });
+          const newTeamCritBonus = Math.round(teamCritBonus * 100);
           this.setState({
             noTeam: false,
             teamAttackPoints,
-            teamCritChance,
-            teamHealTokens,
+            teamCritBonus: newTeamCritBonus,
+            teamHealBonus,
             teamHitPoints,
           });
         }
         if (this.state.onTeamCharacters.length === 4) {
-          this.setState({ fullTeam: true, disableBattle: false });
+          this.setState({ fullTeam: true, disableB: false });
         }
       }).catch(error => console.error('error with getSavedCharacters', error));
   }
@@ -138,19 +139,20 @@ class Characters extends React.Component {
 
 refreshTeamStats = () => {
   let teamAttackPoints = 0;
-  let teamCritChance = 0;
-  let teamHealTokens = 0;
+  let teamCritBonus = 0;
+  let teamHealBonus = 0;
   let teamHitPoints = 0;
   this.state.onTeamCharacters.forEach((character) => {
     teamAttackPoints += character.attackPoints;
-    teamCritChance += character.critChance;
-    teamHealTokens += character.healTokens;
+    teamCritBonus += character.critBonus;
+    teamHealBonus += character.healBonus;
     teamHitPoints += character.hitPoints;
   });
+  const newTeamCritBonus = Math.round(teamCritBonus * 100);
   this.setState({
     teamAttackPoints,
-    teamCritChance,
-    teamHealTokens,
+    teamCritBonus: newTeamCritBonus,
+    teamHealBonus,
     teamHitPoints,
   });
 }
@@ -208,7 +210,7 @@ hideDeleteAlerts = (e) => {
           const { onTeamCharacters } = this.state;
           this.refreshTeamStats();
           if (onTeamCharacters.length === 4) {
-            this.setState({ fullTeam: true, disableBattle: false });
+            this.setState({ fullTeam: true, disableB: false });
           }
         }).catch(error => console.error('error with getSavedCharacters', error));
     }).catch(error => console.error('error on patchOnTeam', error));
@@ -223,7 +225,7 @@ hideDeleteAlerts = (e) => {
           const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
           this.setState({ characters: charactersNotOnTeam });
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
-          this.setState({ onTeamCharacters: charactersOnTeam, fullTeam: false, disableBattle: true });
+          this.setState({ onTeamCharacters: charactersOnTeam, fullTeam: false, disableB: true });
           const { onTeamCharacters } = this.state;
           this.refreshTeamStats();
           if (onTeamCharacters.length === 0) {
@@ -248,21 +250,16 @@ hideDeleteAlerts = (e) => {
       }).catch(error => console.error('error on getFirebaseUserId', error));
       characterRequests.getSingleSavedCharacter(characterId)
         .then((result) => {
-          const characterObject = result.data;
-          this.setState({ levelUpCharacter: characterObject });
-          const myCharacter = { ...this.state.levelUpCharacter };
-          myCharacter.level = characterObject.level + 1;
-          const key = myCharacter.class;
-          myCharacter.hitPoints = characterObject.hitPoints + levelUpData[key].hitPoints;
-          myCharacter.attackPoints = characterObject.attackPoints + levelUpData[key].attackPoints;
-          myCharacter.critChance = characterObject.critChance + levelUpData[key].critChance;
-          myCharacter.healBonus = characterObject.healBonus + levelUpData[key].healBonus;
-          if (myCharacter.class === 'Healer' && myCharacter.level === 4) {
-            myCharacter.healTokens = characterObject.healTokens + 1;
-          } else if (myCharacter.class === 'Healer' && myCharacter.level === 8) {
-            myCharacter.healTokens = characterObject.healTokens + 1;
-          }
-          this.setState({ levelUpCharacter: myCharacter });
+          const character = result.data;
+          this.setState({ levelUpCharacter: character });
+          const myChar = { ...this.state.levelUpCharacter };
+          myChar.level = character.level + 1;
+          const key = myChar.class;
+          myChar.hitPoints = Math.round(character.hitPoints * levelUpData[key].hitPoints);
+          myChar.attackPoints = Math.round(character.attackPoints * levelUpData[key].attackPoints);
+          myChar.healBonus = Math.round(character.healBonus * levelUpData[key].healBonus);
+          myChar.critBonus = character.critBonus * levelUpData[key].critBonus;
+          this.setState({ levelUpCharacter: myChar });
           const { levelUpCharacter } = this.state;
           characterRequests.updateSavedCharacter(characterId, levelUpCharacter)
             .then(() => {
@@ -288,10 +285,10 @@ hideDeleteAlerts = (e) => {
       characters,
       onTeamCharacters,
       fullTeam,
-      disableBattle,
+      disableB,
       teamAttackPoints,
-      teamCritChance,
-      teamHealTokens,
+      teamCritBonus,
+      teamHealBonus,
       teamHitPoints,
     } = this.state;
     const characterItemComponents = characters.map(character => (
@@ -363,8 +360,8 @@ hideDeleteAlerts = (e) => {
             <Row className='d-flex justify-content-center teamStats'>
             <span className='mr-5 ml-5' title='hit points'><i className="fas fa-heart"></i> : {teamHitPoints}</span>
             <span className='mr-5 ml-5' title='attack points'><i className="fas fa-dumbbell"></i> : {teamAttackPoints}</span>
-            <span className='mr-5 ml-5' title='heal tokens'><i className="fas fa-briefcase-medical"></i> : {teamHealTokens}</span>
-            <span className='mr-5 ml-5' title='crit chance'><i className="fas fa-skull"></i> : {teamCritChance}%</span>
+            <span className='mr-5 ml-5' title='heal bonus'><i className="fas fa-briefcase-medical"></i> : {teamHealBonus}</span>
+            <span className='mr-5 ml-5' title='crit bonus'><i className="fas fa-skull"></i> : {teamCritBonus}%</span>
             </Row>
             <Row>
               {onTeamCharacterItemComponents}
@@ -372,7 +369,7 @@ hideDeleteAlerts = (e) => {
             <p className='teamMessage p-5 m-5'>{teamMessage}</p>
           </div>
         </Container>
-        <Button className='battleButton btn btn-danger mb-5' disabled={disableBattle} tag={RRNavLink} to='/battle'><p className='m-1'>Battle!</p> </Button>
+        <Button className='battleButton btn btn-danger mb-5' disabled={disableB} tag={RRNavLink} to='/battle'><p className='m-1'>Battle!</p> </Button>
         <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <div>{buildModals()}</div>
       </div>

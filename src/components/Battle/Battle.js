@@ -51,6 +51,7 @@ class Battle extends React.Component {
       levelUpTokenRewards: 0,
       characterTokenRewards: 0,
       teamCritChance: 0,
+      teamCritBonus: 0,
       backgroundUrl: defaultUrl,
     };
 
@@ -78,16 +79,19 @@ class Battle extends React.Component {
         let teamHP = 0;
         let teamAP = 0;
         let teamCritChance = 0;
+        let teamCritBonus = 0;
         battleTeam.forEach((character) => {
           teamHP += character.hitPoints;
           teamAP += character.attackPoints;
           teamCritChance += character.critChance;
+          teamCritBonus += character.critBonus;
         });
         this.setState({
           teamHP,
           teamAP,
           maxTeamHP: teamHP,
           teamCritChance,
+          teamCritBonus,
         });
       })
       .catch(error => console.error('error on getSavedCharacters', error));
@@ -132,28 +136,26 @@ class Battle extends React.Component {
       teamAP,
       teamHP,
       teamCritChance,
+      teamCritBonus,
     } = this.state;
     let newTeamHP = 0;
     let newBossHP = 0;
     let teamAttack = 0;
     const randomCrit = Math.floor((Math.random() * 100) + 1);
     if (teamCritChance >= randomCrit) {
-      teamAttack = teamAP * attackModifierData[5].attackMultiplier;
-      newBossHP = bossHP - teamAttack;
-      this.setState({ battleMessage: attackModifierData[5].attackMessage });
+      const teamCritModifier = teamCritBonus + attackModifierData[4].attackMultiplier;
+      teamAttack = teamAP * teamCritModifier;
+      newBossHP = Math.round(bossHP - teamAttack);
     } else {
-      const randomizer = Math.floor((Math.random() * 4) + 1);
+      const randomizer = Math.floor((Math.random() * 3) + 1);
       teamAttack = teamAP * attackModifierData[randomizer].attackMultiplier;
-      teamAttack = Math.round(teamAttack);
-      newBossHP = bossHP - teamAttack;
-      this.setState({ battleMessage: attackModifierData[randomizer].attackMessage });
+      newBossHP = Math.round(bossHP - teamAttack);
     }
     this.setState({ bossHP: newBossHP });
     if (newBossHP > 0) {
-      const random = Math.floor((Math.random() * 5) + 1);
-      let bossAttack = battleBoss.attackPoints * attackModifierData[random].attackMultiplier;
-      bossAttack = Math.round(bossAttack);
-      newTeamHP = teamHP - bossAttack;
+      const random = Math.floor((Math.random() * 4) + 1);
+      const bossAttack = battleBoss.attackPoints * attackModifierData[random].attackMultiplier;
+      newTeamHP = Math.round(teamHP - bossAttack);
       this.setState({ teamHP: newTeamHP });
     } else if (newBossHP <= 0) {
       this.setState({ modal: true });
