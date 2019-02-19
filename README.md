@@ -7,7 +7,7 @@ When the player first logs in, they are given a set number of character tokens w
 
 A player can delete characters but only when they have more than 4 total. They can use level up tokens to update and level up the stats of their characters. 
 
-A player can choose up to 4 characters to be on their team. When the team members are selected, they can click the Battle! button to go to the boss selection page.
+A player can choose 4 characters to be on their team. When the team members are selected, they can click the Battle! button to go to the boss selection page.
 
 A player can choose a boss to fight and the battle will start. The attack button uses the combined team's AP and characters that are in the healer's class can heal the party.
 
@@ -34,7 +34,7 @@ npm start
 ## Screenshots
 
 ### Login Page
-![login page]()
+![login page](https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/animeShowdownHome.png?alt=media&token=92838bad-7c56-4bf5-a220-eb1e3c27fe4f)
 
 ### Characters Page
 ![main page]()
