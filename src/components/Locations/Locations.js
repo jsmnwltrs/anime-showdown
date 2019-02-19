@@ -13,6 +13,7 @@ import locationRequests from '../../helpers/data/locationRequests';
 import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
 import userRequests from '../../helpers/data/userRequests';
+import selectionSound from '../../helpers/sound/perfectDark.wav';
 
 const defaultCharacter = {
   name: '',
@@ -186,6 +187,9 @@ class Locations extends React.Component {
               <Button color="secondary" onClick={this.modalToggle}>OK</Button>
             </ModalBody>
         </Modal>
+        <div>
+          <audio ref='audio_tag' src={selectionSound} loop autoPlay/>
+        </div>
       </div>
     );
   }

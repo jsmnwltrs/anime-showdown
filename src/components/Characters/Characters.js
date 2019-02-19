@@ -17,7 +17,7 @@ import CharacterItem from '../CharacterItem/CharacterItem';
 import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
 import userRequests from '../../helpers/data/userRequests';
-import CharacterSelectSuperSmash from '../../helpers/sound/CharacterSelectSuperSmash.mp3';
+import selectionSound from '../../helpers/sound/perfectDark.wav';
 
 const defaultCharacter = {
   name: '',
@@ -374,7 +374,7 @@ hideDeleteAlerts = (e) => {
         <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <div>{buildModals()}</div>
         <div>
-          <audio ref='audio_tag' src={CharacterSelectSuperSmash} loop autoPlay/>
+          <audio ref='audio_tag' src={selectionSound} loop autoPlay/>
         </div>
       </div>
     );
