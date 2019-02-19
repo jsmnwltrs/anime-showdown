@@ -52,7 +52,7 @@ class SignUp extends React.Component {
       userWithUid.uid = data.user.uid;
       userRequests.addUser(userWithUid)
         .then(() => {
-          window.location.assign('http://localhost:3000/characters');
+          window.location.assign('https://anime-showdown.firebaseapp.com/characters');
         })
         .catch(error => console.error('error on addUser', error));
     }).catch(error => console.error('error on saveUser', error));
