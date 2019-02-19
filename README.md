@@ -37,15 +37,19 @@ npm start
 ![login page](https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/animeShowdownHome.png?alt=media&token=92838bad-7c56-4bf5-a220-eb1e3c27fe4f)
 
 ### Characters Page
-![main page]()
+![main page1](https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/characterPage1.PNG?alt=media&token=47a0606e-abd2-46db-9bb0-daa1b6d2f4e9)
+![main page2](https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/characterPage2.PNG?alt=media&token=a0313c23-65da-4325-8805-705e4036b29e)
 
 ### Locations Page
-![locations page]()
+![locations page](https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/LocationsPage.PNG?alt=media&token=a17c9d59-f032-4e56-933f-de994ca05956)
 
 ### Boss Selection Page
-![boss page]()
+![boss page1](https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/bossPage1.PNG?alt=media&token=bce7b3aa-e916-4cd5-bd8d-92c4109e4670)
+![boss page2](https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/bossPage2.PNG?alt=media&token=8ece8291-0e3b-428c-9682-29312c014deb)
+![boss page3](https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/bossPage3.PNG?alt=media&token=0577eac6-705a-452d-bace-e744cd9e8be5)
+![boss page4](https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/bossPage4.PNG?alt=media&token=752e01bf-c594-45c5-9c81-962fa85cf75b)
 
 ### Battle Page
-![battle page]()
+![battle page](https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/BattlePage.PNG?alt=media&token=a39fb0e6-ccc0-4e8c-ba83-1f2a30b596ea)
 
 
