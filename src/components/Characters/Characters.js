@@ -5,6 +5,9 @@ import {
   Modal,
   ModalHeader,
   ModalFooter,
+  ModalBody,
+  Container,
+  Row,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import './Characters.scss';
@@ -25,10 +28,12 @@ const defaultCharacter = {
   onTeam: false,
   uid: '',
   critChance: 0,
+  critBonus: 0,
   healBonus: 0,
-  healTokens: 0,
   class: '',
 };
+
+const defaultBackgroundUrl = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/greenback1.jpg?alt=media&token=907abcb1-b074-480e-b98c-531aee4a3d46';
 
 class Characters extends React.Component {
   static propTypes = {
@@ -47,8 +52,13 @@ class Characters extends React.Component {
       characterId: '',
       levelUpCharacter: defaultCharacter,
       levelUpToken: 0,
-      noTeam: true,
       fullTeam: false,
+      disableB: true,
+      teamAttackPoints: 0,
+      teamCritBonus: 0,
+      teamHealBonus: 0,
+      teamHitPoints: 0,
+      backgroundUrl: defaultBackgroundUrl,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -75,6 +85,11 @@ class Characters extends React.Component {
   }
 
   componentDidMount() {
+    const { backgroundUrl } = this.state;
+    document.body.style.backgroundImage = 'url(' + backgroundUrl + ')';
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
     this.setState({ levelUpCharacter: defaultCharacter, characterId: '' });
     const uid = authRequests.getCurrentUid();
     userRequests.getFirebaseUserId(uid).then((firebaseId) => {
@@ -94,17 +109,56 @@ class Characters extends React.Component {
         if (this.state.onTeamCharacters.length === 0) {
           this.setState({ noTeam: true });
         } else if (this.state.onTeamCharacters.length !== 0) {
-          this.setState({ noTeam: false });
+          let teamAttackPoints = 0;
+          let teamCritBonus = 0;
+          let teamHealBonus = 0;
+          let teamHitPoints = 0;
+          this.state.onTeamCharacters.forEach((character) => {
+            teamAttackPoints += character.attackPoints;
+            teamCritBonus += character.critBonus;
+            teamHealBonus += character.healBonus;
+            teamHitPoints += character.hitPoints;
+          });
+          const newTeamCritBonus = Math.round(teamCritBonus * 100);
+          this.setState({
+            noTeam: false,
+            teamAttackPoints,
+            teamCritBonus: newTeamCritBonus,
+            teamHealBonus,
+            teamHitPoints,
+          });
         }
         if (this.state.onTeamCharacters.length === 4) {
-          this.setState({ fullTeam: true });
+          this.setState({ fullTeam: true, disableB: false });
         }
       }).catch(error => console.error('error with getSavedCharacters', error));
   }
 
-showAlert = (e) => {
-  e.preventDefault();
-  const characterId = e.target.id;
+  componentWillUnmount() {
+    this.setState({ backgroundUrl: '' });
+  }
+
+refreshTeamStats = () => {
+  let teamAttackPoints = 0;
+  let teamCritBonus = 0;
+  let teamHealBonus = 0;
+  let teamHitPoints = 0;
+  this.state.onTeamCharacters.forEach((character) => {
+    teamAttackPoints += character.attackPoints;
+    teamCritBonus += character.critBonus;
+    teamHealBonus += character.healBonus;
+    teamHitPoints += character.hitPoints;
+  });
+  const newTeamCritBonus = Math.round(teamCritBonus * 100);
+  this.setState({
+    teamAttackPoints,
+    teamCritBonus: newTeamCritBonus,
+    teamHealBonus,
+    teamHitPoints,
+  });
+}
+
+showAlert = (characterId) => {
   this.setState({ modal: true, characterId });
 }
 
@@ -155,8 +209,9 @@ hideDeleteAlerts = (e) => {
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
           this.setState({ onTeamCharacters: charactersOnTeam, noTeam: false });
           const { onTeamCharacters } = this.state;
+          this.refreshTeamStats();
           if (onTeamCharacters.length === 4) {
-            this.setState({ fullTeam: true });
+            this.setState({ fullTeam: true, disableB: false });
           }
         }).catch(error => console.error('error with getSavedCharacters', error));
     }).catch(error => console.error('error on patchOnTeam', error));
@@ -171,8 +226,9 @@ hideDeleteAlerts = (e) => {
           const charactersNotOnTeam = characters.filter(x => x.onTeam === false);
           this.setState({ characters: charactersNotOnTeam });
           const charactersOnTeam = characters.filter(x => x.onTeam === true);
-          this.setState({ onTeamCharacters: charactersOnTeam, fullTeam: false });
+          this.setState({ onTeamCharacters: charactersOnTeam, fullTeam: false, disableB: true });
           const { onTeamCharacters } = this.state;
+          this.refreshTeamStats();
           if (onTeamCharacters.length === 0) {
             this.setState({ noTeam: true });
           }
@@ -195,21 +251,16 @@ hideDeleteAlerts = (e) => {
       }).catch(error => console.error('error on getFirebaseUserId', error));
       characterRequests.getSingleSavedCharacter(characterId)
         .then((result) => {
-          const characterObject = result.data;
-          this.setState({ levelUpCharacter: characterObject });
-          const myCharacter = { ...this.state.levelUpCharacter };
-          myCharacter.level = characterObject.level + 1;
-          const key = myCharacter.class;
-          myCharacter.hitPoints = characterObject.hitPoints + levelUpData[key].hitPoints;
-          myCharacter.attackPoints = characterObject.attackPoints + levelUpData[key].attackPoints;
-          myCharacter.critChance = characterObject.critChance + levelUpData[key].critChance;
-          myCharacter.healBonus = characterObject.healBonus + levelUpData[key].healBonus;
-          if (myCharacter.class === 'Healer' && myCharacter.level === 4) {
-            myCharacter.healTokens = characterObject.healTokens + 1;
-          } else if (myCharacter.class === 'Healer' && myCharacter.level === 8) {
-            myCharacter.healTokens = characterObject.healTokens + 1;
-          }
-          this.setState({ levelUpCharacter: myCharacter });
+          const character = result.data;
+          this.setState({ levelUpCharacter: character });
+          const myChar = { ...this.state.levelUpCharacter };
+          myChar.level = character.level + 1;
+          const key = myChar.class;
+          myChar.hitPoints = Math.round(character.hitPoints * levelUpData[key].hitPoints);
+          myChar.attackPoints = Math.round(character.attackPoints * levelUpData[key].attackPoints);
+          myChar.healBonus = Math.round(character.healBonus * levelUpData[key].healBonus);
+          myChar.critBonus = character.critBonus * levelUpData[key].critBonus;
+          this.setState({ levelUpCharacter: myChar });
           const { levelUpCharacter } = this.state;
           characterRequests.updateSavedCharacter(characterId, levelUpCharacter)
             .then(() => {
@@ -235,7 +286,11 @@ hideDeleteAlerts = (e) => {
       characters,
       onTeamCharacters,
       fullTeam,
-      noTeam,
+      disableB,
+      teamAttackPoints,
+      teamCritBonus,
+      teamHealBonus,
+      teamHitPoints,
     } = this.state;
     const characterItemComponents = characters.map(character => (
       <CharacterItem
@@ -248,33 +303,39 @@ hideDeleteAlerts = (e) => {
         addToTeam = {this.addToTeam}
       />
     ));
-    const onTeamCharacterItemComponents = onTeamCharacters.map(onTeamCharacter => (
-      <OnTeamCharacterItem
-        onTeamCharacter={onTeamCharacter}
-        key={onTeamCharacter.id}
-        removeFromTeam={this.removeFromTeam}
-      />
-    ));
+    let onTeamCharacterItemComponents = '';
+    let teamMessage = '';
+    if (onTeamCharacters.length === 0) {
+      teamMessage = 'Create your team!';
+    } else {
+      onTeamCharacterItemComponents = onTeamCharacters.map(onTeamCharacter => (
+        <OnTeamCharacterItem
+          onTeamCharacter={onTeamCharacter}
+          key={onTeamCharacter.id}
+          removeFromTeam={this.removeFromTeam}
+        />
+      ));
+    }
     const buildModals = () => (
     <div>
       <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-        <ModalHeader toggle={this.toggle}>
+        <ModalHeader className='d-flex justify-content-center'>
         Are you sure you want to delete this Character?
         </ModalHeader>
-        <ModalFooter>
+        <ModalBody className='d-flex justify-content-around'>
           <Button className='btn btn-danger' onClick={this.deleteCharacter}>Yes</Button>
           <Button className='btn btn-success' onClick={this.hideAlert}>No</Button>
-        </ModalFooter>
+        </ModalBody>
       </Modal>
       <Modal
         isOpen={this.state.tokenModal}
         toggle={this.modalToggle}
         className={this.props.className}
       >
-        <ModalHeader toggle={this.modalToggle}>
+        <ModalHeader className='d-flex justify-content-center'>
         You have no more tokens to level up your Characters.
         </ModalHeader>
-        <ModalFooter>
+        <ModalFooter className='d-flex justify-content-center'>
           <Button color="secondary" onClick={this.modalToggle}>OK</Button>
         </ModalFooter>
       </Modal>
@@ -283,21 +344,33 @@ hideDeleteAlerts = (e) => {
         toggle={this.cantDeleteToggle}
         className={this.props.className}
       >
-        <ModalHeader toggle={this.cantDeleteToggle}>
-        You must keep some characters in order to battle.
-        You will need to draw more character cards before you can delete.
+        <ModalHeader className='d-flex justify-content-center'>
+        <p>You must keep enough characters in order to battle.</p>
+        <p>You will need to draw more character cards before you can delete.</p>
         </ModalHeader>
-        <ModalFooter>
+        <ModalBody className='d-flex justify-content-center'>
           <Button color="secondary" onClick={this.hideDeleteAlerts}>OK</Button>
-        </ModalFooter>
+        </ModalBody>
       </Modal>
     </div>
     );
     return (
-      <div className="characters col">
-        <h2>Characters</h2>
-        <div className='onTeamCharacters d-flex flex-wrap'>{onTeamCharacterItemComponents}</div>
-        <Button className='btn btn-danger' disabled={noTeam} tag={RRNavLink} to='/battle'>Battle!</Button>
+      <div className="characters">
+        <Container className='onTeamCharacters mt-2 mb-2 d-flex justify-content-center'>
+          <div className='m-3'>
+            <Row className='d-flex justify-content-center teamStats'>
+            <span className='mr-5 ml-5' title='hit points'><i className="fas fa-heart"></i> : {teamHitPoints}</span>
+            <span className='mr-5 ml-5' title='attack points'><i className="fas fa-dumbbell"></i> : {teamAttackPoints}</span>
+            <span className='mr-5 ml-5' title='heal bonus'><i className="fas fa-briefcase-medical"></i> : {teamHealBonus}</span>
+            <span className='mr-5 ml-5' title='crit bonus'><i className="fas fa-skull"></i> : {teamCritBonus}%</span>
+            </Row>
+            <Row>
+              {onTeamCharacterItemComponents}
+            </Row>
+            <p className='teamMessage p-5 m-5'>{teamMessage}</p>
+          </div>
+        </Container>
+        <Button className='battleButton btn btn-danger mb-5' disabled={disableB} tag={RRNavLink} to='/battle'><p className='m-1'>Battle!</p> </Button>
         <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <div>{buildModals()}</div>
         <div>

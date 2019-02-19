@@ -1,8 +1,4 @@
 import React from 'react';
-import {
-  Card,
-  CardTitle,
-} from 'reactstrap';
 import PropTypes from 'prop-types';
 import locationShape from '../../helpers/props/locationShape';
 import './LocationItem.scss';
@@ -17,11 +13,11 @@ class LocationItem extends React.Component {
   render() {
     const { location, drawClickEvent } = this.props;
     return (
-      <div>
-      <Card onClick={drawClickEvent} id={location.id} className='location mr-4'>
-        <CardTitle>{location.name}</CardTitle>
-        <img className="cardImage" src={location.imageUrl} alt="Card img"/>
-      </Card>
+      <div className=''>
+      <div onClick={drawClickEvent} id={location.id} className='location mr-4'>
+        <h3 className='locationName'>{location.name}</h3>
+        <img className="locationImage" src={location.imageUrl} alt="Card img"/>
+      </div>
     </div>
     );
   }

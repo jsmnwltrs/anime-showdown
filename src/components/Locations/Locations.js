@@ -5,7 +5,8 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
+  Row,
+  Col,
 } from 'reactstrap';
 import LocationItem from '../LocationItem/LocationItem';
 import locationRequests from '../../helpers/data/locationRequests';
@@ -22,8 +23,8 @@ const defaultCharacter = {
   onTeam: false,
   uid: '',
   critChance: 0,
+  critBonus: 0,
   healBonus: 0,
-  healTokens: 0,
   class: '',
 };
 
@@ -106,8 +107,8 @@ class Locations extends React.Component {
               myCharacter.attackPoints = character.data.attackPoints;
               myCharacter.hitPoints = character.data.hitPoints;
               myCharacter.critChance = character.data.critChance;
+              myCharacter.critBonus = character.data.critBonus;
               myCharacter.healBonus = character.data.healBonus;
-              myCharacter.healTokens = character.data.healTokens;
               myCharacter.class = character.data.class;
               this.setState({ chosenCharacter: myCharacter });
               characterRequests.addSavedCharacter(this.state.chosenCharacter)
@@ -127,6 +128,7 @@ class Locations extends React.Component {
 
   render() {
     const { locations, chosenCharacter } = this.state;
+    const newCritBonus = Math.round(chosenCharacter.critBonus * 100);
     const locationItemComponents = locations.map(location => (
       <LocationItem
         location={location}
@@ -135,34 +137,54 @@ class Locations extends React.Component {
       />
     ));
     return (
-      <div className="locations col">
-        <h2>Locations</h2>
-        <div className='d-flex flex-wrap'>{locationItemComponents}</div>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>{chosenCharacter.name}</ModalHeader>
-          <ModalBody>
-            <img src={chosenCharacter.imageUrl} alt='character img' />
-          </ModalBody>
-          <ModalFooter>
-           <p>Class: {chosenCharacter.class}</p>
-           <p>HP: {chosenCharacter.hitPoints}</p>
-           <p>AP: {chosenCharacter.attackPoints}</p>
-           <p>Crit Chance: {chosenCharacter.critChance}</p>
-           <p>Heal Bonus: {chosenCharacter.healBonus}</p>
-          </ModalFooter>
-          <Button color="success" onClick={this.toggle}>OK</Button>
+      <div className="locations">
+        <div className='d-flex flex-wrap justify-content-center locationCards'>{locationItemComponents}</div>
+        <Modal id='characterModal' isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+        <div>
+          <ModalBody className='characterModal'>
+            <Row>
+              <Col className='d-flex justify-content-center'>
+                <h3>{chosenCharacter.name}</h3>
+              </Col>
+            </Row>
+            <Row>
+              <Col className='d-flex justify-content-center'>
+                <img className='card-image' src={chosenCharacter.imageUrl} alt='character img' />
+              </Col>
+            </Row>
+            <Row>
+              <Col className='d-flex justify-content-center'>
+                <p>Class: {chosenCharacter.class}</p>
+              </Col>
+            </Row>
+            <Row>
+              <div className='col-2'></div>
+              <Col className='statCol'>
+                <p title='hit points'><i className="fas fa-heart"></i> : {chosenCharacter.hitPoints}</p>
+                <p title='heal bonus'><i className="fas fa-briefcase-medical"></i> : {chosenCharacter.healBonus}</p>
+              </Col>
+              <Col>
+                <p title='attack points'><i className="fas fa-dumbbell"></i> : {chosenCharacter.attackPoints}</p>
+                <p title='crit bonus'><i className="fas fa-skull"></i> : {newCritBonus}%</p>
+              </Col>
+            </Row>
+            <div className='d-flex justify-content-center'>
+              <Button className='okButton' color="success" onClick={this.toggle}>OK</Button>
+            </div>
+            </ModalBody>
+            </div>
         </Modal>
         <Modal
             isOpen={this.state.tokenModal}
             toggle={this.modalToggle}
             className={this.props.className}
           >
-            <ModalHeader toggle={this.modalToggle}>
+            <ModalHeader className='d-flex justify-content-center'>
             You have no more tokens to draw Characters.
             </ModalHeader>
-            <ModalFooter>
+            <ModalBody className='d-flex justify-content-center'>
               <Button color="secondary" onClick={this.modalToggle}>OK</Button>
-            </ModalFooter>
+            </ModalBody>
         </Modal>
       </div>
     );

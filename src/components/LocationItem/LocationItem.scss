@@ -1,0 +1,13 @@
+.locationName {
+  color: white;
+}
+
+.locationImage {
+    width:  320px;
+    height: 320px;
+    border-radius: 25px;
+}
+
+.location:hover {
+  transform: scale(1.2)
+}
