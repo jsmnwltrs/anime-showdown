@@ -5,6 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import characterShape from '../../helpers/props/characterShape';
 import healModifierData from '../../helpers/data/healModifierData';
+import heal from '../../helpers/sound/heal.wav';
 import './BattleTeam.scss';
 
 
@@ -36,6 +37,8 @@ class BattleTeam extends React.Component {
     } else {
       passHealedHP(newTeamHP);
     }
+    const healSound = new Audio(heal);
+    healSound.play();
   }
 
   render() {

@@ -8,6 +8,8 @@ import {
   ModalFooter,
   Row,
   Col,
+  Card,
+  CardTitle,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Bosses from '../Bosses/Bosses';
@@ -17,6 +19,8 @@ import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
 import userRequests from '../../helpers/data/userRequests';
 import attackModifierData from '../../helpers/data/attackModifierData';
+import attack from '../../helpers/sound/smack.wav';
+import battleSound from '../../helpers/sound/battleMusic.wav';
 
 const backgroundImage1 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/arenabackground.jpg?alt=media&token=974afe8c-48e8-4557-8188-cab74373b9fb';
 const backgroundImage2 = 'https://firebasestorage.googleapis.com/v0/b/anime-showdown.appspot.com/o/CaveBackground.jpg?alt=media&token=657c7ec4-0feb-49ef-8e58-454465fa5039';
@@ -164,6 +168,8 @@ class Battle extends React.Component {
     if (newTeamHP <= 0) {
       this.setState({ modal: true });
     }
+    const attackSound = new Audio(attack);
+    attackSound.play();
   }
 
   addRewards = () => {
@@ -308,18 +314,16 @@ class Battle extends React.Component {
               <img className='bossImage' src={battleBoss.imageUrl} alt="Card img"/>
             </Col>
           </Row>
-          <Row className='battleHP'>
-            <Col className='col-4 teamHPCol'>
-              <p className='mr-5'>Team HP: {teamHP}/{maxTeamHP}</p>
-              <progress id="teamHitPoints" value={teamHP} max={maxTeamHP}></progress>
-            </Col>
-           <Col className='col-5'>
+          <Row className='battleHP ml-5 d-flex justify-content-between'>
+            <Card className='teamHPCol bg-dark'>
+              <CardTitle>Team HP: {teamHP}/{maxTeamHP}</CardTitle>
+              <progress className='m-2' id="teamHitPoints" value={teamHP} max={maxTeamHP}></progress>
+            </Card>
             <Button onClick={this.attackBoss} id=' attackButton' className='btn-danger attackButton'>Attack!</Button>
-           </Col>
-           <Col className='col-3 bossHPCol'>
-            <p className='bossHP'>Boss HP: {bossHP}/{battleBoss.hitPoints}</p>
-            <progress className='bossHP' id="bossHitPoints" value={bossHP} max={battleBoss.hitPoints}></progress>
-          </Col>
+           <Card className='bossHPCol bg-dark ml-5'>
+            <CardTitle className='bossHP'>Boss HP: {bossHP}/{battleBoss.hitPoints}</CardTitle>
+            <progress className='m-2' id="bossHitPoints" value={bossHP} max={battleBoss.hitPoints}></progress>
+          </Card>
           </Row>
           </div>
         );
@@ -333,6 +337,9 @@ class Battle extends React.Component {
         <div>{makeBattle()}</div>
         <div>{makeModal()}</div>
         <div>{makeBackgroundModal()}</div>
+        <div>
+          <audio ref='audio_tag' src={battleSound} loop autoPlay/>
+        </div>
       </div>
     );
   }

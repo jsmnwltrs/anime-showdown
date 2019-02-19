@@ -17,6 +17,7 @@ import CharacterItem from '../CharacterItem/CharacterItem';
 import characterRequests from '../../helpers/data/characterRequests';
 import authRequests from '../../helpers/data/authRequests';
 import userRequests from '../../helpers/data/userRequests';
+import selectionSound from '../../helpers/sound/perfectDark.wav';
 
 const defaultCharacter = {
   name: '',
@@ -372,6 +373,9 @@ hideDeleteAlerts = (e) => {
         <Button className='battleButton btn btn-danger mb-5' disabled={disableB} tag={RRNavLink} to='/battle'><p className='m-1'>Battle!</p> </Button>
         <div className='savedCharacters d-flex flex-wrap'>{characterItemComponents}</div>
         <div>{buildModals()}</div>
+        <div>
+          <audio ref='audio_tag' src={selectionSound} loop autoPlay/>
+        </div>
       </div>
     );
   }
