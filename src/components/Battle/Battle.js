@@ -203,7 +203,7 @@ class Battle extends React.Component {
 
   reload = () => {
     this.setState({ backgroundUrl: '' });
-    window.location.assign('http://localhost:3000/characters');
+    window.location.assign('https://anime-showdown.firebaseapp.com/characters');
   }
 
   render() {
